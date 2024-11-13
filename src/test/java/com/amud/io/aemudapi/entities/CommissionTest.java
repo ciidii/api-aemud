@@ -7,9 +7,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class CommissionTest {
     @Test
-    void testConstructorWithAllArgs(){
+    void testConstructorWithAllArgs() {
         //given
-        Long id= 1L;
+        Long id = 1L;
         String name = "CFP";
         //when
         Commission commission = new Commission(id, name);
@@ -17,19 +17,21 @@ class CommissionTest {
         assertThat(commission.getId()).isEqualTo(id);
         assertThat(commission.getName()).isEqualTo(name);
     }
+
     @Test
-    void testGetters(){
+    void testGetters() {
         //given
-        Commission commission = new Commission(1L,"CFP");
+        Commission commission = new Commission(1L, "CFP");
         //when
         Long id = commission.getId();
         String name = commission.getName();
         //then
-       Assertions.assertThat(id).isEqualTo(1L);
-       Assertions.assertThat(name).isEqualTo("CFP");
+        Assertions.assertThat(id).isEqualTo(1L);
+        Assertions.assertThat(name).isEqualTo("CFP");
     }
+
     @Test
-    void testSetters(){
+    void testSetters() {
         //given
         Commission commission = new Commission();
         //when

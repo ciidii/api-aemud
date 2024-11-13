@@ -5,15 +5,12 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class AppConfig {
-    @Value("${GOOGLE_CRENDTIAL_PATH}")
-    private String googleCredentialsPath;
-
-    @Value("${SPREAD_ID}")
-    private String spreadIDs;
-
     @Value("${ORANGE_API_TOKEN}")
     private static String orangeApiToken;
-
+    @Value("${GOOGLE_CRENDTIAL_PATH}")
+    private String googleCredentialsPath;
+    @Value("${SPREAD_ID}")
+    private String spreadIDs;
     @Value("${orange.api.key}")
     private String orangeApiKey;
 
@@ -23,12 +20,15 @@ public class AppConfig {
     public String getGoogleCredentialsPath() {
         return googleCredentialsPath;
     }
+
     public String getSpreadID() {
         return spreadIDs;
     }
+
     public String getOrangeApiToken() {
         return orangeApiToken;
     }
+
     public String getOrangeApiKey() {
         return orangeApiKey;
     }

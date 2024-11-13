@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class BourseMapper {
-    public  BourseDTO toDTO(Bourse bourse) {
+    public BourseDTO toDTO(Bourse bourse) {
         if (bourse == null) {
             return null;
         }
@@ -22,7 +22,8 @@ public class BourseMapper {
 
         return dto;
     }
-    public  List<BourseDTO> toDTO(List<Bourse> bourses) {
+
+    public List<BourseDTO> toDTO(List<Bourse> bourses) {
         if (bourses == null) {
             return null;
         }
@@ -31,7 +32,8 @@ public class BourseMapper {
                 .map(this::toDTO)
                 .collect(Collectors.toList());
     }
-    public  Bourse toEntity(BourseDTO dto) {
+
+    public Bourse toEntity(BourseDTO dto) {
         if (dto == null) {
             return null;
         }
@@ -43,7 +45,8 @@ public class BourseMapper {
 
         return bourse;
     }
-    public  List<Bourse> toEntity(List<BourseDTO> dtos) {
+
+    public List<Bourse> toEntity(List<BourseDTO> dtos) {
         if (dtos == null) {
             return null;
         }

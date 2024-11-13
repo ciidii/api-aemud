@@ -10,6 +10,7 @@ import java.util.List;
 @Service
 public interface BourseService {
     ResponseEntity<ResponseVO<BourseDTO>> addBourse(BourseDTO bourseDTO);
-    ResponseEntity<ResponseVO<List<BourseDTO>>> getAllBourse( );
+
+    ResponseEntity<ResponseVO<List<BourseDTO>>> getAllBourse();
 
 }

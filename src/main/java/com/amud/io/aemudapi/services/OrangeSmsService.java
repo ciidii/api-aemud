@@ -7,6 +7,7 @@ import java.util.List;
 
 @Service
 public interface OrangeSmsService {
-    public String sendSmsToMultipleRecipients(List<String> recipientNumbers, String message) throws IOException;
-    public String sendSms(String recipientNumber, String message) throws IOException;
+    String sendSmsToMultipleRecipients(List<String> recipientNumbers, String message) throws IOException;
+
+    String sendSms(String recipientNumber, String message) throws IOException;
 }

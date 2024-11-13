@@ -2,8 +2,6 @@ package com.amud.io.aemudapi.dto;
 
 import lombok.Data;
 
-import java.util.List;
-
 @Data
 public class MembershipInfoDTO {
     private Long yearOfMembership;

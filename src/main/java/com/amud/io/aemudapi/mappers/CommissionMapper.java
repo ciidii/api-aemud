@@ -2,7 +2,6 @@ package com.amud.io.aemudapi.mappers;
 
 import com.amud.io.aemudapi.dto.CommissionDto;
 import com.amud.io.aemudapi.entities.Commission;
-import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 
 @Component

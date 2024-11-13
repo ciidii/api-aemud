@@ -1,7 +1,6 @@
 package com.amud.io.aemudapi.controllers;
 
 import com.amud.io.aemudapi.dto.AddressInfoRequestDto;
-import com.amud.io.aemudapi.dto.ContactInfoRequestDto;
 import com.amud.io.aemudapi.services.AddressInfoService;
 import com.amud.io.aemudapi.utils.ResponseVO;
 import lombok.AllArgsConstructor;

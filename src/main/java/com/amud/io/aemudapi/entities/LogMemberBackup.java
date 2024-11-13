@@ -1,6 +1,7 @@
 package com.amud.io.aemudapi.entities;
 
 import jakarta.persistence.*;
+
 @Entity
 public class LogMemberBackup {
     @Id
@@ -9,6 +10,7 @@ public class LogMemberBackup {
     @OneToOne
     private Member member;
     private boolean isBackup;
+
     public LogMemberBackup() {
         //constructor without args
     }
@@ -20,9 +22,11 @@ public class LogMemberBackup {
     public void setId(Long id) {
         this.id = id;
     }
+
     public Member getMember() {
         return member;
     }
+
     public void setMember(Member members) {
         this.member = members;
     }

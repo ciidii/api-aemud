@@ -3,8 +3,6 @@ package com.amud.io.aemudapi.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.List;
-
 @Entity
 @Table(name = "member")
 @Data

@@ -9,6 +9,7 @@ import java.util.List;
 
 @Service
 public interface ClubService {
-    public ResponseEntity<ResponseVO<ClubDto>> addClub(ClubDto clubDto);
-    public ResponseEntity<ResponseVO<List<ClubDto>>> getAllClubs();
+    ResponseEntity<ResponseVO<ClubDto>> addClub(ClubDto clubDto);
+
+    ResponseEntity<ResponseVO<List<ClubDto>>> getAllClubs();
 }

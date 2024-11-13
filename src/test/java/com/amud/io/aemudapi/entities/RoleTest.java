@@ -4,14 +4,15 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class RoleTest {
     @BeforeEach
     void setUp() {
     }
+
     @Test
-    void testConstructorWithAllArgs(){
+    void testConstructorWithAllArgs() {
         //given
         Long id = 1L;
         String name = "ROLE_ADMIN";
@@ -22,7 +23,7 @@ class RoleTest {
     }
 
     @Test
-    void testGetters(){
+    void testGetters() {
         //given
         Role role = new Role(1L, "ROLE_ADMIN");
         //when
@@ -32,10 +33,11 @@ class RoleTest {
         Assertions.assertThat(id).isEqualTo(1L);
         Assertions.assertThat(name).isEqualTo("ROLE_ADMIN");
     }
+
     @Test
-    void testSetters(){
+    void testSetters() {
         //given
-        Role role=new Role();
+        Role role = new Role();
         //when
         role.setId(1L);
         role.setName("ROLE_ADMIN");

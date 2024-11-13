@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 public class MemberHasBourseKeyMapper {
 
     // Méthode pour mapper une entité vers un DTO
-    public  MemberHasBourseKeyDto toDto(MemberHasBourseKey entity) {
+    public MemberHasBourseKeyDto toDto(MemberHasBourseKey entity) {
         if (entity == null) {
             return null;
         }
@@ -40,7 +40,7 @@ public class MemberHasBourseKeyMapper {
     }
 
     // Méthode pour mapper un DTO vers une entité
-    public  MemberHasBourseKey toEntity(MemberHasBourseKeyDto dto) {
+    public MemberHasBourseKey toEntity(MemberHasBourseKeyDto dto) {
         if (dto == null) {
             return null;
         }

@@ -27,18 +27,18 @@ public class ClubServiceImpl implements ClubService {
     @Override
     public ResponseEntity<ResponseVO<ClubDto>> addClub(ClubDto clubDto) {
         Club club = this.clubMapper.toEntity(clubDto);
-        club =  this.clubRepository.save(club);
+        club = this.clubRepository.save(club);
         clubDto = this.clubMapper.toDto(club);
-         ResponseVO<ClubDto> responseVO = new ResponseVOBuilder<ClubDto>().addData(clubDto).build();
-        return new ResponseEntity<>(responseVO,HttpStatus.CREATED);
+        ResponseVO<ClubDto> responseVO = new ResponseVOBuilder<ClubDto>().addData(clubDto).build();
+        return new ResponseEntity<>(responseVO, HttpStatus.CREATED);
     }
 
     @Override
     public ResponseEntity<ResponseVO<List<ClubDto>>> getAllClubs() {
         List<ClubDto> clubsDto = new ArrayList<>();
-         this.clubRepository.findAll().forEach(club -> {
-             clubsDto.add(this.clubMapper.toDto(club));
-         });
+        this.clubRepository.findAll().forEach(club -> {
+            clubsDto.add(this.clubMapper.toDto(club));
+        });
         ResponseVO<List<ClubDto>> responseVO = new ResponseVOBuilder<List<ClubDto>>().addData(clubsDto).build();
         return new ResponseEntity<>(responseVO, HttpStatus.OK);
     }

@@ -19,12 +19,12 @@ public class CommissionController {
     }
 
     @PostMapping()
-    public ResponseEntity<ResponseVO<CommissionDto>> addCommission(@RequestBody CommissionDto commission){
+    public ResponseEntity<ResponseVO<CommissionDto>> addCommission(@RequestBody CommissionDto commission) {
         return this.commissionService.addCommission(commission);
     }
 
     @GetMapping("all")
-    public ResponseEntity<ResponseVO<List<CommissionDto>>> getAllCommissions(){
+    public ResponseEntity<ResponseVO<List<CommissionDto>>> getAllCommissions() {
         return this.commissionService.getAllCommission();
     }
 }

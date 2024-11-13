@@ -7,7 +7,9 @@ import com.amud.io.aemudapi.utils.ResponseVO;
 import org.springframework.http.ResponseEntity;
 
 public interface ReRegistrationService {
-    public ResponseEntity<ResponseVO<RegistrationResponseDto>> reRegisterMember(ReRegistrationDto reRegistrationKeyDto);
-    public ResponseEntity<ResponseVO<RegistrationPearYearDto>> getAllReRegisterForAYear(Long year);
-    public ResponseEntity<ResponseVO<RegistrationPearYearDto>> getAllNotReRegisterForAYear(Long year);
+    ResponseEntity<ResponseVO<RegistrationResponseDto>> reRegisterMember(ReRegistrationDto reRegistrationKeyDto);
+
+    ResponseEntity<ResponseVO<RegistrationPearYearDto>> getAllReRegisterForAYear(Long year);
+
+    ResponseEntity<ResponseVO<RegistrationPearYearDto>> getAllNotReRegisterForAYear(Long year);
 }

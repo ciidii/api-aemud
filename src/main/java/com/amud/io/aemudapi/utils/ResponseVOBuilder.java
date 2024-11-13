@@ -23,7 +23,7 @@ public class ResponseVOBuilder<T> {
         return new ResponseVOBuilder<T>().result("Failed").status(status);
     }
 
-    public ResponseVOBuilder<T> error(ResponseErrorVo error,HttpStatus status) {
+    public ResponseVOBuilder<T> error(ResponseErrorVo error, HttpStatus status) {
         responseVO.setError(error);
         responseVO.setResult("Failed");
         responseVO.setStatus(status);

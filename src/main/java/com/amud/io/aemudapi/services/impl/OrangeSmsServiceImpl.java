@@ -1,7 +1,6 @@
 package com.amud.io.aemudapi.services.impl;
 
 import com.amud.io.aemudapi.prodivers.OrangeCrendentialsProvider;
-import com.amud.io.aemudapi.repositories.MemberRepository;
 import com.amud.io.aemudapi.services.OrangeSmsService;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -22,11 +21,9 @@ public class OrangeSmsServiceImpl implements OrangeSmsService {
     private static final String ORANGE_API_URL = "https://api.orange.com/smsmessaging/v1/outbound/tel%3A%2B{sender_number}/requests";
     private static final String SENDER_NUMBER = "221782156437";
     private final OrangeCrendentialsProvider credentialsProvider;
-    private final MemberRepository memberRepository;
 
-    public OrangeSmsServiceImpl(OrangeCrendentialsProvider credentialsProvider, MemberRepository memberRepository) {
+    public OrangeSmsServiceImpl(OrangeCrendentialsProvider credentialsProvider) {
         this.credentialsProvider = credentialsProvider;
-        this.memberRepository = memberRepository;
     }
 
     @Override

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
-public interface YearOfSessionRepository extends JpaRepository<YearOfSession,Long> {
+public interface YearOfSessionRepository extends JpaRepository<YearOfSession, Long> {
     @Modifying
     @Transactional
     @Query("update YearOfSession y set y.currentYear = false where y.currentYear = true")

@@ -15,8 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 public class AcademicInfoController {
     private final AcademicInfoService academicInfoService;
+
     @PostMapping
-    public ResponseEntity<ResponseVO<Void>> addAcademicInfo(@RequestBody AcademicInfoRequestDTO infoRequestDTO){
+    public ResponseEntity<ResponseVO<Void>> addAcademicInfo(@RequestBody AcademicInfoRequestDTO infoRequestDTO) {
         return this.academicInfoService.createAcademicInfo(infoRequestDTO);
     }
 }

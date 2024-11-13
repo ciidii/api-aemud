@@ -1,10 +1,8 @@
 package com.amud.io.aemudapi.dto;
 
-import com.amud.io.aemudapi.entities.*;
-import jakarta.persistence.Embedded;
+import com.amud.io.aemudapi.entities.MembershipInfo;
+import com.amud.io.aemudapi.entities.PersonalInfo;
 import lombok.Data;
-
-import java.util.List;
 
 @Data
 public class MemberResponseDto {

@@ -1,5 +1,8 @@
 package com.amud.io.aemudapi.dto;
 
+import lombok.Data;
+
+@Data
 public class ContributionKeyDto {
     private Long idMonth;
 
@@ -10,27 +13,4 @@ public class ContributionKeyDto {
     public ContributionKeyDto() {
     }
 
-    public Long getIdMonth() {
-        return idMonth;
-    }
-
-    public void setIdMonth(Long idMonth) {
-        this.idMonth = idMonth;
-    }
-
-    public Long getIdYear() {
-        return idYear;
-    }
-
-    public void setIdYear(Long idYear) {
-        this.idYear = idYear;
-    }
-
-    public Long getMemberId() {
-        return memberId;
-    }
-
-    public void setMemberId(Long memberId) {
-        this.memberId = memberId;
-    }
 }

@@ -3,10 +3,11 @@ package com.amud.io.aemudapi.entities;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class ClubTest {
     private Club club;
+
     @Test
     void testConstructorWithAllArgs() {
         //given
@@ -18,8 +19,9 @@ class ClubTest {
         assertThat(id).isEqualTo(club.getId());
         assertThat(name).isEqualTo(club.getName());
     }
+
     @Test
-    void testGetters(){
+    void testGetters() {
         Club club = new Club(1L, "Boubacar");
         //when
         Long id = club.getId();
@@ -28,8 +30,9 @@ class ClubTest {
         Assertions.assertThat(id).isEqualTo(1L);
         Assertions.assertThat(name).isEqualTo("Boubacar");
     }
+
     @Test
-    void testSetters(){
+    void testSetters() {
         Club club = new Club();
         //when
         club.setId(2L);

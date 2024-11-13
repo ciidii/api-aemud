@@ -1,4 +1,5 @@
 package com.amud.io.aemudapi.dto;
+
 import jakarta.persistence.Embeddable;
 import lombok.Data;
 

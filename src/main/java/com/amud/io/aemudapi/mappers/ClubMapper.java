@@ -2,7 +2,6 @@ package com.amud.io.aemudapi.mappers;
 
 import com.amud.io.aemudapi.dto.ClubDto;
 import com.amud.io.aemudapi.entities.Club;
-import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 
 @Component

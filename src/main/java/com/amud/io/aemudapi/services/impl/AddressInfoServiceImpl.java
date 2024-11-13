@@ -16,14 +16,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.net.http.HttpClient;
-
 @Service
 @AllArgsConstructor
 public class AddressInfoServiceImpl implements AddressInfoService {
     private AddressInfoMapper addressInfoMapper;
     private AddressInfoRepository addressInfoRepository;
     private YearOfSessionRepository yearOfSessionRepository;
+
     @Override
     public ResponseEntity<ResponseVO<Void>> createAddressInfo(AddressInfoRequestDto requestDto) {
         AddressInfo addressInfo;
@@ -37,7 +36,7 @@ public class AddressInfoServiceImpl implements AddressInfoService {
     public ResponseEntity<ResponseVO<AddressInfoRequestDto>> getCurrentSessionMemberAddress(Long memberID) {
         YearOfSession yearOfSession = this.yearOfSessionRepository.findCurrentSession();
         MemberAndYearKey memberAndYearKey = new MemberAndYearKey(yearOfSession.getIdYear(), memberID);
-        AddressInfo addressInfo = this.addressInfoRepository.findById(memberAndYearKey).orElseThrow(()->new EntityNotFoundException("C'est utilisateur ne s'Inscrit cette année"));
+        AddressInfo addressInfo = this.addressInfoRepository.findById(memberAndYearKey).orElseThrow(() -> new EntityNotFoundException("C'est utilisateur ne s'Inscrit cette année"));
         AddressInfoRequestDto infoRequestDto = this.addressInfoMapper.toDto(addressInfo);
         ResponseVO<AddressInfoRequestDto> responseVO = new ResponseVOBuilder<AddressInfoRequestDto>().addData(infoRequestDto).build();
         return new ResponseEntity<>(responseVO, HttpStatus.OK);

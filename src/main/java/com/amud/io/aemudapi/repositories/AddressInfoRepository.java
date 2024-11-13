@@ -1,7 +1,6 @@
 package com.amud.io.aemudapi.repositories;
 
 import com.amud.io.aemudapi.entities.AddressInfo;
-import com.amud.io.aemudapi.entities.Member;
 import com.amud.io.aemudapi.entities.MemberAndYearKey;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

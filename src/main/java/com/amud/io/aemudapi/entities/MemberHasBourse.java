@@ -7,17 +7,17 @@ import lombok.Data;
 @Data
 public class MemberHasBourse {
     @EmbeddedId
-   private MemberHasBourseKey memberHasBourseKey;
+    private MemberHasBourseKey memberHasBourseKey;
 
-    @JoinColumn(name = "member_id",insertable = false,updatable = false)
+    @JoinColumn(name = "member_id", insertable = false, updatable = false)
     @ManyToOne(cascade = CascadeType.REMOVE)
     private Member member;
 
-    @JoinColumn(name = "bourse_id",insertable = false,updatable = false)
+    @JoinColumn(name = "bourse_id", insertable = false, updatable = false)
     @ManyToOne
     private Bourse bourse;
 
-    @JoinColumn(name = "year_",insertable = false,updatable = false)
+    @JoinColumn(name = "year_", insertable = false, updatable = false)
     @OneToOne
     private YearOfSession year;
 }

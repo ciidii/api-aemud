@@ -17,7 +17,7 @@ public class ContributionKey implements Serializable {
     private Long idYear;
 
     @Column(name = "id_member")
-    private  Long memberId;
+    private Long memberId;
 
 
     @Override

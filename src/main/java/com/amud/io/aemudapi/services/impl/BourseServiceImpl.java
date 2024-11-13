@@ -25,9 +25,9 @@ public class BourseServiceImpl implements BourseService {
 
     @Override
     public ResponseEntity<ResponseVO<BourseDTO>> addBourse(BourseDTO bourseDTO) {
-        Bourse bourse  = bourseMapper.toEntity(bourseDTO);
+        Bourse bourse = bourseMapper.toEntity(bourseDTO);
         BourseDTO dto = this.bourseMapper.toDTO(this.bourseRepository.save(bourse));
-            ResponseVO<BourseDTO> responseVO = new ResponseVOBuilder<BourseDTO>().addData(dto).build();
+        ResponseVO<BourseDTO> responseVO = new ResponseVOBuilder<BourseDTO>().addData(dto).build();
         return new ResponseEntity<>(responseVO, HttpStatus.OK);
     }
 
@@ -36,6 +36,6 @@ public class BourseServiceImpl implements BourseService {
         List<Bourse> bourses = this.bourseRepository.findAll();
         List<BourseDTO> bourseDTOS = this.bourseMapper.toDTO(bourses);
         ResponseVO<List<BourseDTO>> responseVO = new ResponseVOBuilder<List<BourseDTO>>().addData(bourseDTOS).build();
-        return new ResponseEntity<>(responseVO,HttpStatus.OK);
+        return new ResponseEntity<>(responseVO, HttpStatus.OK);
     }
 }

@@ -26,10 +26,10 @@ public class CommissionServiceImpl implements CommissionService {
 
     @Override
     public ResponseEntity<ResponseVO<CommissionDto>> addCommission(CommissionDto commissionDto) {
-        Commission commission =  this.commissionMapper.toEntity(commissionDto);
-       commission = this.commissionRepository.save(commission);
-       commissionDto = this.commissionMapper.toDto(commission);
-       ResponseVO<CommissionDto> responseVO = new ResponseVOBuilder<CommissionDto>().addData(commissionDto).build();
+        Commission commission = this.commissionMapper.toEntity(commissionDto);
+        commission = this.commissionRepository.save(commission);
+        commissionDto = this.commissionMapper.toDto(commission);
+        ResponseVO<CommissionDto> responseVO = new ResponseVOBuilder<CommissionDto>().addData(commissionDto).build();
         return new ResponseEntity<>(responseVO, HttpStatus.CREATED);
     }
 
@@ -40,6 +40,6 @@ public class CommissionServiceImpl implements CommissionService {
             commissionDtos.add(this.commissionMapper.toDto(commission));
         });
         ResponseVO<List<CommissionDto>> responseVO = new ResponseVOBuilder<List<CommissionDto>>().addData(commissionDtos).build();
-        return new ResponseEntity<>(responseVO,HttpStatus.OK);
+        return new ResponseEntity<>(responseVO, HttpStatus.OK);
     }
 }

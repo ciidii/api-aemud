@@ -7,27 +7,27 @@ import org.springframework.stereotype.Component;
 @Component
 public class ReRegistrationKeyMapper {
 
-  public ReRegistrationKeyDto toDto(MemberAndYearKey memberAndYearKey) {
-    if (memberAndYearKey == null) {
-      return null;
+    public ReRegistrationKeyDto toDto(MemberAndYearKey memberAndYearKey) {
+        if (memberAndYearKey == null) {
+            return null;
+        }
+
+        ReRegistrationKeyDto dto = new ReRegistrationKeyDto();
+        dto.setYearOfRegistration(memberAndYearKey.getYearOfRegistration());
+        dto.setMemberId(memberAndYearKey.getMember());
+
+        return dto;
     }
 
-    ReRegistrationKeyDto dto = new ReRegistrationKeyDto();
-    dto.setYearOfRegistration(memberAndYearKey.getYearOfRegistration());
-    dto.setMemberId(memberAndYearKey.getMember());
+    public MemberAndYearKey toEntity(ReRegistrationKeyDto dto) {
+        if (dto == null) {
+            return null;
+        }
 
-    return dto;
-  }
+        MemberAndYearKey memberAndYearKey = new MemberAndYearKey();
+        memberAndYearKey.setYearOfRegistration(dto.getYearOfRegistration());
+        memberAndYearKey.setMember(dto.getMemberId());
 
-  public MemberAndYearKey toEntity(ReRegistrationKeyDto dto) {
-    if (dto == null) {
-      return null;
+        return memberAndYearKey;
     }
-
-    MemberAndYearKey memberAndYearKey = new MemberAndYearKey();
-    memberAndYearKey.setYearOfRegistration(dto.getYearOfRegistration());
-    memberAndYearKey.setMember(dto.getMemberId());
-
-    return memberAndYearKey;
-  }
 }

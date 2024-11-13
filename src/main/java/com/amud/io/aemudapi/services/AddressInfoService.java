@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface AddressInfoService {
-    public ResponseEntity<ResponseVO<Void>> createAddressInfo(AddressInfoRequestDto requestDto);
+    ResponseEntity<ResponseVO<Void>> createAddressInfo(AddressInfoRequestDto requestDto);
 
     ResponseEntity<ResponseVO<AddressInfoRequestDto>> getCurrentSessionMemberAddress(Long memberID);
 }

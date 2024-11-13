@@ -54,7 +54,7 @@ public class MainFormServiceImpl implements MainFormService {
                 this.contactInfoService.createContactInfo(contactInfoRequestDto);
                 return new ResponseEntity<>(new ResponseVOBuilder<Void>().success().build(), HttpStatus.CREATED);
             }
-           throw new MemberNotCreatedException("L'Utilisateur n'est pas créer premier ifs");
+            throw new MemberNotCreatedException("L'Utilisateur n'est pas créer premier ifs");
         }
         throw new MemberNotCreatedException("L'Utilisateur n'est pas créer");
     }

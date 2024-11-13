@@ -2,11 +2,7 @@ package com.amud.io.aemudapi.mappers;
 
 import com.amud.io.aemudapi.dto.MemberDataResponseDTO;
 import com.amud.io.aemudapi.dto.MemberRequestDto;
-import com.amud.io.aemudapi.entities.*;
-import com.amud.io.aemudapi.repositories.BourseRepository;
-import com.amud.io.aemudapi.repositories.ClubRepository;
-import com.amud.io.aemudapi.repositories.CommissionRepository;
-import jakarta.persistence.EntityNotFoundException;
+import com.amud.io.aemudapi.entities.Member;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 

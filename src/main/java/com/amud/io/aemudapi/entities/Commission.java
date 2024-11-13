@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Entity
 @Data
-public class    Commission {
+public class Commission {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

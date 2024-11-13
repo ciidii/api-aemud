@@ -9,6 +9,7 @@ import java.util.List;
 
 @Service
 public interface CommissionService {
-    public ResponseEntity<ResponseVO<CommissionDto>> addCommission(CommissionDto commissionDto);
-    public ResponseEntity<ResponseVO<List<CommissionDto>>> getAllCommission();
+    ResponseEntity<ResponseVO<CommissionDto>> addCommission(CommissionDto commissionDto);
+
+    ResponseEntity<ResponseVO<List<CommissionDto>>> getAllCommission();
 }

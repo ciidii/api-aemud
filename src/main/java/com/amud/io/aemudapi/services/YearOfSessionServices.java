@@ -9,7 +9,9 @@ import java.util.List;
 
 @Service
 public interface YearOfSessionServices {
-    public ResponseEntity<ResponseVO<Void>> openNewSession(int year_);
-    public ResponseEntity<ResponseVO<List<YearOfSessionResponse>>> getAllYears();
-    public ResponseEntity<ResponseVO<YearOfSessionResponse>> getCurrentSession();
+    ResponseEntity<ResponseVO<Void>> openNewSession(int year_);
+
+    ResponseEntity<ResponseVO<List<YearOfSessionResponse>>> getAllYears();
+
+    ResponseEntity<ResponseVO<YearOfSessionResponse>> getCurrentSession();
 }

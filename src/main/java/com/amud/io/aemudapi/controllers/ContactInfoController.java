@@ -15,8 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 public class ContactInfoController {
     private final ContactInfoService contactInfoService;
+
     @PostMapping
-    public ResponseEntity<ResponseVO<Void>> createContactInfos(@RequestBody ContactInfoRequestDto contactInfoRequestDto){
+    public ResponseEntity<ResponseVO<Void>> createContactInfos(@RequestBody ContactInfoRequestDto contactInfoRequestDto) {
         return this.contactInfoService.createContactInfo(contactInfoRequestDto);
     }
 }

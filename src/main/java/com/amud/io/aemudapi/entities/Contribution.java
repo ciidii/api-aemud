@@ -14,15 +14,15 @@ public class Contribution {
     private ContributionKey contributionKey;
 
     @ManyToOne
-    @JoinColumn(name = "id_month",insertable = false,updatable = false)
+    @JoinColumn(name = "id_month", insertable = false, updatable = false)
     private MonthContribution contribution;
 
     @ManyToOne
-    @JoinColumn(name = "id_year",insertable = false,updatable = false)
+    @JoinColumn(name = "id_year", insertable = false, updatable = false)
     private YearOfSession yearContribution;
 
 
-    @JoinColumn(name = "id_member",insertable = false,updatable = false)
+    @JoinColumn(name = "id_member", insertable = false, updatable = false)
     @ManyToOne(cascade = CascadeType.REMOVE)
     private Member member;
 

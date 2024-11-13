@@ -14,53 +14,28 @@ class UserTest {
     private Member member;
     @Mock
     private List<Role> roles;
-    private Commission commission;
-    private User user;
-    private List<Club> clubs;
 
     @BeforeEach
     void setUp() {
-        user = new User();
+        User user = new User();
         List<Role> roles = new ArrayList<>();
         roles.add(new Role(1L, "ROLE_ADMIN"));
         roles.add(new Role(2L, "ROLE_USER"));
-        commission = new Commission(1L, "Commission");
-        clubs = new ArrayList<>();
+        Commission commission = new Commission(1L, "Commission");
+        List<Club> clubs = new ArrayList<>();
         clubs.add(new Club(1L, "Club Informatique"));
         clubs.add(new Club(1L, "Club Maths"));
-        member = Member.builder()
-                .setId(1L)
-                .setName("Diallo")
-                .setEmail("boubacar@gmail.com")
-                .setFirstname("Boubacar")
-                .setNationality("SN")
-                .setBirthday("10/03/2000")
-                .setMaritalStatus("Single")
-                .setAddressInDakar("Malika")
-                .setHolidayAddress("Dakar")
-                .setNumberPhone("7777777777")
-                .setPersonToCall("Tanou")
-                .setFaculty("FSR")
-                .setDepartment("Math-Info")
-                .setClubs(clubs)
-                .setCommission(commission)
-                .setParticipatedActivity("Set Setal")
-                .setAddressToCampus("Pavillons H")
-                .setAemudCourses("Arabe")
-                .setOtherCourses("No")
-                .setTwinsName("Loum")
-                .setPay(false)
-                .build();    }
+    }
 
     @Test
-     void testConstructorsWithAllAgrs() {
+    void testConstructorsWithAllAgrs() {
         //Given
         Long id = 1L;
         String username = "AEMUD-111";
         boolean locked = false;
         String password = "password";
         //When
-        User createdUser = new User(1L,username,password,locked,member,roles);
+        User createdUser = new User(1L, username, password, locked, member, roles);
         //Then
         assertThat(id).isEqualTo(createdUser.getId());
         assertThat(username).isEqualTo(createdUser.getUsername());
@@ -69,8 +44,9 @@ class UserTest {
         assertThat(member).isEqualTo(createdUser.getMember());
         assertThat(roles).isEqualTo(createdUser.getRoles());
     }
+
     @Test
-    void testGetters(){
+    void testGetters() {
         //given
         Long id = 1L;
         String username = "AEMUD-111";

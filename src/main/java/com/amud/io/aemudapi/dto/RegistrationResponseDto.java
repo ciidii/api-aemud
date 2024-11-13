@@ -1,7 +1,9 @@
 package com.amud.io.aemudapi.dto;
 
 import com.amud.io.aemudapi.entities.YearOfSession;
+import lombok.Data;
 
+@Data
 public class RegistrationResponseDto {
     private MemberRequestDto memberRequestDto;
     private YearOfSession year;
@@ -12,13 +14,5 @@ public class RegistrationResponseDto {
 
     public void setMemberDto(MemberRequestDto memberRequestDto) {
         this.memberRequestDto = memberRequestDto;
-    }
-
-    public YearOfSession getYear() {
-        return year;
-    }
-
-    public void setYear(YearOfSession year) {
-        this.year = year;
     }
 }

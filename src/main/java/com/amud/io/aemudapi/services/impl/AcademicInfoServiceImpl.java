@@ -1,16 +1,13 @@
 package com.amud.io.aemudapi.services.impl;
 
 import com.amud.io.aemudapi.dto.AcademicInfoRequestDTO;
-import com.amud.io.aemudapi.dto.AddressInfoRequestDto;
 import com.amud.io.aemudapi.entities.AcademicInfo;
-import com.amud.io.aemudapi.entities.AddressInfo;
 import com.amud.io.aemudapi.entities.MemberAndYearKey;
 import com.amud.io.aemudapi.entities.YearOfSession;
 import com.amud.io.aemudapi.mappers.AcademicInfoMapper;
 import com.amud.io.aemudapi.repositories.AcademicInfoRepository;
 import com.amud.io.aemudapi.repositories.YearOfSessionRepository;
 import com.amud.io.aemudapi.services.AcademicInfoService;
-import com.amud.io.aemudapi.services.YearOfSessionServices;
 import com.amud.io.aemudapi.utils.ResponseVO;
 import com.amud.io.aemudapi.utils.ResponseVOBuilder;
 import jakarta.persistence.EntityNotFoundException;
@@ -29,7 +26,7 @@ public class AcademicInfoServiceImpl implements AcademicInfoService {
     @Override
     public ResponseEntity<ResponseVO<Void>> createAcademicInfo(AcademicInfoRequestDTO academicInfoRequestDTO) {
         AcademicInfo academicInfo = this.academicInfoMapper.toEntity(academicInfoRequestDTO);
-        AcademicInfo academicInfoDB = this.academicInfoRepository.save(academicInfo);
+        this.academicInfoRepository.save(academicInfo);
         ResponseVO<Void> responseVO = new ResponseVOBuilder<Void>().success().build();
         return new ResponseEntity<>(responseVO, HttpStatus.CREATED);
     }

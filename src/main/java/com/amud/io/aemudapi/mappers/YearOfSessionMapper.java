@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 public class YearOfSessionMapper {
 
     // Mapper une entité YearOfSession vers un DTO YearOfSessionResponse
-    public  YearOfSessionResponse toDto(YearOfSession yearOfSession) {
+    public YearOfSessionResponse toDto(YearOfSession yearOfSession) {
         if (yearOfSession == null) {
             return null;
         }
@@ -23,7 +23,7 @@ public class YearOfSessionMapper {
     }
 
     // Mapper un DTO YearOfSessionResponse vers une entité YearOfSession
-    public  YearOfSession toEntity(YearOfSessionResponse dto) {
+    public YearOfSession toEntity(YearOfSessionResponse dto) {
         if (dto == null) {
             return null;
         }

@@ -16,49 +16,51 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
-//@RestControllerAdvice
+@RestControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(GeneralSecurityException.class)
     public ResponseEntity<ResponseVO<Void>> handleGeneralSecurityException(GeneralSecurityException ex) {
         ResponseErrorVo errorVo = new ResponseErrorVo("SECURITY_ERROR", "Erreur de sécurité", ex.getMessage());
-        ResponseVO<Void> response = new ResponseVOBuilder<Void>().fail(HttpStatus.INTERNAL_SERVER_ERROR).error(errorVo,HttpStatus.INTERNAL_SERVER_ERROR).build();
+        ResponseVO<Void> response = new ResponseVOBuilder<Void>().fail(HttpStatus.INTERNAL_SERVER_ERROR).error(errorVo, HttpStatus.INTERNAL_SERVER_ERROR).build();
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(IOException.class)
     public ResponseEntity<ResponseVO<Void>> handleIOException(IOException ex) {
         ResponseErrorVo errorVo = new ResponseErrorVo("IO_ERROR", "Erreur d'entrée/sortie", ex.getMessage());
-        ResponseVO<Void> response = new ResponseVOBuilder<Void>().fail(HttpStatus.INTERNAL_SERVER_ERROR).error(errorVo,HttpStatus.INTERNAL_SERVER_ERROR).build();
+        ResponseVO<Void> response = new ResponseVOBuilder<Void>().fail(HttpStatus.INTERNAL_SERVER_ERROR).error(errorVo, HttpStatus.INTERNAL_SERVER_ERROR).build();
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<ResponseVO<Void>> handleNotFoundException(EntityNotFoundException ex) {
         ResponseErrorVo errorVo = new ResponseErrorVo("ENTITY_NOT_FOUND", "L'entité introuvable", ex.getMessage());
-            ResponseVO<Void> response = new ResponseVOBuilder<Void>().fail(HttpStatus.NOT_FOUND).error(errorVo,HttpStatus.NOT_FOUND).build();
+        ResponseVO<Void> response = new ResponseVOBuilder<Void>().fail(HttpStatus.NOT_FOUND).error(errorVo, HttpStatus.NOT_FOUND).build();
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(NoHandlerFoundException.class)
     public ResponseEntity<ResponseVO<Void>> handleNoHandlerFoundException(NoHandlerFoundException ex) {
         ResponseErrorVo errorVo = new ResponseErrorVo("NOT_FOUND", "La ressource demandée est introuvable", ex.getMessage());
-        ResponseVO<Void> response = new ResponseVOBuilder<Void>().fail(HttpStatus.NOT_FOUND).error(errorVo,HttpStatus.NOT_FOUND).build();
+        ResponseVO<Void> response = new ResponseVOBuilder<Void>().fail(HttpStatus.NOT_FOUND).error(errorVo, HttpStatus.NOT_FOUND).build();
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ResponseVO<Void>> handleGenericException(Exception ex) {
         ResponseErrorVo errorVo = new ResponseErrorVo("GENERIC_ERROR", "Erreur interne", ex.getMessage());
-        ResponseVO<Void> response = new ResponseVOBuilder<Void>().fail(HttpStatus.INTERNAL_SERVER_ERROR).error(errorVo,HttpStatus.INTERNAL_SERVER_ERROR).build();
+        ResponseVO<Void> response = new ResponseVOBuilder<Void>().fail(HttpStatus.INTERNAL_SERVER_ERROR).error(errorVo, HttpStatus.INTERNAL_SERVER_ERROR).build();
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-        @ExceptionHandler(UserAlreadyExistsException.class)
-        public ResponseEntity<ResponseVO<Void>> handleUserAlreadyExistsException(UserAlreadyExistsException ex) {
-            ResponseErrorVo errorVo = new ResponseErrorVo("USER_ALREADY_EXISTS", "L'utilisateur existe déjà", ex.getMessage());
-            ResponseVO<Void> response = new ResponseVOBuilder<Void>().fail(HttpStatus.CONFLICT).error(errorVo,HttpStatus.CONFLICT).build();
-            return new ResponseEntity<>(response, HttpStatus.CONFLICT);
-        }
+
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    public ResponseEntity<ResponseVO<Void>> handleUserAlreadyExistsException(UserAlreadyExistsException ex) {
+        ResponseErrorVo errorVo = new ResponseErrorVo("USER_ALREADY_EXISTS", "L'utilisateur existe déjà", ex.getMessage());
+        ResponseVO<Void> response = new ResponseVOBuilder<Void>().fail(HttpStatus.CONFLICT).error(errorVo, HttpStatus.CONFLICT).build();
+        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+    }
+
     @ExceptionHandler(ReRegistrationRequiredException.class)
     public ResponseEntity<ResponseVO<Void>> handleReRegistrationRequiredException(ReRegistrationRequiredException ex) {
         ResponseErrorVo errorVo = new ResponseErrorVo("RE_REGISTRATION_REQUIRED", "Réinscription requise", ex.getMessage());

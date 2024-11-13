@@ -1,7 +1,6 @@
 package com.amud.io.aemudapi.mappers;
 
 import com.amud.io.aemudapi.dto.AcademicInfoRequestDTO;
-import com.amud.io.aemudapi.dto.AddressInfoRequestDto;
 import com.amud.io.aemudapi.entities.AcademicInfo;
 import com.amud.io.aemudapi.entities.Member;
 import com.amud.io.aemudapi.entities.MemberAndYearKey;

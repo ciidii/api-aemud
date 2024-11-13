@@ -148,7 +148,7 @@
                     http://localhost:9000
                 </sonar.host.url>
                 <sonar.login>admin</sonar.login>
-                <sonar.password>Wollaj@1</sonar.password>
+                <sonar.password>Wollaj@1passer</sonar.password>
             </properties>
         </profile>
     </profiles>

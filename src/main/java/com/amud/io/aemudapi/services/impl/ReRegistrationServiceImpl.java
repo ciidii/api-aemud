@@ -62,7 +62,7 @@ public class ReRegistrationServiceImpl implements ReRegistrationService {
             throw new UserAlreadyExistsException("Ce membre est déja inscrit pour l'année " + memberAndYearKey.getYearOfRegistration());
         }
         MemberHasBourseKey memberHasBourseKey = this.memberHasBourseKeyMapper.toEntity(reRegistrationDto.getMemberHasBourseKeyDto());
-        if (!this.memberHasBourseRepository.existsById(memberHasBourseKey)){
+        if (!this.memberHasBourseRepository.existsById(memberHasBourseKey)) {
             MemberHasBourse memberHasBourse = new MemberHasBourse();
             memberHasBourse.setMemberHasBourseKey(memberHasBourseKey);
             this.memberHasBourseRepository.save(memberHasBourse);
@@ -70,14 +70,14 @@ public class ReRegistrationServiceImpl implements ReRegistrationService {
         reRegistration = this.reRegistrationRepository.save(reRegistration);
         RegistrationResponseDto registrationResponseDto = new RegistrationResponseDto();
         registrationResponseDto.setMemberDto(this.memberMapper.toDto(reRegistration.getMember()));
-       // registrationResponseDto.setYear(reRegistration.getMember().getYearOfMembership());
+        // registrationResponseDto.setYear(reRegistration.getMember().getYearOfMembership());
         ResponseVO<RegistrationResponseDto> registrationResponseDtoResponseVO = new ResponseVOBuilder<RegistrationResponseDto>().addData(registrationResponseDto).build();
         return new ResponseEntity<>(registrationResponseDtoResponseVO, HttpStatus.CREATED);
     }
 
     @Override
     public ResponseEntity<ResponseVO<RegistrationPearYearDto>> getAllReRegisterForAYear(Long yearId) {
-       // List<Member> member = this.reRegistrationRepository.findAllByYearOfReRegistration(yearId).orElseThrow(() -> new RuntimeException("Pas de member inscript pour cette années"));
+        // List<Member> member = this.reRegistrationRepository.findAllByYearOfReRegistration(yearId).orElseThrow(() -> new RuntimeException("Pas de member inscript pour cette années"));
         RegistrationPearYearDto registrationPearYearDto = new RegistrationPearYearDto();
         List<MemberRequestDto> memberRequestDtos = new ArrayList<>();
         registrationPearYearDto.setYear(yearId);
@@ -97,9 +97,9 @@ public class ReRegistrationServiceImpl implements ReRegistrationService {
         //List<Member> membersNotRegisterForAYear = this.reRegistrationRepository.findMembersNotRegisteredByYear(yearId).orElseThrow(() -> new RuntimeException("Tous les membre se sont inscrit pour cette année" + yearId));
         RegistrationPearYearDto notRegisterForYear;
         notRegisterForYear = new RegistrationPearYearDto();
-       // List<MemberRequestDto> memberRequestDtos = new ArrayList<>(this.memberMapper.toDto(membersNotRegisterForAYear));
+        // List<MemberRequestDto> memberRequestDtos = new ArrayList<>(this.memberMapper.toDto(membersNotRegisterForAYear));
         notRegisterForYear.setYear(yearId);
-      //  notRegisterForYear.setRegisterMembers(memberRequestDtos);
+        //  notRegisterForYear.setRegisterMembers(memberRequestDtos);
         return new ResponseEntity<>(new ResponseVOBuilder<RegistrationPearYearDto>().addData(notRegisterForYear).build(), HttpStatus.FOUND);
     }
 }
