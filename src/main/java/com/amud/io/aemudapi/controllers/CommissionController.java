@@ -27,4 +27,18 @@ public class CommissionController {
     public ResponseEntity<ResponseVO<List<CommissionDto>>> getAllCommissions() {
         return this.commissionService.getAllCommission();
     }
+
+    @DeleteMapping()
+    public ResponseEntity<ResponseVO<Void>> deleteCommission(@RequestParam("commissionId") Long commissionID) {
+        return this.commissionService.deleteCommission(commissionID);
+    }
+
+    @GetMapping()
+    public ResponseEntity<ResponseVO<CommissionDto>> getCommissionById(@RequestParam("commissionId") Long commissionID) {
+        return this.commissionService.getSingleCommission(commissionID);
+    }
+    @PutMapping()
+    public ResponseEntity<ResponseVO<CommissionDto>> updateCommission(@RequestBody CommissionDto commission) {
+        return this.commissionService.updateCommission(commission);
+    }
 }

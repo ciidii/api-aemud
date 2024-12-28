@@ -13,4 +13,8 @@ public interface BourseService {
 
     ResponseEntity<ResponseVO<List<BourseDTO>>> getAllBourse();
 
+    ResponseEntity<ResponseVO<Void>> deleteBourse(Long bourseId);
+    public ResponseEntity<ResponseVO<Boolean>>  checkIfCanDeleteBourse(Long bourseId);
+
+    ResponseEntity<ResponseVO<BourseDTO>> findBourseById(Long bourseId);
 }

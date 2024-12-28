@@ -1,0 +1,15 @@
+services:
+  api-aemud:
+    container_name: apiaemudcontainer
+    build:
+      context: .
+      args:
+          CONTAINER_PORT: ${SERV_PORT}
+    image: api-aemud:v1
+    restart: always
+    env_file:
+      - ${ENV_FILE}
+    expose:
+      - ${SERV_PORT}
+    ports:
+      - ${SERV_PORT}:${HOST_POST}

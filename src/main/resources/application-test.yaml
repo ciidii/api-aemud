@@ -1,0 +1,15 @@
+#serveur config
+SEV_PORT: 8088
+ACTIVE_PROFILE: test
+
+#database config
+DBMS: mysql
+DB_HOST: localhost
+DB_PORT: 3306
+DB_NAME: aemud
+DB_PASSWORD: Wollaj@1
+DB_USERNAME: root
+
+#ui config
+
+# UI_APP_URL: http://localhost:4200

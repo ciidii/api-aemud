@@ -9,7 +9,6 @@ import org.springframework.web.filter.CorsFilter;
 
 import java.util.Arrays;
 
-
 public class WebConfig {
 
 
@@ -24,6 +23,7 @@ public class WebConfig {
                 HttpHeaders.CONTENT_TYPE,
                 HttpHeaders.ACCEPT
         ));
+
         configuration.setAllowedMethods(
                 Arrays.asList(
                         HttpMethod.POST.name(),

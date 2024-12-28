@@ -4,6 +4,7 @@ import com.amud.io.aemudapi.dto.AcademicInfoRequestDTO;
 import com.amud.io.aemudapi.entities.AcademicInfo;
 import com.amud.io.aemudapi.entities.MemberAndYearKey;
 import com.amud.io.aemudapi.entities.YearOfSession;
+import com.amud.io.aemudapi.exceptions.customeExceptions.NoActiveSection;
 import com.amud.io.aemudapi.mappers.AcademicInfoMapper;
 import com.amud.io.aemudapi.repositories.AcademicInfoRepository;
 import com.amud.io.aemudapi.repositories.YearOfSessionRepository;
@@ -32,8 +33,8 @@ public class AcademicInfoServiceImpl implements AcademicInfoService {
     }
 
     @Override
-    public ResponseEntity<ResponseVO<AcademicInfoRequestDTO>> getCurrentSessionMemberAddress(Long memberID) {
-        YearOfSession yearOfSession = this.yearOfSessionRepository.findCurrentSession();
+    public ResponseEntity<ResponseVO<AcademicInfoRequestDTO>> getCurrentSessionMemberAcademicInfo(Long memberID) {
+        YearOfSession yearOfSession = this.yearOfSessionRepository.findCurrentSession().orElseThrow(() -> new NoActiveSection("No active session"));
         MemberAndYearKey memberAndYearKey = new MemberAndYearKey(yearOfSession.getIdYear(), memberID);
         AcademicInfo addressInfo = this.academicInfoRepository.findById(memberAndYearKey).orElseThrow(() -> new EntityNotFoundException("C'est utilisateur ne s'Inscrit cette année"));
         AcademicInfoRequestDTO infoRequestDto = this.academicInfoMapper.toDto(addressInfo);

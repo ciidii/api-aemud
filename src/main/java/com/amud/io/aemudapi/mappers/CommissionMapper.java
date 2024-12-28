@@ -16,6 +16,7 @@ public class CommissionMapper {
     public Commission toEntity(CommissionDto commissionDto) {
         Commission commission = new Commission();
         commission.setName(commissionDto.getName());
+        commission.setId(commissionDto.getId());
         return commission;
     }
 }

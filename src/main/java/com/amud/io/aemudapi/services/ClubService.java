@@ -12,4 +12,8 @@ public interface ClubService {
     ResponseEntity<ResponseVO<ClubDto>> addClub(ClubDto clubDto);
 
     ResponseEntity<ResponseVO<List<ClubDto>>> getAllClubs();
+
+    ResponseEntity<ResponseVO<Void>> deleteClub(Long id);
+
+    ResponseEntity<ResponseVO<ClubDto>> getClubById(Long clubId);
 }

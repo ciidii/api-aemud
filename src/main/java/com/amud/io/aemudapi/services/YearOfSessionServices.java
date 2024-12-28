@@ -14,4 +14,10 @@ public interface YearOfSessionServices {
     ResponseEntity<ResponseVO<List<YearOfSessionResponse>>> getAllYears();
 
     ResponseEntity<ResponseVO<YearOfSessionResponse>> getCurrentSession();
+
+    ResponseEntity<ResponseVO<YearOfSessionResponse>> getAParticularYear(Long sessionid);
+
+    ResponseEntity<ResponseVO<Boolean>> checkIfCanDeleteSession(Long sessionid);
+
+    ResponseEntity<ResponseVO<Void>> deleteSession(Long sessionid);
 }

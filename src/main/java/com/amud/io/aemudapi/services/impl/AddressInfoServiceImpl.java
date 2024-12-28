@@ -4,6 +4,7 @@ import com.amud.io.aemudapi.dto.AddressInfoRequestDto;
 import com.amud.io.aemudapi.entities.AddressInfo;
 import com.amud.io.aemudapi.entities.MemberAndYearKey;
 import com.amud.io.aemudapi.entities.YearOfSession;
+import com.amud.io.aemudapi.exceptions.customeExceptions.NoActiveSection;
 import com.amud.io.aemudapi.mappers.AddressInfoMapper;
 import com.amud.io.aemudapi.repositories.AddressInfoRepository;
 import com.amud.io.aemudapi.repositories.YearOfSessionRepository;
@@ -34,7 +35,7 @@ public class AddressInfoServiceImpl implements AddressInfoService {
 
     @Override
     public ResponseEntity<ResponseVO<AddressInfoRequestDto>> getCurrentSessionMemberAddress(Long memberID) {
-        YearOfSession yearOfSession = this.yearOfSessionRepository.findCurrentSession();
+        YearOfSession yearOfSession = this.yearOfSessionRepository.findCurrentSession().orElseThrow(()->new NoActiveSection("No active session"));
         MemberAndYearKey memberAndYearKey = new MemberAndYearKey(yearOfSession.getIdYear(), memberID);
         AddressInfo addressInfo = this.addressInfoRepository.findById(memberAndYearKey).orElseThrow(() -> new EntityNotFoundException("C'est utilisateur ne s'Inscrit cette année"));
         AddressInfoRequestDto infoRequestDto = this.addressInfoMapper.toDto(addressInfo);

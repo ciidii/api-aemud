@@ -12,4 +12,10 @@ public interface CommissionService {
     ResponseEntity<ResponseVO<CommissionDto>> addCommission(CommissionDto commissionDto);
 
     ResponseEntity<ResponseVO<List<CommissionDto>>> getAllCommission();
+
+    ResponseEntity<ResponseVO<Void>> deleteCommission(Long commissionID);
+
+    ResponseEntity<ResponseVO<CommissionDto>> getSingleCommission(Long commissionID);
+
+    ResponseEntity<ResponseVO<CommissionDto>> updateCommission(CommissionDto commission);
 }

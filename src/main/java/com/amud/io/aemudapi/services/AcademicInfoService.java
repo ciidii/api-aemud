@@ -9,5 +9,5 @@ import org.springframework.stereotype.Service;
 public interface AcademicInfoService {
     ResponseEntity<ResponseVO<Void>> createAcademicInfo(AcademicInfoRequestDTO academicInfoRequestDTO);
 
-    ResponseEntity<ResponseVO<AcademicInfoRequestDTO>> getCurrentSessionMemberAddress(Long memberID);
+    ResponseEntity<ResponseVO<AcademicInfoRequestDTO>> getCurrentSessionMemberAcademicInfo(Long memberID);
 }

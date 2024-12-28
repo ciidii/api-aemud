@@ -28,4 +28,13 @@ public class ClubController {
         return this.clubService.getAllClubs();
     }
 
+    @DeleteMapping()
+    ResponseEntity<ResponseVO<Void>> deleteClub(@RequestParam("clubId") Long clubId) {
+        return this.clubService.deleteClub(clubId);
+    }
+
+    @GetMapping
+    ResponseEntity<ResponseVO<ClubDto>> getClubById(@RequestParam("clubId") Long clubId) {
+        return this.clubService.getClubById(clubId);
+    }
 }

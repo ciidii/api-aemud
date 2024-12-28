@@ -29,11 +29,12 @@ public class MainFormServiceImpl implements MainFormService {
     }
 
     @Override
+    @Transactional
     public ResponseEntity<ResponseVO<Void>> registerMember(MemberDataRequestDTO memberDataRequestDTO) {
         MemberRequestDto memberRequestDto = memberDataRequestDTO.getMember();
         Long currentSession = this.yearOfSessionServices.getCurrentSession().getBody().getData().getId();
         memberRequestDto.getMembershipInfo().setYearOfMembership(currentSession);
-        ResponseEntity<ResponseVO<MemberRequestDto>> response = this.memberService.addMember(memberRequestDto, true);
+        ResponseEntity<ResponseVO<MemberRequestDto>> response = this.memberService.addMember(memberRequestDto);
 
         if (response.getStatusCode() == HttpStatus.CREATED) {
             if (response.getBody().getResult().equals("Succeeded")) {

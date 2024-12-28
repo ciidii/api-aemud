@@ -1,5 +1,6 @@
 package com.amud.io.aemudapi.controllers;
 
+import com.amud.io.aemudapi.dto.FilterDTO;
 import com.amud.io.aemudapi.dto.MemberDataResponseDTO;
 import com.amud.io.aemudapi.dto.MemberRequestDto;
 import com.amud.io.aemudapi.dto.MessageDto;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.List;
 
 @RestController()
 @RequestMapping(path = "members")
@@ -29,8 +31,8 @@ public class MemberController {
     }
 
     @PostMapping
-    ResponseEntity<ResponseVO<MemberRequestDto>> addMember(@RequestBody MemberRequestDto memberRequestDto, @RequestParam("backup") boolean backup) throws GeneralSecurityException, IOException {
-        return this.memberService.addMember(memberRequestDto, backup);
+    ResponseEntity<ResponseVO<MemberRequestDto>> addMember(@RequestBody MemberRequestDto memberRequestDto) {
+        return this.memberService.addMember(memberRequestDto);
     }
 
     @GetMapping(path = "all")
@@ -60,5 +62,31 @@ public class MemberController {
         this.orangeSmsService.sendSmsToMultipleRecipients(message.getRecipientNumbers(), message.getMessage());
         return new ResponseEntity<>("Message envoyer avec succes", HttpStatus.OK);
     }
-}
 
+    @GetMapping(path = "search")
+    ResponseEntity<ResponsePageableVO<MemberDataResponseDTO>> searchMember
+            (@RequestParam("page") @Min(1) int page,
+             @Min(1) @RequestParam("rpp") int rpp,
+             @RequestParam(name = "criteria", required = false) String criteria,
+             @RequestParam(name = "value",required = false) String value,
+             @RequestParam(name = "club",required = false) Long club,
+             @RequestParam(name = "commission",required = false) Long commission,
+             @RequestParam(name = "year",required = false) Long year
+            ) {
+        RequestPageableVO requestPageableVO = new RequestPageableVO(page, rpp);
+        FilterDTO filters = new FilterDTO(club, year, commission);
+        return this.memberService.searchMember(requestPageableVO, criteria, value, filters);
+    }
+
+    @GetMapping(path = "print")
+    ResponseEntity<ResponseVO<List<MemberDataResponseDTO>>> searchMemberToPrint(
+            @RequestParam(name = "criteria", required = false) String criteria,
+            @RequestParam(name = "value",required = false) String value,
+            @RequestParam(name = "club",required = false) Long club,
+            @RequestParam(name = "commission",required = false) Long commission,
+            @RequestParam(name = "year",required = false) Long year
+    ){
+        FilterDTO filters = new FilterDTO(club, year, commission);
+       return this.memberService.searchMemberToPrint(criteria,value,filters);
+    }
+}

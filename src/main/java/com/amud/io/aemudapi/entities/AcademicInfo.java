@@ -1,10 +1,14 @@
 package com.amud.io.aemudapi.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class AcademicInfo {
     @Id
     @EmbeddedId

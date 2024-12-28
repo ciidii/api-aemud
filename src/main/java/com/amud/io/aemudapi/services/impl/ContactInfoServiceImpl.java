@@ -5,6 +5,7 @@ import com.amud.io.aemudapi.entities.ContactInfo;
 import com.amud.io.aemudapi.entities.MemberAndYearKey;
 import com.amud.io.aemudapi.entities.PersonToCall;
 import com.amud.io.aemudapi.entities.YearOfSession;
+import com.amud.io.aemudapi.exceptions.customeExceptions.NoActiveSection;
 import com.amud.io.aemudapi.mappers.ContactInfoMapper;
 import com.amud.io.aemudapi.repositories.ContactInfoRepository;
 import com.amud.io.aemudapi.repositories.PersonToCallRepository;
@@ -43,7 +44,7 @@ public class ContactInfoServiceImpl implements ContactInfoService {
 
     @Override
     public ResponseEntity<ResponseVO<ContactInfoRequestDto>> getCurrentSessionMemberInfos(Long memberID) {
-        YearOfSession yearOfSession = this.yearOfSessionRepository.findCurrentSession();
+        YearOfSession yearOfSession = this.yearOfSessionRepository.findCurrentSession().orElseThrow(()->new NoActiveSection("No active session"));
         MemberAndYearKey memberAndYearKey = new MemberAndYearKey(yearOfSession.getIdYear(), memberID);
         ContactInfo addressInfo = this.contactInfoRepository.findById(memberAndYearKey).orElseThrow(() -> new EntityNotFoundException("C'est utilisateur ne s'Inscrit cette année"));
         ContactInfoRequestDto infoRequestDto = this.contactInfoMapper.toDTO(addressInfo);

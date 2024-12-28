@@ -27,4 +27,19 @@ public class BourseController {
     ResponseEntity<ResponseVO<List<BourseDTO>>> findAllBourse() {
         return this.bourseService.getAllBourse();
     }
+
+    @PutMapping()
+    ResponseEntity<ResponseVO<BourseDTO>> updateBourse(@RequestBody BourseDTO bourseDTO) {
+        return this.bourseService.addBourse(bourseDTO);
+    }
+
+    @DeleteMapping
+    ResponseEntity<ResponseVO<Void>> deleteBourse(@RequestParam("bourseId") Long bourseId) {
+        return this.bourseService.deleteBourse(bourseId);
+    }
+
+    @GetMapping()
+    ResponseEntity<ResponseVO<BourseDTO>> findBourseById(@RequestParam("bourseId") Long bourseId) {
+        return  this.bourseService.findBourseById(bourseId);
+    }
 }

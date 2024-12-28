@@ -1,6 +1,7 @@
 package com.amud.io.aemudapi.exceptions;
 
 import com.amud.io.aemudapi.exceptions.customeExceptions.ContributionAlreadyExistsException;
+import com.amud.io.aemudapi.exceptions.customeExceptions.EntityCannotBeDeletedException;
 import com.amud.io.aemudapi.exceptions.customeExceptions.ReRegistrationRequiredException;
 import com.amud.io.aemudapi.exceptions.customeExceptions.UserAlreadyExistsException;
 import com.amud.io.aemudapi.utils.ResponseErrorVo;
@@ -71,6 +72,13 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ContributionAlreadyExistsException.class)
     public ResponseEntity<ResponseVO<Void>> handleContributionAlreadyExistsException(ContributionAlreadyExistsException ex) {
         ResponseErrorVo errorVo = new ResponseErrorVo("CONTRIBUTION_ALREADY_EXISTS", "Cette membre a déjà cotisé", ex.getMessage());
+        ResponseVO<Void> response = new ResponseVOBuilder<Void>().fail(HttpStatus.CONFLICT).error(errorVo, HttpStatus.CONFLICT).build();
+        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(EntityCannotBeDeletedException.class)
+    public ResponseEntity<ResponseVO<Void>> SessionCannotBeDeletedException(EntityCannotBeDeletedException ex) {
+        ResponseErrorVo errorVo = new ResponseErrorVo("CANNOT_DELETE_ENTITY", ex.getMessage());
         ResponseVO<Void> response = new ResponseVOBuilder<Void>().fail(HttpStatus.CONFLICT).error(errorVo, HttpStatus.CONFLICT).build();
         return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }

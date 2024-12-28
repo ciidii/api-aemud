@@ -1,0 +1,8 @@
+SEV_PORT: 8080
+ACTIVE_PROFILE: dev
+DBMS: mysql
+DB_HOST: localhost
+DB_PORT: 3306
+DB_NAME: aemud
+DB_PASSWORD:
+DB_USERNAME: root

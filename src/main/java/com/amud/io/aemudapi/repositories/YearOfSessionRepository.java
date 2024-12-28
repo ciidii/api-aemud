@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Repository
 public interface YearOfSessionRepository extends JpaRepository<YearOfSession, Long> {
     @Modifying
@@ -15,5 +17,5 @@ public interface YearOfSessionRepository extends JpaRepository<YearOfSession, Lo
     void updateCurrentYear();
 
     @Query("select y from YearOfSession y where y.currentYear=true")
-    YearOfSession findCurrentSession();
+    Optional<YearOfSession> findCurrentSession();
 }

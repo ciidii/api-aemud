@@ -2,7 +2,6 @@ package com.amud.io.aemudapi.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.checkerframework.common.aliasing.qual.Unique;
 
 import java.util.List;
 
@@ -18,9 +17,7 @@ public class ContactInfo {
     @ManyToOne
     @JoinColumn(name = "year_", insertable = false, updatable = false)
     private YearOfSession year;
-    @Unique
     private String numberPhone;
-    @Unique
     private String email;
     @OneToMany
     @JoinTable(name = "persontocall_contact")
