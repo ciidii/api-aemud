@@ -11,7 +11,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("session")
-@CrossOrigin(origins = "http://localhost:4200")
 public class YearOfSessionController {
     private final YearOfSessionServices yearOfSessionServices;
 
@@ -43,6 +42,7 @@ public class YearOfSessionController {
     public ResponseEntity<ResponseVO<Boolean>> checkIfCanDeleteSession(@RequestParam("sessionid") Long sessionid) {
         return this.yearOfSessionServices.checkIfCanDeleteSession(sessionid);
     }
+
     @DeleteMapping()
     public ResponseEntity<ResponseVO<Void>> deleteSession(@RequestParam("sessionid") Long sessionid) {
         return this.yearOfSessionServices.deleteSession(sessionid);

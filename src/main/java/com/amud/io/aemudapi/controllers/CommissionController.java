@@ -10,7 +10,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("commissions")
-@CrossOrigin(origins = "http://localhost:4200")
 public class CommissionController {
     private final CommissionService commissionService;
 

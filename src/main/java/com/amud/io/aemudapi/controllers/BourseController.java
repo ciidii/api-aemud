@@ -10,7 +10,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("bourses")
-@CrossOrigin(origins = "http://localhost:4200")
 public class BourseController {
     private final BourseService bourseService;
 

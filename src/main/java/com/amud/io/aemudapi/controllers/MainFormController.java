@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "main-form")
-@CrossOrigin(origins = "http://localhost:4200")
 public class MainFormController {
     private final MainFormService mainFormService;
 

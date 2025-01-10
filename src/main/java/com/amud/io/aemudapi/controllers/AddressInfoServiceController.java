@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("address-infos")
 @AllArgsConstructor
-@CrossOrigin("http://localhost:4200")
 public class AddressInfoServiceController {
     private final AddressInfoService addressInfoService;
 
