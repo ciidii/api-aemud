@@ -7,16 +7,7 @@ import java.util.List;
 
 @Data
 @Entity
-public class ContactInfo {
-    @Id
-    @EmbeddedId
-    private MemberAndYearKey memberAndYearKey;
-    @JoinColumn(name = "member_id", insertable = false, updatable = false)
-    @ManyToOne(cascade = CascadeType.REMOVE)
-    private Member member;
-    @ManyToOne
-    @JoinColumn(name = "year_", insertable = false, updatable = false)
-    private YearOfSession year;
+public class ContactInfo extends BaseEntity {
     private String numberPhone;
     private String email;
     @OneToMany

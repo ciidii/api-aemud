@@ -3,9 +3,9 @@ package org.aemudapi.member.service.impl;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.aemudapi.member.dtos.ContactInfoRequestDto;
-import org.aemudapi.member.entity.MemberAndYearKey;
+import org.aemudapi.member.entity.Member_Session_PK;
 import org.aemudapi.member.entity.PersonToCall;
-import org.aemudapi.member.entity.YearOfSession;
+import org.aemudapi.member.entity.Session;
 import org.aemudapi.exceptions.customeExceptions.NoActiveSection;
 import org.aemudapi.member.entity.ContactInfo;
 import org.aemudapi.member.mapper.ContactInfoMapper;
@@ -44,9 +44,9 @@ public class ContactInfoServiceImpl implements ContactInfoService {
 
     @Override
     public ResponseEntity<ResponseVO<ContactInfoRequestDto>> getCurrentSessionMemberInfos(Long memberID) {
-        YearOfSession yearOfSession = this.yearOfSessionRepository.findCurrentSession().orElseThrow(()->new NoActiveSection("No active session"));
-        MemberAndYearKey memberAndYearKey = new MemberAndYearKey(yearOfSession.getIdYear(), memberID);
-        ContactInfo addressInfo = this.contactInfoRepository.findById(memberAndYearKey).orElseThrow(() -> new EntityNotFoundException("C'est utilisateur ne s'Inscrit cette année"));
+        Session session = this.yearOfSessionRepository.findCurrentSession().orElseThrow(()->new NoActiveSection("No active session"));
+        Member_Session_PK memberSessionPK = new Member_Session_PK(session.getIdYear(), memberID);
+        ContactInfo addressInfo = this.contactInfoRepository.findById(memberSessionPK).orElseThrow(() -> new EntityNotFoundException("C'est utilisateur ne s'Inscrit cette année"));
         ContactInfoRequestDto infoRequestDto = this.contactInfoMapper.toDTO(addressInfo);
         ResponseVO<ContactInfoRequestDto> responseVO = new ResponseVOBuilder<ContactInfoRequestDto>().addData(infoRequestDto).build();
         return new ResponseEntity<>(responseVO, HttpStatus.OK);

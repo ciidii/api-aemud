@@ -2,11 +2,14 @@ package org.aemudapi.member.entity;
 
 import jakarta.persistence.Embeddable;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 
 @Embeddable
-@Data
+@Getter
+@Setter
 public class PersonalInfo {
     private String name;
     private String firstname;

@@ -2,11 +2,8 @@ package org.aemudapi.member.mapper;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.aemudapi.member.dtos.MembershipInfoDTO;
-import org.aemudapi.member.entity.MembershipInfo;
-import org.aemudapi.member.entity.YearOfSession;
-import org.aemudapi.member.entity.Bourse;
-import org.aemudapi.member.entity.Club;
-import org.aemudapi.member.entity.Commission;
+import org.aemudapi.member.entity.*;
+import org.aemudapi.member.entity.Session;
 import org.aemudapi.member.repository.BourseRepository;
 import org.aemudapi.member.repository.ClubRepository;
 import org.aemudapi.member.repository.CommissionRepository;
@@ -33,9 +30,9 @@ public class MembershipInfoMapper {
             return null;
         }
         MembershipInfo entity = new MembershipInfo();
-        YearOfSession yearOfSession = new YearOfSession();
-        yearOfSession.setIdYear(dto.getYearOfMembership());
-        entity.setYearOfMembership(yearOfSession);
+        Session session = new Session();
+        session.setIdYear(dto.getYearOfMembership());
+        entity.setYearOfMembership(session);
         entity.setLegacyInstitution(dto.getLegacyInstitution());
         entity.setYearOfBac(dto.getYearOfBac());
         entity.setBacMention(dto.getBacMention());

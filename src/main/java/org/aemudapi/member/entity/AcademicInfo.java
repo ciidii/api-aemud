@@ -1,24 +1,17 @@
 package org.aemudapi.member.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AcademicInfo {
-    @Id
-    @EmbeddedId
-    private MemberAndYearKey memberAndYearKey;
-    @JoinColumn(name = "member_id", insertable = false, updatable = false)
-    @ManyToOne(cascade = CascadeType.REMOVE)
-    private Member member;
-    @ManyToOne
-    @JoinColumn(name = "year_", insertable = false, updatable = false)
-    private YearOfSession year;
+public class AcademicInfo extends BaseEntity {
     private String university;
     private String faculty;
     private String department;

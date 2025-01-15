@@ -36,7 +36,7 @@ spring:
       continue-on-error: false
 logging:
   level:
-      org:
-        springframework:
-          web:
-            cors: DEBUG
+    org:
+      springframework:
+        web:
+          cors: DEBUG

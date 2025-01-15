@@ -3,8 +3,8 @@ package org.aemudapi.member.service.impl;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.aemudapi.member.dtos.AcademicInfoRequestDTO;
-import org.aemudapi.member.entity.MemberAndYearKey;
-import org.aemudapi.member.entity.YearOfSession;
+import org.aemudapi.member.entity.Member_Session_PK;
+import org.aemudapi.member.entity.Session;
 import org.aemudapi.exceptions.customeExceptions.NoActiveSection;
 import org.aemudapi.member.entity.AcademicInfo;
 import org.aemudapi.member.mapper.AcademicInfoMapper;
@@ -34,9 +34,9 @@ public class AcademicInfoServiceImpl implements AcademicInfoService {
 
     @Override
     public ResponseEntity<ResponseVO<AcademicInfoRequestDTO>> getCurrentSessionMemberAcademicInfo(Long memberID) {
-        YearOfSession yearOfSession = this.yearOfSessionRepository.findCurrentSession().orElseThrow(() -> new NoActiveSection("No active session"));
-        MemberAndYearKey memberAndYearKey = new MemberAndYearKey(yearOfSession.getIdYear(), memberID);
-        AcademicInfo addressInfo = this.academicInfoRepository.findById(memberAndYearKey).orElseThrow(() -> new EntityNotFoundException("C'est utilisateur ne s'Inscrit cette année"));
+        Session session = this.yearOfSessionRepository.findCurrentSession().orElseThrow(() -> new NoActiveSection("No active session"));
+        Member_Session_PK memberSessionPK = new Member_Session_PK(session.getIdYear(), memberID);
+        AcademicInfo addressInfo = this.academicInfoRepository.findById(memberSessionPK).orElseThrow(() -> new EntityNotFoundException("C'est utilisateur ne s'Inscrit cette année"));
         AcademicInfoRequestDTO infoRequestDto = this.academicInfoMapper.toDto(addressInfo);
         ResponseVO<AcademicInfoRequestDTO> responseVO = new ResponseVOBuilder<AcademicInfoRequestDTO>().addData(infoRequestDto).build();
         return new ResponseEntity<>(responseVO, HttpStatus.OK);

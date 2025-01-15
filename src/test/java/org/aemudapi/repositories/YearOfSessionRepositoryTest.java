@@ -1,6 +1,6 @@
 package org.aemudapi.repositories;
 
-import org.aemudapi.member.entity.YearOfSession;
+import org.aemudapi.member.entity.Session;
 import org.aemudapi.member.repository.YearOfSessionRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +18,11 @@ class YearOfSessionRepositoryTest {
     @Test
     void updateCurrentYear() {
         //given
-        YearOfSession yearOfSession = new YearOfSession(1L, 2020, true);
-        yearOfSessionRepository.save(yearOfSession);
+        Session session = new Session(1L, 2020, true);
+        yearOfSessionRepository.save(session);
         //when
         this.yearOfSessionRepository.updateCurrentYear();
-        YearOfSession year = this.yearOfSessionRepository.findById(1L).orElseThrow();
+        Session year = this.yearOfSessionRepository.findById(1L).orElseThrow();
         //then
         assertThat(year.isCurrentYear()).isTrue();
     }
@@ -30,10 +30,10 @@ class YearOfSessionRepositoryTest {
     @Test
     void checkIfTheCurrentYearExists() {
         //given
-        YearOfSession yearOfSession = new YearOfSession(1L, 2020, true);
-        this.yearOfSessionRepository.save(yearOfSession);
+        Session session = new Session(1L, 2020, true);
+        this.yearOfSessionRepository.save(session);
         //when
-        //YearOfSession year = this.yearOfSessionRepository.findCurrentSession();
+        //Session year = this.yearOfSessionRepository.findCurrentSession();
         //then
        // assertThat(year.isCurrentYear()).isTrue();
     }

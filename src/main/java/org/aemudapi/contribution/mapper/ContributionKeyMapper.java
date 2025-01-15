@@ -1,7 +1,7 @@
 package org.aemudapi.contribution.mapper;
 
 import org.aemudapi.contribution.controller.ContributionKeyDto;
-import org.aemudapi.member.entity.ContributionKey;
+import org.aemudapi.contribution.entity.ContributionKey;
 import org.springframework.stereotype.Component;
 
 @Component

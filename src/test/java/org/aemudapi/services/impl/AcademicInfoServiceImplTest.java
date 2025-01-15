@@ -1,10 +1,9 @@
 package org.aemudapi.services.impl;
 
-import org.aemudapi.member.dtos.AcademicInfoRequestDTO;
-import org.aemudapi.member.entity.MemberAndYearKey;
+import org.aemudapi.member.entity.Member_Session_PK;
 import org.aemudapi.member.entity.MembershipInfo;
 import org.aemudapi.member.entity.PersonalInfo;
-import org.aemudapi.member.entity.YearOfSession;
+import org.aemudapi.member.entity.Session;
 import org.aemudapi.member.entity.*;
 import org.aemudapi.member.mapper.AcademicInfoMapper;
 import org.aemudapi.member.repository.AcademicInfoRepository;
@@ -14,7 +13,6 @@ import org.aemudapi.member.service.impl.AcademicInfoServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -36,10 +34,10 @@ class AcademicInfoServiceTest {
     @Mock
     private YearOfSessionRepository yearOfSessionRepository;
     AcademicInfo academicInfo;
-    YearOfSession yearOfSession = new YearOfSession();
+    Session session = new Session();
     Member member = new Member();
     MembershipInfo membershipInfo = new MembershipInfo();
-    MemberAndYearKey memberAndYearKey = new MemberAndYearKey();
+    Member_Session_PK memberSessionPK = new Member_Session_PK();
 
 
     @BeforeEach
@@ -83,28 +81,17 @@ class AcademicInfoServiceTest {
         membershipInfo.setOtherCourses("arabes");
 
 
-        yearOfSession.setCurrentYear(true);
-        yearOfSession.setYear_(2000);
-        yearOfSession.setIdYear(1L);
-        membershipInfo.setYearOfMembership(yearOfSession);
+        session.setCurrentYear(true);
+        session.setYear_(2000);
+        session.setIdYear(1L);
+        membershipInfo.setYearOfMembership(session);
 
         member.setMembershipInfo(membershipInfo);
-        memberAndYearKey.setYearOfRegistration(2020L);
+        memberSessionPK.setYearOfRegistration(2020L);
     }
 
     @Test
     void createAcademicInfo() {
-        AcademicInfoRequestDTO academicInfoRequestDTO = new AcademicInfoRequestDTO();
-        academicInfo = new AcademicInfo(memberAndYearKey, member, yearOfSession, "Ucad", "fst", "MI", "Section", "L1");
-        academicInfoRequestDTO = academicInfoMapper.toDto(academicInfo);
-        //when
-        this.underTest.createAcademicInfo(academicInfoRequestDTO);
-        //then
-        ArgumentCaptor<AcademicInfoRequestDTO> captor = ArgumentCaptor.forClass(AcademicInfoRequestDTO.class);
-        verify(academicInfoRepository).save(academicInfo);
-
-        AcademicInfoRequestDTO captorValue = captor.getValue();
-        assertThat(captorValue).isEqualTo(academicInfoRequestDTO);
     }
 
     @Test

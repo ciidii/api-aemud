@@ -13,14 +13,14 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class YearOfSession {
+public class Session {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idYear;
     @NotNull
     private int year_;
     private boolean currentYear;
-    public YearOfSession() {
+    public Session() {
         //
     }
 }

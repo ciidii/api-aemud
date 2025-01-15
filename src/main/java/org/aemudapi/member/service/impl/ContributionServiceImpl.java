@@ -4,11 +4,11 @@ import jakarta.persistence.EntityNotFoundException;
 import org.aemudapi.contribution.controller.ContributionKeyDto;
 import org.aemudapi.contribution.controller.ContributionResponseDto;
 import org.aemudapi.contribution.entity.MonthContribution;
-import org.aemudapi.member.entity.YearOfSession;
+import org.aemudapi.member.entity.Session;
 import org.aemudapi.exceptions.customeExceptions.ContributionAlreadyExistsException;
 import org.aemudapi.contribution.mapper.ContributionKeyMapper;
-import org.aemudapi.member.entity.Contribution;
-import org.aemudapi.member.entity.ContributionKey;
+import org.aemudapi.contribution.entity.Contribution;
+import org.aemudapi.contribution.entity.ContributionKey;
 import org.aemudapi.member.repository.MemberRepository;
 import org.aemudapi.member.repository.YearOfSessionRepository;
 import org.aemudapi.member.service.ContributionService;
@@ -71,9 +71,9 @@ public class ContributionServiceImpl implements ContributionService {
         contribution.setDateTime(LocalDateTime.now());
         contribution = this.contributionRepository.save(contribution);
         MonthContribution monthContribution = this.monthContributionRepository.findById(contributionKey.getIdMonth()).orElseThrow();
-        YearOfSession yearOfSession = this.yearOfSessionRepository.findById(contributionKey.getIdYear()).orElseThrow();
+        Session session = this.yearOfSessionRepository.findById(contributionKey.getIdYear()).orElseThrow();
         String month = monthContribution.getWording();
-        Long year = (long) yearOfSession.getYear_();
+        Long year = (long) session.getYear_();
 
         ContributionResponseDto contributionResponseDto = new ContributionResponseDto();
 

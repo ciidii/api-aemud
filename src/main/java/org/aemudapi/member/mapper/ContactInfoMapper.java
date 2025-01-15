@@ -3,8 +3,8 @@ package org.aemudapi.member.mapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.aemudapi.member.dtos.ContactInfoRequestDto;
-import org.aemudapi.member.entity.MemberAndYearKey;
-import org.aemudapi.member.entity.YearOfSession;
+import org.aemudapi.member.entity.Member_Session_PK;
+import org.aemudapi.member.entity.Session;
 import org.aemudapi.member.entity.ContactInfo;
 import org.aemudapi.member.entity.Member;
 import org.aemudapi.member.repository.MemberRepository;
@@ -19,15 +19,15 @@ public class ContactInfoMapper {
     private final PersonToCallMapper personToCallMapper;
 
     public ContactInfo toEntity(ContactInfoRequestDto dto) {
-        MemberAndYearKey memberAndYearKey = new MemberAndYearKey();
-        memberAndYearKey.setMember(getMemberID(dto.getMemberID()));
-        memberAndYearKey.setYearOfRegistration(getIdYear(dto.getIdYear()));
+        Member_Session_PK memberSessionPK = new Member_Session_PK();
+        memberSessionPK.setMember(getMemberID(dto.getMemberID()));
+        memberSessionPK.setYearOfRegistration(getIdYear(dto.getIdYear()));
 
         ContactInfo entity = new ContactInfo();
         entity.setEmail(dto.getEmail());
         entity.setNumberPhone(dto.getNumberPhone());
         entity.setPersonToCalls(this.personToCallMapper.toEntityList(dto.getPersonToCalls()));
-        entity.setMemberAndYearKey(memberAndYearKey);
+        entity.setMemberSessionPK(memberSessionPK);
         return entity;
     }
 
@@ -38,10 +38,10 @@ public class ContactInfoMapper {
         dto.setEmail(entity.getEmail());
         dto.setNumberPhone(entity.getNumberPhone());
 
-        // Conversion de la clé composite MemberAndYearKey
-        if (entity.getMemberAndYearKey() != null) {
-            dto.setMemberID(entity.getMemberAndYearKey().getMember()); // Assuming getId() is the member ID method
-            dto.setIdYear(entity.getMemberAndYearKey().getYearOfRegistration()); // Assuming getId() is the year ID method
+        // Conversion de la clé composite Member_Session_PK
+        if (entity.getMemberSessionPK() != null) {
+            dto.setMemberID(entity.getMemberSessionPK().getMember()); // Assuming getId() is the member ID method
+            dto.setIdYear(entity.getMemberSessionPK().getYearOfRegistration()); // Assuming getId() is the year ID method
         }
 
         // Conversion de la liste de personnes à contacter (PersonToCall)
@@ -59,8 +59,8 @@ public class ContactInfoMapper {
     }
 
     private Long getIdYear(Long idYear) {
-        YearOfSession yearOfSession = this.yearOfSessionRepository.findById(idYear)
+        Session session = this.yearOfSessionRepository.findById(idYear)
                 .orElseThrow(() -> new EntityNotFoundException("Pas d'année avec cette identifiant " + idYear));
-        return yearOfSession.getIdYear();
+        return session.getIdYear();
     }
 }

@@ -1,17 +1,15 @@
 package org.aemudapi.member.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
-@Data
-public class AddressInfo {
-    @Id
-    @EmbeddedId
-    private MemberAndYearKey memberAndYearKey;
-    @JoinColumn(name = "member_id", insertable = false, updatable = false)
-    @ManyToOne(cascade = CascadeType.REMOVE)
-    private Member member;
+public class AddressInfo extends BaseEntity {
     private String addressInDakar;
     private String holidayAddress;
     private String addressToCampus;

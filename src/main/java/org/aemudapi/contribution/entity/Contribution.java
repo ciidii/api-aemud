@@ -1,8 +1,9 @@
-package org.aemudapi.member.entity;
+package org.aemudapi.contribution.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.aemudapi.contribution.entity.MonthContribution;
+import org.aemudapi.member.entity.Member;
+import org.aemudapi.member.entity.Session;
 
 import java.time.LocalDateTime;
 
@@ -20,7 +21,7 @@ public class Contribution {
 
     @ManyToOne
     @JoinColumn(name = "id_year", insertable = false, updatable = false)
-    private YearOfSession yearContribution;
+    private Session yearContribution;
 
 
     @JoinColumn(name = "id_member", insertable = false, updatable = false)

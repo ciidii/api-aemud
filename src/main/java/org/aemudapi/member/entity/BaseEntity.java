@@ -1,23 +1,21 @@
 package org.aemudapi.member.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
-@Entity
-@Data
-public class MemberHasBourse {
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@MappedSuperclass
+public class BaseEntity {
+    @Id
     @EmbeddedId
-    private MemberHasBourseKey memberHasBourseKey;
-
+    private Member_Session_PK memberSessionPK;
     @JoinColumn(name = "member_id", insertable = false, updatable = false)
     @ManyToOne(cascade = CascadeType.REMOVE)
     private Member member;
-
-    @JoinColumn(name = "bourse_id", insertable = false, updatable = false)
     @ManyToOne
-    private Bourse bourse;
-
     @JoinColumn(name = "year_", insertable = false, updatable = false)
-    @OneToOne
     private Session year;
 }

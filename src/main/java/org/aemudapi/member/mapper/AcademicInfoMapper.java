@@ -3,8 +3,8 @@ package org.aemudapi.member.mapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.aemudapi.member.dtos.AcademicInfoRequestDTO;
-import org.aemudapi.member.entity.MemberAndYearKey;
-import org.aemudapi.member.entity.YearOfSession;
+import org.aemudapi.member.entity.Member_Session_PK;
+import org.aemudapi.member.entity.Session;
 import org.aemudapi.member.entity.AcademicInfo;
 import org.aemudapi.member.entity.Member;
 import org.aemudapi.member.repository.MemberRepository;
@@ -21,9 +21,9 @@ public class AcademicInfoMapper {
         if (dto == null) {
             return null;
         }
-        MemberAndYearKey memberAndYearKey = new MemberAndYearKey();
-        memberAndYearKey.setMember(getMemberID(dto.getMemberID()));
-        memberAndYearKey.setYearOfRegistration(getIdYear(dto.getIdYear()));
+        Member_Session_PK memberSessionPK = new Member_Session_PK();
+        memberSessionPK.setMember(getMemberID(dto.getMemberID()));
+        memberSessionPK.setYearOfRegistration(getIdYear(dto.getIdYear()));
 
         AcademicInfo academicInfo = new AcademicInfo();
         academicInfo.setUniversity(dto.getUniversity());
@@ -31,7 +31,7 @@ public class AcademicInfoMapper {
         academicInfo.setDepartment(dto.getDepartment());
         academicInfo.setSection(dto.getSection());
         academicInfo.setStudiesLevel(dto.getStudiesLevel());
-        academicInfo.setMemberAndYearKey(memberAndYearKey);
+        academicInfo.setMemberSessionPK(memberSessionPK);
 
         return academicInfo;
     }
@@ -43,9 +43,9 @@ public class AcademicInfoMapper {
     }
 
     private Long getIdYear(Long idYear) {
-        YearOfSession yearOfSession = this.yearOfSessionRepository.findById(idYear)
+        Session session = this.yearOfSessionRepository.findById(idYear)
                 .orElseThrow(() -> new EntityNotFoundException("Pas d'année avec cette identifiant" + idYear));
-        return yearOfSession.getIdYear();
+        return session.getIdYear();
     }
 
     public AcademicInfoRequestDTO toDto(AcademicInfo academicInfo) {
@@ -60,9 +60,9 @@ public class AcademicInfoMapper {
         dto.setSection(academicInfo.getSection());
         dto.setStudiesLevel(academicInfo.getStudiesLevel());
 
-        // Extraction des informations du MemberAndYearKey
-        dto.setMemberID(academicInfo.getMemberAndYearKey().getMember());
-        dto.setIdYear(academicInfo.getMemberAndYearKey().getYearOfRegistration());
+        // Extraction des informations du Member_Session_PK
+        dto.setMemberID(academicInfo.getMemberSessionPK().getMember());
+        dto.setIdYear(academicInfo.getMemberSessionPK().getYearOfRegistration());
 
         return dto;
     }

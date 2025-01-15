@@ -2,7 +2,7 @@ package org.aemudapi.member.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.aemudapi.member.dtos.YearOfSessionResponse;
-import org.aemudapi.member.entity.YearOfSession;
+import org.aemudapi.member.entity.Session;
 import org.aemudapi.exceptions.customeExceptions.EntityCannotBeDeletedException;
 import org.aemudapi.exceptions.customeExceptions.NoActiveSection;
 import org.aemudapi.member.entity.Member;
@@ -37,11 +37,11 @@ public class YearOfSessionServicesImpl implements YearOfSessionServices {
     @Override
     public ResponseEntity<ResponseVO<Void>> openNewSession(int year_) {
         //TODO: A revoir quand on modifier une année on défini comme année courant
-        YearOfSession yearOfSession = new YearOfSession();
-        yearOfSession.setYear_(year_);
-        yearOfSession.setCurrentYear(true);
+        Session session = new Session();
+        session.setYear_(year_);
+        session.setCurrentYear(true);
         this.yearOfSessionRepository.updateCurrentYear();
-        this.yearOfSessionRepository.save(yearOfSession);
+        this.yearOfSessionRepository.save(session);
         return new ResponseEntity<>(new ResponseVOBuilder<Void>().success().build(), HttpStatus.CREATED);
     }
 
@@ -57,8 +57,8 @@ public class YearOfSessionServicesImpl implements YearOfSessionServices {
 
     @Override
     public ResponseEntity<ResponseVO<YearOfSessionResponse>> getCurrentSession() {
-        YearOfSession currentYearOfSession = this.yearOfSessionRepository.findCurrentSession().orElseThrow(() -> new NoActiveSection("No active session"));
-        YearOfSessionResponse yearOfSessionResponse = this.yearOfSessionMapper.toDto(currentYearOfSession);
+        Session currentSession = this.yearOfSessionRepository.findCurrentSession().orElseThrow(() -> new NoActiveSection("No active session"));
+        YearOfSessionResponse yearOfSessionResponse = this.yearOfSessionMapper.toDto(currentSession);
         ResponseVO<YearOfSessionResponse> responseVO = new ResponseVOBuilder<YearOfSessionResponse>().addData(yearOfSessionResponse).build();
 
         return new ResponseEntity<>(responseVO, HttpStatus.OK);
@@ -66,7 +66,7 @@ public class YearOfSessionServicesImpl implements YearOfSessionServices {
 
     @Override
     public ResponseEntity<ResponseVO<YearOfSessionResponse>> getAParticularYear(Long sessionid) {
-        YearOfSession session = this.yearOfSessionRepository.findById(sessionid).orElseThrow(() -> new EntityNotFoundException("No session with id=" + sessionid));
+        Session session = this.yearOfSessionRepository.findById(sessionid).orElseThrow(() -> new EntityNotFoundException("No session with id=" + sessionid));
         YearOfSessionResponse yearOfSessionResponse = this.yearOfSessionMapper.toDto(session);
         ResponseVO<YearOfSessionResponse> responseVO = new ResponseVOBuilder<YearOfSessionResponse>().addData(yearOfSessionResponse).build();
 
@@ -91,7 +91,7 @@ public class YearOfSessionServicesImpl implements YearOfSessionServices {
 
     @Override
     public ResponseEntity<ResponseVO<Void>> deleteSession(Long sessionid) {
-        YearOfSession session = this.yearOfSessionRepository.findById(sessionid).orElseThrow(() -> new EntityNotFoundException("No active session"));
+        Session session = this.yearOfSessionRepository.findById(sessionid).orElseThrow(() -> new EntityNotFoundException("No active session"));
         ResponseEntity<ResponseVO<Boolean>> canDeleteSession = this.checkIfCanDeleteSession(sessionid);
         if (canDeleteSession.getBody().getData()) {
             this.yearOfSessionRepository.delete(session);

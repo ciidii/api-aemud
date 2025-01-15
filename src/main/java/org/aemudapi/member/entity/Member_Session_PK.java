@@ -13,7 +13,7 @@ import java.util.Objects;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MemberAndYearKey implements Serializable {
+public class Member_Session_PK implements Serializable {
     @Column(name = "year_of_registration")
     Long yearOfRegistration;
     @Column(name = "member_id")
@@ -23,7 +23,7 @@ public class MemberAndYearKey implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        MemberAndYearKey that = (MemberAndYearKey) o;
+        Member_Session_PK that = (Member_Session_PK) o;
         return Objects.equals(yearOfRegistration, that.yearOfRegistration) && Objects.equals(member, that.member);
     }
 

@@ -1,39 +1,39 @@
 package org.aemudapi.member.mapper;
 
 import org.aemudapi.member.dtos.YearOfSessionResponse;
-import org.aemudapi.member.entity.YearOfSession;
+import org.aemudapi.member.entity.Session;
 import org.springframework.stereotype.Component;
 
 
 @Component
 public class YearOfSessionMapper {
 
-    // Mapper une entité YearOfSession vers un DTO YearOfSessionResponse
-    public YearOfSessionResponse toDto(YearOfSession yearOfSession) {
-        if (yearOfSession == null) {
+    // Mapper une entité Session vers un DTO YearOfSessionResponse
+    public YearOfSessionResponse toDto(Session session) {
+        if (session == null) {
             return null;
         }
 
         YearOfSessionResponse dto = new YearOfSessionResponse();
-        dto.setId(yearOfSession.getIdYear());
-        dto.setYear_(yearOfSession.getYear_());
-        dto.setCurrentYear(yearOfSession.isCurrentYear());
+        dto.setId(session.getIdYear());
+        dto.setYear_(session.getYear_());
+        dto.setCurrentYear(session.isCurrentYear());
 
         return dto;
     }
 
-    // Mapper un DTO YearOfSessionResponse vers une entité YearOfSession
-    public YearOfSession toEntity(YearOfSessionResponse dto) {
+    // Mapper un DTO YearOfSessionResponse vers une entité Session
+    public Session toEntity(YearOfSessionResponse dto) {
         if (dto == null) {
             return null;
         }
 
-        YearOfSession yearOfSession = new YearOfSession();
-        yearOfSession.setIdYear(dto.getId());
-        yearOfSession.setYear_(dto.getYear_());
-        yearOfSession.setCurrentYear(dto.isCurrentYear());
+        Session session = new Session();
+        session.setIdYear(dto.getId());
+        session.setYear_(dto.getYear_());
+        session.setCurrentYear(dto.isCurrentYear());
 
-        return yearOfSession;
+        return session;
     }
 
 }

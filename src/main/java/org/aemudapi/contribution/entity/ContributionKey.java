@@ -1,4 +1,4 @@
-package org.aemudapi.member.entity;
+package org.aemudapi.contribution.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

@@ -11,7 +11,7 @@ import java.util.List;
 @Data
 public class MembershipInfo {
     @ManyToOne
-    private YearOfSession yearOfMembership;
+    private Session yearOfMembership;
     private boolean pay;
     private String legacyInstitution;
     private String bacSeries;

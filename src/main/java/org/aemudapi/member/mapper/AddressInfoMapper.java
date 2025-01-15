@@ -3,8 +3,8 @@ package org.aemudapi.member.mapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.aemudapi.member.dtos.AddressInfoRequestDto;
-import org.aemudapi.member.entity.MemberAndYearKey;
-import org.aemudapi.member.entity.YearOfSession;
+import org.aemudapi.member.entity.Member_Session_PK;
+import org.aemudapi.member.entity.Session;
 import org.aemudapi.member.entity.AddressInfo;
 import org.aemudapi.member.entity.Member;
 import org.aemudapi.member.repository.MemberRepository;
@@ -23,14 +23,14 @@ public class AddressInfoMapper {
         }
 
         AddressInfo addressInfo = new AddressInfo();
-        MemberAndYearKey memberAndYearKey = new MemberAndYearKey();
-        memberAndYearKey.setYearOfRegistration(getIdYear(dto.getIdYear()));
-        memberAndYearKey.setMember(getMemberID(dto.getMemberID()));
+        Member_Session_PK memberSessionPK = new Member_Session_PK();
+        memberSessionPK.setYearOfRegistration(getIdYear(dto.getIdYear()));
+        memberSessionPK.setMember(getMemberID(dto.getMemberID()));
 
         addressInfo.setAddressInDakar(dto.getAddressInDakar());
         addressInfo.setHolidayAddress(dto.getHolidayAddress());
         addressInfo.setAddressToCampus(dto.getAddressToCampus());
-        addressInfo.setMemberAndYearKey(memberAndYearKey);
+        addressInfo.setMemberSessionPK(memberSessionPK);
         return addressInfo;
     }
 
@@ -41,7 +41,7 @@ public class AddressInfoMapper {
 
         AddressInfoRequestDto dto = new AddressInfoRequestDto();
         dto.setMemberID(addressInfo.getMember().getId());
-        dto.setIdYear(addressInfo.getMemberAndYearKey().getYearOfRegistration());
+        dto.setIdYear(addressInfo.getMemberSessionPK().getYearOfRegistration());
         dto.setAddressInDakar(addressInfo.getAddressInDakar());
         dto.setHolidayAddress(addressInfo.getHolidayAddress());
         dto.setAddressToCampus(addressInfo.getAddressToCampus());
@@ -56,8 +56,8 @@ public class AddressInfoMapper {
     }
 
     private Long getIdYear(Long idYear) {
-        YearOfSession yearOfSession = this.yearOfSessionRepository.findById(idYear)
+        Session session = this.yearOfSessionRepository.findById(idYear)
                 .orElseThrow(() -> new EntityNotFoundException("Pas d'année avec cette identifiant" + idYear));
-        return yearOfSession.getIdYear();
+        return session.getIdYear();
     }
 }
