@@ -1,26 +1,20 @@
 package org.aemudapi.member.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@AllArgsConstructor
 @Getter
 @Setter
-public class Session {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idYear;
-    @NotNull
+@AllArgsConstructor
+@NoArgsConstructor
+public class Session extends BaseEntity {
+
+    @Column(name = "session")
     private int year_;
-    private boolean currentYear;
-    public Session() {
-        //
-    }
+    private boolean isCurrent;
 }

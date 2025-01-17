@@ -1,7 +1,7 @@
 package org.aemudapi.member.mapper;
 
 import org.aemudapi.member.dtos.ClubDto;
-import org.aemudapi.member.entity.Club;
+import org.aemudapi.club.entity.Club;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -1,7 +1,7 @@
 package org.aemudapi.entities;
 
-import org.aemudapi.member.entity.Club;
-import org.aemudapi.member.entity.Commission;
+import org.aemudapi.club.entity.Club;
+import org.aemudapi.commission.entity.Commission;
 import org.aemudapi.member.entity.Member;
 import org.aemudapi.user.entity.Role;
 import org.aemudapi.user.entity.User;

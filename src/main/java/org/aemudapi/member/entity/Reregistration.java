@@ -1,18 +1,32 @@
 package org.aemudapi.member.entity;
 
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-public class Reregistration {
-    @Id
-    private Long id;
+import java.time.LocalDate;
 
-    @OneToOne
-    private AcademicInfo academicInfo;
+@Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class Reregistration extends BaseEntity {
 
-    @OneToOne
-    private AddressInfo address;
+    @ManyToOne
+    @JoinColumn(name = "member_id", nullable = false)
+    private Member member;
 
-    @OneToOne
-    private ContactInfo contactInfo;
+    @ManyToOne
+    @JoinColumn(name = "session_id", nullable = false)
+    private Session session;
+
+    private LocalDate dateInscription = LocalDate.now();
+
+    private Boolean statutPaiement = false;
+
+    private boolean registrationStatus = false;
+
 }

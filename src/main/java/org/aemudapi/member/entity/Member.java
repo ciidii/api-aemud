@@ -1,22 +1,30 @@
-    package org.aemudapi.member.entity;
+package org.aemudapi.member.entity;
 
-    import jakarta.persistence.*;
-    import lombok.Data;
+import jakarta.persistence.*;
+import lombok.*;
+import org.aemudapi.club.entity.Club;
+import org.aemudapi.commission.entity.Commission;
 
-    @Entity
-    @Table(name = "member")
-    @Data
-    public class Member {
+import java.util.List;
 
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private Long id;
-        @Embedded
-        private PersonalInfo personalInfo;
-        @Embedded
-        private MembershipInfo membershipInfo;
+@Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class Member extends BaseEntity {
+    @Embedded
+    private PersonalInfo personalInfo;
+    @Embedded
+    private MembershipInfo membershipInfo;
 
-        public Member() {
-            //constructor without args
-        }
-    }
+    @ManyToOne
+    @JoinColumn(name = "commission_id")
+    private Commission commission;
+    @ManyToOne()
+    @JoinColumn(name = "club_id")
+    private Club clubs;
+    @ManyToOne
+    @JoinColumn(name = "bourse_id")
+    private Bourse bourse;
+}

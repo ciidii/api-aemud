@@ -1,6 +1,6 @@
 package org.aemudapi.entities;
 
-import org.aemudapi.member.entity.Club;
+import org.aemudapi.club.entity.Club;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 

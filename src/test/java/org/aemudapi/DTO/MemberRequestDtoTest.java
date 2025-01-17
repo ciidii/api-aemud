@@ -1,7 +1,7 @@
 package org.aemudapi.DTO;
 
 import org.aemudapi.member.dtos.MemberRequestDto;
-import org.aemudapi.member.entity.Club;
+import org.aemudapi.club.entity.Club;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

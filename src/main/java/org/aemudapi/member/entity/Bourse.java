@@ -1,24 +1,18 @@
 package org.aemudapi.member.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
-public class Bourse {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idBourse;
+@AllArgsConstructor
+@NoArgsConstructor
+public class Bourse extends BaseEntity {
     private String lebelle;
     private Double montant;
-
-    public Bourse() {
-        //construtor without Args
-    }
+    @OneToMany(mappedBy = "bourse")
+    private List<Member> member;
 }

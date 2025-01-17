@@ -1,6 +1,6 @@
 package org.aemudapi.entities;
 
-import org.aemudapi.member.entity.Club;
+import org.aemudapi.club.entity.Club;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

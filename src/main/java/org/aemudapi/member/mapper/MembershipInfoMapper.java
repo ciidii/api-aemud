@@ -1,6 +1,8 @@
 package org.aemudapi.member.mapper;
 
 import jakarta.persistence.EntityNotFoundException;
+import org.aemudapi.club.entity.Club;
+import org.aemudapi.commission.entity.Commission;
 import org.aemudapi.member.dtos.MembershipInfoDTO;
 import org.aemudapi.member.entity.*;
 import org.aemudapi.member.entity.Session;

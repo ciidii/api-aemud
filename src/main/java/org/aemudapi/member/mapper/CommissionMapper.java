@@ -1,7 +1,7 @@
 package org.aemudapi.member.mapper;
 
 import org.aemudapi.member.dtos.CommissionDto;
-import org.aemudapi.member.entity.Commission;
+import org.aemudapi.commission.entity.Commission;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -1,5 +1,7 @@
 package org.aemudapi.services.impl;
 
+import org.aemudapi.club.entity.Club;
+import org.aemudapi.commission.entity.Commission;
 import org.aemudapi.member.entity.Member_Session_PK;
 import org.aemudapi.member.entity.MembershipInfo;
 import org.aemudapi.member.entity.PersonalInfo;

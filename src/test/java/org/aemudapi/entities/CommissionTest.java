@@ -1,6 +1,6 @@
 package org.aemudapi.entities;
 
-import org.aemudapi.member.entity.Commission;
+import org.aemudapi.commission.entity.Commission;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 

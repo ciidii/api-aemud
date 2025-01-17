@@ -4,7 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.aemudapi.member.dtos.ClubDto;
 import org.aemudapi.member.dtos.FilterDTO;
 import org.aemudapi.exceptions.customeExceptions.EntityCannotBeDeletedException;
-import org.aemudapi.member.entity.Club;
+import org.aemudapi.club.entity.Club;
 import org.aemudapi.member.entity.Member;
 import org.aemudapi.member.mapper.ClubMapper;
 import org.aemudapi.member.repository.ClubRepository;

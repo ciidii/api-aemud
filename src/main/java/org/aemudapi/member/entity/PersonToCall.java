@@ -8,13 +8,13 @@ import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
-@Data
-public class PersonToCall {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long personToCallId;
+@Setter
+@Getter
+public class PersonToCall extends BaseEntity {
     private String lastname;
     private String firstname;
     @NotNull
