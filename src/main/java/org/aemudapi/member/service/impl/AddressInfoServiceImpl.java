@@ -2,11 +2,10 @@ package org.aemudapi.member.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
-import org.aemudapi.member.dtos.AddressInfoRequestDto;
-import org.aemudapi.member.entity.Member_Session_PK;
-import org.aemudapi.member.entity.Session;
 import org.aemudapi.exceptions.customeExceptions.NoActiveSection;
+import org.aemudapi.member.dtos.AddressInfoRequestDto;
 import org.aemudapi.member.entity.AddressInfo;
+import org.aemudapi.member.entity.Session;
 import org.aemudapi.member.mapper.AddressInfoMapper;
 import org.aemudapi.member.repository.AddressInfoRepository;
 import org.aemudapi.member.repository.YearOfSessionRepository;
@@ -36,8 +35,7 @@ public class AddressInfoServiceImpl implements AddressInfoService {
     @Override
     public ResponseEntity<ResponseVO<AddressInfoRequestDto>> getCurrentSessionMemberAddress(Long memberID) {
         Session session = this.yearOfSessionRepository.findCurrentSession().orElseThrow(()->new NoActiveSection("No active session"));
-        Member_Session_PK memberSessionPK = new Member_Session_PK(session.getIdYear(), memberID);
-        AddressInfo addressInfo = this.addressInfoRepository.findById(memberSessionPK).orElseThrow(() -> new EntityNotFoundException("C'est utilisateur ne s'Inscrit cette année"));
+        AddressInfo addressInfo = this.addressInfoRepository.findById(session.getId()).orElseThrow(() -> new EntityNotFoundException("C'est utilisateur ne s'Inscrit cette année"));
         AddressInfoRequestDto infoRequestDto = this.addressInfoMapper.toDto(addressInfo);
         ResponseVO<AddressInfoRequestDto> responseVO = new ResponseVOBuilder<AddressInfoRequestDto>().addData(infoRequestDto).build();
         return new ResponseEntity<>(responseVO, HttpStatus.OK);

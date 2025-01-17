@@ -9,5 +9,5 @@ import org.springframework.stereotype.Service;
 public interface ContactInfoService {
     ResponseEntity<ResponseVO<Void>> createContactInfo(ContactInfoRequestDto contactInfoRequestDto);
 
-    ResponseEntity<ResponseVO<ContactInfoRequestDto>> getCurrentSessionMemberInfos(Long memberID);
+    ResponseEntity<ResponseVO<ContactInfoRequestDto>> getCurrentSessionMemberInfos(String memberID);
 }

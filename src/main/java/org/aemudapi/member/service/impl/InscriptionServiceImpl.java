@@ -4,7 +4,7 @@ package org.aemudapi.member.service.impl;
 import org.aemudapi.exceptions.customeExceptions.MemberNotCreatedException;
 import org.aemudapi.member.dtos.*;
 import org.aemudapi.member.service.*;
-import org.aemudapi.member.service.YearOfSessionServices;
+import org.aemudapi.member.service.Session;
 import org.aemudapi.utils.ResponseVO;
 import org.aemudapi.utils.ResponseVOBuilder;
 import org.springframework.http.HttpStatus;
@@ -16,14 +16,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class InscriptionServiceImpl implements InscriptionService {
     private final MemberService memberService;
-    private final YearOfSessionServices yearOfSessionServices;
+    private final Session session;
     private final AcademicInfoService academicInfoService;
     private final AddressInfoService addressInfoService;
     private final ContactInfoService contactInfoService;
 
-    public InscriptionServiceImpl(MemberService memberService, YearOfSessionServices yearOfSessionServices, AcademicInfoService academicInfoService, AddressInfoService addressInfoService, ContactInfoService contactInfoService) {
+    public InscriptionServiceImpl(MemberService memberService, Session session, AcademicInfoService academicInfoService, AddressInfoService addressInfoService, ContactInfoService contactInfoService) {
         this.memberService = memberService;
-        this.yearOfSessionServices = yearOfSessionServices;
+        this.session = session;
         this.academicInfoService = academicInfoService;
 
         this.addressInfoService = addressInfoService;
@@ -34,7 +34,7 @@ public class InscriptionServiceImpl implements InscriptionService {
     @Transactional
     public ResponseEntity<ResponseVO<Void>> registerMember(MemberDataRequestDTO memberDataRequestDTO) {
         MemberRequestDto memberRequestDto = memberDataRequestDTO.getMember();
-        Long currentSession = this.yearOfSessionServices.getCurrentSession().getBody().getData().getId();
+        Long currentSession = this.session.getCurrentSession().getBody().getData().getId();
         memberRequestDto.getMembershipInfo().setYearOfMembership(currentSession);
         ResponseEntity<ResponseVO<MemberRequestDto>> response = this.memberService.addMember(memberRequestDto);
 

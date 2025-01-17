@@ -13,9 +13,9 @@ public interface CommissionService {
 
     ResponseEntity<ResponseVO<List<CommissionDto>>> getAllCommission();
 
-    ResponseEntity<ResponseVO<Void>> deleteCommission(Long commissionID);
+    ResponseEntity<ResponseVO<Void>> deleteCommission(String commissionID);
 
-    ResponseEntity<ResponseVO<CommissionDto>> getSingleCommission(Long commissionID);
+    ResponseEntity<ResponseVO<CommissionDto>> getSingleCommission(String commissionID);
 
     ResponseEntity<ResponseVO<CommissionDto>> updateCommission(CommissionDto commission);
 }

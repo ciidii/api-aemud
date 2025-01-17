@@ -53,7 +53,7 @@ public class ClubServiceImpl implements ClubService {
     }
 
     @Override
-    public ResponseEntity<ResponseVO<Void>> deleteClub(Long id) {
+    public ResponseEntity<ResponseVO<Void>> deleteClub(String id) {
         FilterDTO filterDTO = new FilterDTO(id, null, null);
         Specification<Member> memberSpecification = Utils.makeFilterCriteriaSpec(null, null, filterDTO);
         List<Member> members = memberRepository.findAll(memberSpecification);
@@ -65,7 +65,7 @@ public class ClubServiceImpl implements ClubService {
     }
 
     @Override
-    public ResponseEntity<ResponseVO<ClubDto>> getClubById(Long clubId) {
+    public ResponseEntity<ResponseVO<ClubDto>> getClubById(String clubId) {
         Club clubFromDb = this.clubRepository.findById(clubId).orElseThrow(() -> new EntityNotFoundException("Club with " + clubId + " not found"));
         ResponseVO<ClubDto> responseVO = new ResponseVOBuilder<ClubDto>().addData(this.clubMapper.toDto(clubFromDb)).build();
         return new ResponseEntity<>(responseVO, HttpStatus.OK);

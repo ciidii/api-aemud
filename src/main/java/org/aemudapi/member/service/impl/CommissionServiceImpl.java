@@ -53,7 +53,7 @@ public class CommissionServiceImpl implements CommissionService {
     }
 
     @Override
-    public ResponseEntity<ResponseVO<Void>> deleteCommission(Long commissionID) {
+    public ResponseEntity<ResponseVO<Void>> deleteCommission(String commissionID) {
         FilterDTO filterDTO = new FilterDTO(null, null, commissionID);
         Specification<Member> memberSpecification = Utils.makeFilterCriteriaSpec(null, null, filterDTO);
         List<Member> members = this.memberRepository.findAll(memberSpecification);
@@ -66,7 +66,7 @@ public class CommissionServiceImpl implements CommissionService {
     }
 
     @Override
-    public ResponseEntity<ResponseVO<CommissionDto>> getSingleCommission(Long commissionID) {
+    public ResponseEntity<ResponseVO<CommissionDto>> getSingleCommission(String commissionID) {
         Commission commission = this.commissionRepository.findById(commissionID).orElseThrow(() -> new EntityNotFoundException("Pas de commission avec id" + commissionID));
         CommissionDto commissionDto = this.commissionMapper.toDto(commission);
         ResponseVO<CommissionDto> responseVO = new ResponseVOBuilder<CommissionDto>().addData(commissionDto).build();

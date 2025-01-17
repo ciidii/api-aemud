@@ -50,7 +50,7 @@ public class ContributionServiceImpl implements ContributionService {
     public ResponseEntity<ResponseVO<ContributionResponseDto>> contribute(ContributionKeyDto contributionKeyDto) {
         // Bourse bourse = this.memberHasBourseRepository.findByBourseByIdYearAndIdMember(contributionKeyDto.getMemberId(),contributionKeyDto.getIdYear());
         ContributionKey contributionKey = this.contributionKeyMapper.toEntity(contributionKeyDto);
-        if (!this.memberRepository.existsById(contributionKey.getMemberId())) {
+        if (!this.memberRepository.existsById("UUI")) {
             throw new EntityNotFoundException("Il faut inscrire un memberID avant qu'il cotise");
         }
 

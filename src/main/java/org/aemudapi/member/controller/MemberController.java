@@ -41,7 +41,7 @@ public class MemberController {
     }
 
     @GetMapping
-    ResponseEntity<ResponseVO<MemberDataResponseDTO>> getMember(@RequestParam("member-id") Long memberID) {
+    ResponseEntity<ResponseVO<MemberDataResponseDTO>> getMember(@RequestParam("member-id") String memberID) {
         return this.memberService.getMemberById(memberID);
     }
 
@@ -52,7 +52,7 @@ public class MemberController {
     }
 
     @DeleteMapping
-    ResponseEntity<ResponseVO<Void>> removeMember(@RequestParam("userId") Long userId) {
+    ResponseEntity<ResponseVO<Void>> removeMember(@RequestParam("userId") String userId) {
         return this.memberService.removeMember(userId);
     }
 
@@ -67,10 +67,10 @@ public class MemberController {
             (@RequestParam("page") @Min(1) int page,
              @Min(1) @RequestParam("rpp") int rpp,
              @RequestParam(name = "criteria", required = false) String criteria,
-             @RequestParam(name = "value",required = false) String value,
-             @RequestParam(name = "club",required = false) Long club,
-             @RequestParam(name = "commission",required = false) Long commission,
-             @RequestParam(name = "year",required = false) Long year
+             @RequestParam(name = "value", required = false) String value,
+             @RequestParam(name = "club", required = false) String club,
+             @RequestParam(name = "commission", required = false) String commission,
+             @RequestParam(name = "year", required = false) String year
             ) {
         RequestPageableVO requestPageableVO = new RequestPageableVO(page, rpp);
         FilterDTO filters = new FilterDTO(club, year, commission);
@@ -80,12 +80,12 @@ public class MemberController {
     @GetMapping(path = "print")
     ResponseEntity<ResponseVO<List<MemberDataResponseDTO>>> searchMemberToPrint(
             @RequestParam(name = "criteria", required = false) String criteria,
-            @RequestParam(name = "value",required = false) String value,
-            @RequestParam(name = "club",required = false) Long club,
-            @RequestParam(name = "commission",required = false) Long commission,
-            @RequestParam(name = "year",required = false) Long year
-    ){
+            @RequestParam(name = "value", required = false) String value,
+            @RequestParam(name = "club", required = false) String club,
+            @RequestParam(name = "commission", required = false) String commission,
+            @RequestParam(name = "year", required = false) String year
+    ) {
         FilterDTO filters = new FilterDTO(club, year, commission);
-       return this.memberService.searchMemberToPrint(criteria,value,filters);
+        return this.memberService.searchMemberToPrint(criteria, value, filters);
     }
 }

@@ -44,9 +44,8 @@ public class ContactInfoServiceImpl implements ContactInfoService {
 
     @Override
     public ResponseEntity<ResponseVO<ContactInfoRequestDto>> getCurrentSessionMemberInfos(Long memberID) {
-        Session session = this.yearOfSessionRepository.findCurrentSession().orElseThrow(()->new NoActiveSection("No active session"));
-        Member_Session_PK memberSessionPK = new Member_Session_PK(session.getIdYear(), memberID);
-        ContactInfo addressInfo = this.contactInfoRepository.findById(memberSessionPK).orElseThrow(() -> new EntityNotFoundException("C'est utilisateur ne s'Inscrit cette année"));
+        Session session = this.yearOfSessionRepository.findCurrentSession().orElseThrow(() -> new NoActiveSection("No active session"));
+        ContactInfo addressInfo = this.contactInfoRepository.findById(session.getId()).orElseThrow(() -> new EntityNotFoundException("C'est utilisateur ne s'Inscrit cette année"));
         ContactInfoRequestDto infoRequestDto = this.contactInfoMapper.toDTO(addressInfo);
         ResponseVO<ContactInfoRequestDto> responseVO = new ResponseVOBuilder<ContactInfoRequestDto>().addData(infoRequestDto).build();
         return new ResponseEntity<>(responseVO, HttpStatus.OK);

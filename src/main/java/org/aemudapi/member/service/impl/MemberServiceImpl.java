@@ -68,7 +68,7 @@ public class MemberServiceImpl implements MemberService {
 
 
     @Override
-    public ResponseEntity<ResponseVO<MemberDataResponseDTO>> getMemberById(Long id) {
+    public ResponseEntity<ResponseVO<MemberDataResponseDTO>> getMemberById(String id) {
         AcademicInfoRequestDTO academicInfo = this.academicInfoService.getCurrentSessionMemberAcademicInfo(id).getBody().getData();
         AddressInfoRequestDto addressInfo = this.addressInfoService.getCurrentSessionMemberAddress(id).getBody().getData();
         ContactInfoRequestDto contactInfo = this.contactInfoService.getCurrentSessionMemberInfos(id).getBody().getData();
@@ -105,7 +105,7 @@ public class MemberServiceImpl implements MemberService {
 
 
     @Override
-    public ResponseEntity removeMember(Long id) {
+    public ResponseEntity removeMember(String id) {
         Member member = this.memberRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Un membre avec l'id " + id + " n'existe pas"));
         this.memberRepository.delete(member);
         ResponseVO responseVO = new ResponseVOBuilder<Void>().success().build();

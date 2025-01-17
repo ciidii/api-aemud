@@ -48,7 +48,7 @@ public class BourseServiceImpl implements BourseService {
     }
 
     @Override
-    public ResponseEntity<ResponseVO<Void>> deleteBourse(Long bourseId) {
+    public ResponseEntity<ResponseVO<Void>> deleteBourse(String bourseId) {
         if (checkIfCanDeleteBourse(bourseId).getBody().getData()) {
             this.bourseRepository.deleteById(bourseId);
             return new ResponseEntity<>(new ResponseVOBuilder<Void>().success().build(), HttpStatus.OK);
@@ -57,7 +57,7 @@ public class BourseServiceImpl implements BourseService {
     }
 
     @Override
-    public ResponseEntity<ResponseVO<Boolean>> checkIfCanDeleteBourse(Long bourseID) {
+    public ResponseEntity<ResponseVO<Boolean>> checkIfCanDeleteBourse(String bourseID) {
         if (this.bourseRepository.existsById(bourseID)) {
             Specification<Member> memberSpecification = MemberSpecification.hasBourse(bourseID);
             List<Member> members = this.memberRepository.findAll(memberSpecification);
@@ -73,7 +73,7 @@ public class BourseServiceImpl implements BourseService {
     }
 
     @Override
-    public ResponseEntity<ResponseVO<BourseDTO>> findBourseById(Long bourseId) {
+    public ResponseEntity<ResponseVO<BourseDTO>> findBourseById(String bourseId) {
         Bourse bourse = this.bourseRepository.findById(bourseId).orElseThrow(EntityNotFoundException::new);
         BourseDTO dto = this.bourseMapper.toDTO(bourse);
         ResponseVO<BourseDTO> responseVO = new ResponseVOBuilder<BourseDTO>().addData(dto).build();

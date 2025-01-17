@@ -9,5 +9,5 @@ import org.springframework.stereotype.Service;
 public interface AddressInfoService {
     ResponseEntity<ResponseVO<Void>> createAddressInfo(AddressInfoRequestDto requestDto);
 
-    ResponseEntity<ResponseVO<AddressInfoRequestDto>> getCurrentSessionMemberAddress(Long memberID);
+    ResponseEntity<ResponseVO<AddressInfoRequestDto>> getCurrentSessionMemberAddress(String memberID);
 }

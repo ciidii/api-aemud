@@ -35,8 +35,8 @@ public class AcademicInfoServiceImpl implements AcademicInfoService {
     @Override
     public ResponseEntity<ResponseVO<AcademicInfoRequestDTO>> getCurrentSessionMemberAcademicInfo(Long memberID) {
         Session session = this.yearOfSessionRepository.findCurrentSession().orElseThrow(() -> new NoActiveSection("No active session"));
-        Member_Session_PK memberSessionPK = new Member_Session_PK(session.getIdYear(), memberID);
-        AcademicInfo addressInfo = this.academicInfoRepository.findById(memberSessionPK).orElseThrow(() -> new EntityNotFoundException("C'est utilisateur ne s'Inscrit cette année"));
+
+        AcademicInfo addressInfo = this.academicInfoRepository.findById(session.getId()).orElseThrow(() -> new EntityNotFoundException("C'est utilisateur ne s'Inscrit cette année"));
         AcademicInfoRequestDTO infoRequestDto = this.academicInfoMapper.toDto(addressInfo);
         ResponseVO<AcademicInfoRequestDTO> responseVO = new ResponseVOBuilder<AcademicInfoRequestDTO>().addData(infoRequestDto).build();
         return new ResponseEntity<>(responseVO, HttpStatus.OK);

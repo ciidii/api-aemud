@@ -28,14 +28,15 @@ public class CommissionController {
     }
 
     @DeleteMapping()
-    public ResponseEntity<ResponseVO<Void>> deleteCommission(@RequestParam("commissionId") Long commissionID) {
+    public ResponseEntity<ResponseVO<Void>> deleteCommission(@RequestParam("commissionId") String commissionID) {
         return this.commissionService.deleteCommission(commissionID);
     }
 
     @GetMapping()
-    public ResponseEntity<ResponseVO<CommissionDto>> getCommissionById(@RequestParam("commissionId") Long commissionID) {
+    public ResponseEntity<ResponseVO<CommissionDto>> getCommissionById(@RequestParam("commissionId") String commissionID) {
         return this.commissionService.getSingleCommission(commissionID);
     }
+
     @PutMapping()
     public ResponseEntity<ResponseVO<CommissionDto>> updateCommission(@RequestBody CommissionDto commission) {
         return this.commissionService.updateCommission(commission);

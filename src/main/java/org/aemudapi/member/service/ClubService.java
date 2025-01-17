@@ -13,7 +13,7 @@ public interface ClubService {
 
     ResponseEntity<ResponseVO<List<ClubDto>>> getAllClubs();
 
-    ResponseEntity<ResponseVO<Void>> deleteClub(Long id);
+    ResponseEntity<ResponseVO<Void>> deleteClub(String id);
 
-    ResponseEntity<ResponseVO<ClubDto>> getClubById(Long clubId);
+    ResponseEntity<ResponseVO<ClubDto>> getClubById(String clubId);
 }

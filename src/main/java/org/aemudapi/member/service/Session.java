@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public interface YearOfSessionServices {
+public interface Session {
     ResponseEntity<ResponseVO<Void>> openNewSession(int year_);
 
     ResponseEntity<ResponseVO<List<YearOfSessionResponse>>> getAllYears();

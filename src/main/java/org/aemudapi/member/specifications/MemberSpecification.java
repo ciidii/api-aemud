@@ -27,7 +27,7 @@ public class MemberSpecification {
         return (root, query, criteriaBuilder) -> commissionId == null ? criteriaBuilder.conjunction() : criteriaBuilder.equal(root.get("membershipInfo").get("commission").get("id"), commissionId);
     }
 
-    public static Specification<Member> hasBourse(Long bourseId) {
+    public static Specification<Member> hasBourse(String bourseId) {
         return (root, query, criteriaBuilder) -> bourseId == null ? criteriaBuilder.conjunction() : criteriaBuilder.equal(root.get("membershipInfo").get("bourse").get("idBourse"), bourseId);
     }
 }

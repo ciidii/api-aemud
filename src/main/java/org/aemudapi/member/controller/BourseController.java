@@ -33,12 +33,12 @@ public class BourseController {
     }
 
     @DeleteMapping
-    ResponseEntity<ResponseVO<Void>> deleteBourse(@RequestParam("bourseId") Long bourseId) {
+    ResponseEntity<ResponseVO<Void>> deleteBourse(@RequestParam("bourseId") String bourseId) {
         return this.bourseService.deleteBourse(bourseId);
     }
 
     @GetMapping()
-    ResponseEntity<ResponseVO<BourseDTO>> findBourseById(@RequestParam("bourseId") Long bourseId) {
+    ResponseEntity<ResponseVO<BourseDTO>> findBourseById(@RequestParam("bourseId") String bourseId) {
         return  this.bourseService.findBourseById(bourseId);
     }
 }
