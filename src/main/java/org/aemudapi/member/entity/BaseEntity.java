@@ -16,6 +16,6 @@ public class BaseEntity {
     @ManyToOne(cascade = CascadeType.REMOVE)
     private Member member;
     @ManyToOne
-    @JoinColumn(name = "year_", insertable = false, updatable = false)
+    @JoinColumn(name = "session_id", insertable = false, updatable = false)
     private Session year;
 }

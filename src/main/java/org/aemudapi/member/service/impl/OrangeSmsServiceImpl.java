@@ -77,7 +77,7 @@ public class OrangeSmsServiceImpl implements OrangeSmsService {
     }
 
     public String formatMessage(String message, String recipientNumber) {
-        //Optional<Member> member = this.memberRepository.findByNumberPhone(recipientNumber);
+        //Optional<Member> memberID = this.memberRepository.findByNumberPhone(recipientNumber);
 
         return message;
     }

@@ -24,8 +24,8 @@ public class AddressInfoMapper {
 
         AddressInfo addressInfo = new AddressInfo();
         Member_Session_PK memberSessionPK = new Member_Session_PK();
-        memberSessionPK.setYearOfRegistration(getIdYear(dto.getIdYear()));
-        memberSessionPK.setMember(getMemberID(dto.getMemberID()));
+        memberSessionPK.setSessionID(getIdYear(dto.getIdYear()));
+        memberSessionPK.setMemberID(getMemberID(dto.getMemberID()));
 
         addressInfo.setAddressInDakar(dto.getAddressInDakar());
         addressInfo.setHolidayAddress(dto.getHolidayAddress());
@@ -41,7 +41,7 @@ public class AddressInfoMapper {
 
         AddressInfoRequestDto dto = new AddressInfoRequestDto();
         dto.setMemberID(addressInfo.getMember().getId());
-        dto.setIdYear(addressInfo.getMemberSessionPK().getYearOfRegistration());
+        dto.setIdYear(addressInfo.getMemberSessionPK().getSessionID());
         dto.setAddressInDakar(addressInfo.getAddressInDakar());
         dto.setHolidayAddress(addressInfo.getHolidayAddress());
         dto.setAddressToCampus(addressInfo.getAddressToCampus());

@@ -22,8 +22,8 @@ public class AcademicInfoMapper {
             return null;
         }
         Member_Session_PK memberSessionPK = new Member_Session_PK();
-        memberSessionPK.setMember(getMemberID(dto.getMemberID()));
-        memberSessionPK.setYearOfRegistration(getIdYear(dto.getIdYear()));
+        memberSessionPK.setMemberID(getMemberID(dto.getMemberID()));
+        memberSessionPK.setMemberID(getIdYear(dto.getIdYear()));
 
         AcademicInfo academicInfo = new AcademicInfo();
         academicInfo.setUniversity(dto.getUniversity());
@@ -61,8 +61,8 @@ public class AcademicInfoMapper {
         dto.setStudiesLevel(academicInfo.getStudiesLevel());
 
         // Extraction des informations du Member_Session_PK
-        dto.setMemberID(academicInfo.getMemberSessionPK().getMember());
-        dto.setIdYear(academicInfo.getMemberSessionPK().getYearOfRegistration());
+        dto.setMemberID(academicInfo.getMemberSessionPK().getMemberID());
+        dto.setIdYear(academicInfo.getMemberSessionPK().getSessionID());
 
         return dto;
     }

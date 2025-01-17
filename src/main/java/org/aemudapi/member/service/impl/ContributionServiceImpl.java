@@ -51,7 +51,7 @@ public class ContributionServiceImpl implements ContributionService {
         // Bourse bourse = this.memberHasBourseRepository.findByBourseByIdYearAndIdMember(contributionKeyDto.getMemberId(),contributionKeyDto.getIdYear());
         ContributionKey contributionKey = this.contributionKeyMapper.toEntity(contributionKeyDto);
         if (!this.memberRepository.existsById(contributionKey.getMemberId())) {
-            throw new EntityNotFoundException("Il faut inscrire un member avant qu'il cotise");
+            throw new EntityNotFoundException("Il faut inscrire un memberID avant qu'il cotise");
         }
 
         if (!this.yearOfSessionRepository.existsById(contributionKey.getIdYear())) {
@@ -62,7 +62,7 @@ public class ContributionServiceImpl implements ContributionService {
         }
 
         if (this.contributionRepository.existsById(contributionKey)) {
-            throw new ContributionAlreadyExistsException("cette member à déja cotiser pour se mois" + contributionKey);
+            throw new ContributionAlreadyExistsException("cette memberID à déja cotiser pour se mois" + contributionKey);
         }
 
         Contribution contribution = new Contribution();

@@ -20,8 +20,8 @@ public class ContactInfoMapper {
 
     public ContactInfo toEntity(ContactInfoRequestDto dto) {
         Member_Session_PK memberSessionPK = new Member_Session_PK();
-        memberSessionPK.setMember(getMemberID(dto.getMemberID()));
-        memberSessionPK.setYearOfRegistration(getIdYear(dto.getIdYear()));
+        memberSessionPK.setMemberID(getMemberID(dto.getMemberID()));
+        memberSessionPK.setSessionID(getIdYear(dto.getIdYear()));
 
         ContactInfo entity = new ContactInfo();
         entity.setEmail(dto.getEmail());
@@ -34,17 +34,14 @@ public class ContactInfoMapper {
     public ContactInfoRequestDto toDTO(ContactInfo entity) {
         ContactInfoRequestDto dto = new ContactInfoRequestDto();
 
-        // Conversion des champs simples
         dto.setEmail(entity.getEmail());
         dto.setNumberPhone(entity.getNumberPhone());
 
-        // Conversion de la clé composite Member_Session_PK
         if (entity.getMemberSessionPK() != null) {
-            dto.setMemberID(entity.getMemberSessionPK().getMember()); // Assuming getId() is the member ID method
-            dto.setIdYear(entity.getMemberSessionPK().getYearOfRegistration()); // Assuming getId() is the year ID method
+            dto.setMemberID(entity.getMemberSessionPK().getMemberID());
+            dto.setIdYear(entity.getMemberSessionPK().getSessionID());
         }
 
-        // Conversion de la liste de personnes à contacter (PersonToCall)
         if (entity.getPersonToCalls() != null) {
             dto.setPersonToCalls(this.personToCallMapper.toDtoList(entity.getPersonToCalls()));
         }
