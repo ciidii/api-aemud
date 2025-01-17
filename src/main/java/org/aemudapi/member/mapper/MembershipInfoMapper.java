@@ -7,7 +7,7 @@ import org.aemudapi.member.dtos.MembershipInfoDTO;
 import org.aemudapi.member.entity.*;
 import org.aemudapi.member.entity.Session;
 import org.aemudapi.member.repository.BourseRepository;
-import org.aemudapi.member.repository.ClubRepository;
+import org.aemudapi.club.repository.ClubRepository;
 import org.aemudapi.member.repository.CommissionRepository;
 import org.springframework.stereotype.Component;
 

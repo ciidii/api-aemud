@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AcademicInfoRepository extends JpaRepository<AcademicInfo, Member_Session_PK> {
+public interface AcademicInfoRepository extends JpaRepository<AcademicInfo, String> {
 }

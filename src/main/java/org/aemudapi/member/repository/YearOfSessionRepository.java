@@ -13,9 +13,9 @@ import java.util.Optional;
 public interface YearOfSessionRepository extends JpaRepository<Session, Long> {
     @Modifying
     @Transactional
-    @Query("update Session y set y.currentYear = false where y.currentYear = true")
+    @Query("update Session y set y.isCurrent = false where y.isCurrent = true")
     void updateCurrentYear();
 
-    @Query("select y from Session y where y.currentYear=true")
+    @Query("select y from Session y where y.isCurrent=true")
     Optional<Session> findCurrentSession();
 }

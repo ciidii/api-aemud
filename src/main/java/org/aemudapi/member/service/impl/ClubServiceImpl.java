@@ -7,7 +7,7 @@ import org.aemudapi.exceptions.customeExceptions.EntityCannotBeDeletedException;
 import org.aemudapi.club.entity.Club;
 import org.aemudapi.member.entity.Member;
 import org.aemudapi.member.mapper.ClubMapper;
-import org.aemudapi.member.repository.ClubRepository;
+import org.aemudapi.club.repository.ClubRepository;
 import org.aemudapi.member.repository.MemberRepository;
 import org.aemudapi.member.service.ClubService;
 import org.aemudapi.utils.ResponseVO;

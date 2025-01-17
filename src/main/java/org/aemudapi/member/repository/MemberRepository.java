@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MemberRepository extends JpaRepository<Member, Long>, JpaSpecificationExecutor<Member> {
-    @Query("select m from Member m where m.membershipInfo.yearOfMembership.currentYear=true")
+public interface MemberRepository extends JpaRepository<Member, String>, JpaSpecificationExecutor<Member> {
+    //@Query("select m from Member m where m.membershipInfo.yearOfMembership.currentYear=true")
     Page<Member> findAll(Pageable pageable);
 }
