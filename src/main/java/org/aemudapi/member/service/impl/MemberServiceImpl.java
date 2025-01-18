@@ -7,9 +7,6 @@ import org.aemudapi.member.entity.Member;
 import org.aemudapi.member.mapper.MemberMapper;
 import org.aemudapi.member.mapper.MemberResponseMapper;
 import org.aemudapi.member.repository.MemberRepository;
-import org.aemudapi.member.service.AcademicInfoService;
-import org.aemudapi.member.service.AddressInfoService;
-import org.aemudapi.member.service.ContactInfoService;
 import org.aemudapi.member.service.MemberService;
 import org.aemudapi.utils.RequestPageableVO;
 import org.aemudapi.utils.ResponsePageableVO;
@@ -35,9 +32,6 @@ public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
     private final MemberMapper memberMapper;
     private final MemberResponseMapper memberResponseMapper;
-    private final AddressInfoService addressInfoService;
-    private final ContactInfoService contactInfoService;
-    private final AcademicInfoService academicInfoService;
 
     @Override
     @Transactional
@@ -69,14 +63,8 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public ResponseEntity<ResponseVO<MemberDataResponseDTO>> getMemberById(String id) {
-        AcademicInfoRequestDTO academicInfo = this.academicInfoService.getCurrentSessionMemberAcademicInfo(id).getBody().getData();
-        AddressInfoRequestDto addressInfo = this.addressInfoService.getCurrentSessionMemberAddress(id).getBody().getData();
-        ContactInfoRequestDto contactInfo = this.contactInfoService.getCurrentSessionMemberInfos(id).getBody().getData();
         return memberRepository.findById(id).map(member -> {
             MemberDataResponseDTO memberRequestDto = memberMapper.memberDataDto(member);
-            memberRequestDto.setAcademicInfo(academicInfo);
-            memberRequestDto.setAddressInfo(addressInfo);
-            memberRequestDto.setContactInfo(contactInfo);
             ResponseVO<MemberDataResponseDTO> responseVO = new ResponseVOBuilder<MemberDataResponseDTO>().addData(memberRequestDto).build();
             return ResponseEntity.status(HttpStatus.OK).body(responseVO);
         }).orElseThrow(() -> new EntityNotFoundException("Un membre avec l'id " + id + " n'existe pas"));
@@ -119,11 +107,7 @@ public class MemberServiceImpl implements MemberService {
         for (Member member : memberPage) {
             MemberDataResponseDTO memberDataResponseDTO = new MemberDataResponseDTO();
 
-            addressInfo = Objects.requireNonNull(this.addressInfoService.getCurrentSessionMemberAddress(member.getId()).getBody()).getData();
-            contactInfoRequestDto = this.contactInfoService.getCurrentSessionMemberInfos(member.getId()).getBody().getData();
             memberDataResponseDTO.setMember(this.memberResponseMapper.toDto(member));
-            memberDataResponseDTO.setContactInfo(contactInfoRequestDto);
-            memberDataResponseDTO.setAddressInfo(addressInfo);
             memberResponseDtos.add(memberDataResponseDTO);
         }
         return memberResponseDtos;
