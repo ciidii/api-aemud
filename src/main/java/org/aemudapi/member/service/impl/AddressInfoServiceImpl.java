@@ -33,7 +33,7 @@ public class AddressInfoServiceImpl implements AddressInfoService {
     }
 
     @Override
-    public ResponseEntity<ResponseVO<AddressInfoRequestDto>> getCurrentSessionMemberAddress(Long memberID) {
+    public ResponseEntity<ResponseVO<AddressInfoRequestDto>> getCurrentSessionMemberAddress(String memberID) {
         Session session = this.yearOfSessionRepository.findCurrentSession().orElseThrow(()->new NoActiveSection("No active session"));
         AddressInfo addressInfo = this.addressInfoRepository.findById(session.getId()).orElseThrow(() -> new EntityNotFoundException("C'est utilisateur ne s'Inscrit cette année"));
         AddressInfoRequestDto infoRequestDto = this.addressInfoMapper.toDto(addressInfo);

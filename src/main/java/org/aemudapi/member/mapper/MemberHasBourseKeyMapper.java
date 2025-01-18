@@ -18,9 +18,9 @@ public class MemberHasBourseKeyMapper {
         }
 
         MemberHasBourseKeyDto dto = new MemberHasBourseKeyDto();
-        dto.setYear_(entity.getYear_());
-        dto.setMemberId(entity.getMemberId());
-        dto.setBourseId(entity.getBourseId());
+//        dto.setYear_(entity.getYear_());
+//        dto.setMemberId(entity.getMemberId());
+//        dto.setBourseId(entity.getBourseId());
 
         return dto;
     }
@@ -46,9 +46,9 @@ public class MemberHasBourseKeyMapper {
         }
 
         MemberHasBourseKey entity = new MemberHasBourseKey();
-        entity.setYear_(dto.getYear_());
-        entity.setMemberId(dto.getMemberId());
-        entity.setBourseId(dto.getBourseId());
+//        entity.setYear_(dto.getYear_());
+//        entity.setMemberId(dto.getMemberId());
+//        entity.setBourseId(dto.getBourseId());
 
         return entity;
     }

@@ -24,13 +24,11 @@ public class AddressInfoMapper {
 
         AddressInfo addressInfo = new AddressInfo();
         Member_Session_PK memberSessionPK = new Member_Session_PK();
-        memberSessionPK.setSessionID(getIdYear(dto.getIdYear()));
-        memberSessionPK.setMemberID(getMemberID(dto.getMemberID()));
 
         addressInfo.setAddressInDakar(dto.getAddressInDakar());
         addressInfo.setHolidayAddress(dto.getHolidayAddress());
         addressInfo.setAddressToCampus(dto.getAddressToCampus());
-        addressInfo.setMemberSessionPK(memberSessionPK);
+        addressInfo.setId(dto.getMemberID());
         return addressInfo;
     }
 
@@ -40,8 +38,8 @@ public class AddressInfoMapper {
         }
 
         AddressInfoRequestDto dto = new AddressInfoRequestDto();
-        dto.setMemberID(addressInfo.getMember().getId());
-        dto.setIdYear(addressInfo.getMemberSessionPK().getSessionID());
+       // dto.setMemberID(addressInfo.getMember().getId());
+       // dto.setIdYear(addressInfo.getMemberSessionPK().getSessionID());
         dto.setAddressInDakar(addressInfo.getAddressInDakar());
         dto.setHolidayAddress(addressInfo.getHolidayAddress());
         dto.setAddressToCampus(addressInfo.getAddressToCampus());
@@ -49,15 +47,15 @@ public class AddressInfoMapper {
         return dto;
     }
 
-    private Long getMemberID(Long idMember) {
+    private String getMemberID(String idMember) {
         Member member = this.memberRepository.findById(idMember)
                 .orElseThrow(() -> new EntityNotFoundException("Pas de membre avec cette Identifiant" + idMember));
         return member.getId();
     }
 
-    private Long getIdYear(Long idYear) {
+    private String getIdYear(String idYear) {
         Session session = this.yearOfSessionRepository.findById(idYear)
                 .orElseThrow(() -> new EntityNotFoundException("Pas d'année avec cette identifiant" + idYear));
-        return session.getIdYear();
+        return session.getId();
     }
 }

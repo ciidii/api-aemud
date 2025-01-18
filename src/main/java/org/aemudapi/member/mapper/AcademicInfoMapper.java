@@ -21,9 +21,6 @@ public class AcademicInfoMapper {
         if (dto == null) {
             return null;
         }
-        Member_Session_PK memberSessionPK = new Member_Session_PK();
-        memberSessionPK.setMemberID(getMemberID(dto.getMemberID()));
-        memberSessionPK.setMemberID(getIdYear(dto.getIdYear()));
 
         AcademicInfo academicInfo = new AcademicInfo();
         academicInfo.setUniversity(dto.getUniversity());
@@ -31,21 +28,20 @@ public class AcademicInfoMapper {
         academicInfo.setDepartment(dto.getDepartment());
         academicInfo.setSection(dto.getSection());
         academicInfo.setStudiesLevel(dto.getStudiesLevel());
-        academicInfo.setMemberSessionPK(memberSessionPK);
 
         return academicInfo;
     }
 
-    private Long getMemberID(Long idMember) {
+    private String getMemberID(String idMember) {
         Member member = this.memberRepository.findById(idMember)
                 .orElseThrow(() -> new EntityNotFoundException("Pas de membre avec cette Identifiant" + idMember));
         return member.getId();
     }
 
-    private Long getIdYear(Long idYear) {
+    private String getIdYear(String idYear) {
         Session session = this.yearOfSessionRepository.findById(idYear)
                 .orElseThrow(() -> new EntityNotFoundException("Pas d'année avec cette identifiant" + idYear));
-        return session.getIdYear();
+        return session.getId();
     }
 
     public AcademicInfoRequestDTO toDto(AcademicInfo academicInfo) {
@@ -59,10 +55,6 @@ public class AcademicInfoMapper {
         dto.setDepartment(academicInfo.getDepartment());
         dto.setSection(academicInfo.getSection());
         dto.setStudiesLevel(academicInfo.getStudiesLevel());
-
-        // Extraction des informations du Member_Session_PK
-        dto.setMemberID(academicInfo.getMemberSessionPK().getMemberID());
-        dto.setIdYear(academicInfo.getMemberSessionPK().getSessionID());
 
         return dto;
     }

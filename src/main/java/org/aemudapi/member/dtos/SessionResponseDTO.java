@@ -3,8 +3,8 @@ package org.aemudapi.member.dtos;
 import lombok.Data;
 
 @Data
-public class YearOfSessionResponse {
-    private Long id;
-    private int year_;
+public class SessionResponseDTO {
+    private String id;
+    private int session;
     private boolean currentYear;
 }

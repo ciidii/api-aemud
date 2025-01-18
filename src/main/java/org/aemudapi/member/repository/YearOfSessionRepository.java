@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 @Repository
-public interface YearOfSessionRepository extends JpaRepository<Session, Long> {
+public interface YearOfSessionRepository extends JpaRepository<Session, String> {
     @Modifying
     @Transactional
     @Query("update Session y set y.isCurrent = false where y.isCurrent = true")

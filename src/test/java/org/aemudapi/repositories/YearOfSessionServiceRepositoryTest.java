@@ -10,7 +10,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 
 @DataJpaTest
-class YearOfSessionRepositoryTest {
+class YearOfSessionServiceRepositoryTest {
 
     @Autowired
     private YearOfSessionRepository yearOfSessionRepository;
@@ -33,7 +33,7 @@ class YearOfSessionRepositoryTest {
         Session session = new Session(1L, 2020, true);
         this.yearOfSessionRepository.save(session);
         //when
-        //Session year = this.yearOfSessionRepository.findCurrentSession();
+        //SessionService year = this.yearOfSessionRepository.findCurrentSession();
         //then
        // assertThat(year.isCurrentYear()).isTrue();
     }

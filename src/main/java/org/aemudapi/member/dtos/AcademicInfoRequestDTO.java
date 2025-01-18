@@ -1,11 +1,14 @@
 package org.aemudapi.member.dtos;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class AcademicInfoRequestDTO {
-    private Long memberID;
-    private Long idYear;
+    private String memberID;
+    private String idYear;
     private String university;
     private String faculty;
     private String department;

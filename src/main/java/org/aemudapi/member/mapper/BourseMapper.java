@@ -16,7 +16,7 @@ public class BourseMapper {
         }
 
         BourseDTO dto = new BourseDTO();
-        dto.setBourseId(bourse.getIdBourse());
+      //  dto.setBourseId(bourse.getIdBourse());
         dto.setLebelle(bourse.getLebelle());
         dto.setMontant(bourse.getMontant());
 
@@ -39,7 +39,7 @@ public class BourseMapper {
         }
 
         Bourse bourse = new Bourse();
-        bourse.setIdBourse(dto.getBourseId());
+       // bourse.setIdBourse(dto.getBourseId());
         bourse.setLebelle(dto.getLebelle());
         bourse.setMontant(dto.getMontant());
 

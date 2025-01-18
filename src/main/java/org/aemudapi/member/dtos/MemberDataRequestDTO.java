@@ -1,11 +1,17 @@
 package org.aemudapi.member.dtos;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class MemberDataRequestDTO {
-    MemberRequestDto member;
-    AcademicInfoRequestDTO academicInfo;
-    AddressInfoRequestDto addressInfo;
-    ContactInfoRequestDto contactInfo;
+    private MemberRequestDto member;
+    private AcademicInfoRequestDTO academicInfo;
+    private AddressInfoRequestDto addressInfo;
+    private ContactInfoRequestDto contactInfo;
 }

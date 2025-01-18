@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Reregistration extends BaseEntity {
+public class Registration extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "member_id", nullable = false)
@@ -24,6 +24,8 @@ public class Reregistration extends BaseEntity {
     private Session session;
 
     private LocalDate dateInscription = LocalDate.now();
+    @Enumerated(EnumType.STRING)
+    private TypeInscription registrationType;
 
     private Boolean statutPaiement = false;
 

@@ -19,7 +19,7 @@ public class AddressInfoServiceController {
     }
 
     @GetMapping
-    public ResponseEntity<ResponseVO<AddressInfoRequestDto>> getCurrentSessionMemberAddress(@RequestParam Long memberID) {
+    public ResponseEntity<ResponseVO<AddressInfoRequestDto>> getCurrentSessionMemberAddress(@RequestParam String memberID) {
         return this.addressInfoService.getCurrentSessionMemberAddress(memberID);
     }
 }

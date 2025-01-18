@@ -43,7 +43,7 @@ public class ContactInfoServiceImpl implements ContactInfoService {
     }
 
     @Override
-    public ResponseEntity<ResponseVO<ContactInfoRequestDto>> getCurrentSessionMemberInfos(Long memberID) {
+    public ResponseEntity<ResponseVO<ContactInfoRequestDto>> getCurrentSessionMemberInfos(String memberID) {
         Session session = this.yearOfSessionRepository.findCurrentSession().orElseThrow(() -> new NoActiveSection("No active session"));
         ContactInfo addressInfo = this.contactInfoRepository.findById(session.getId()).orElseThrow(() -> new EntityNotFoundException("C'est utilisateur ne s'Inscrit cette année"));
         ContactInfoRequestDto infoRequestDto = this.contactInfoMapper.toDTO(addressInfo);

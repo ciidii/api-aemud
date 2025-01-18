@@ -4,9 +4,11 @@ import lombok.Data;
 
 @Data
 public class MemberRequestDto {
-    private Long id;
+    private String id;
     private PersonalInfoDTO personalInfo;
     private MembershipInfoDTO membershipInfo;
+    private ClubDto club;
+    private CommissionDto commission;
 
     public MemberRequestDto() {
         //constructeur without params

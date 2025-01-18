@@ -15,15 +15,15 @@ public class MemberSpecification {
         return (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("personalInfo").get("firstname"), "%" + firstname.toLowerCase() + "%");
     }
 
-    public static Specification<Member> hasClub(Long clubId) {
+    public static Specification<Member> hasClub(String clubId) {
         return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("membershipInfo").get("clubs").get("id"), clubId);
     }
 
-    public static Specification<Member> hasYearOfRegistration(Long yearOfRegistration) {
+    public static Specification<Member> hasYearOfRegistration(String yearOfRegistration) {
         return (root, query, criteriaBuilder) -> yearOfRegistration == null ? criteriaBuilder.conjunction() : criteriaBuilder.equal(root.get("membershipInfo").get("yearOfMembership").get("idYear"), yearOfRegistration);
     }
 
-    public static Specification<Member> hasCommission(Long commissionId) {
+    public static Specification<Member> hasCommission(String commissionId) {
         return (root, query, criteriaBuilder) -> commissionId == null ? criteriaBuilder.conjunction() : criteriaBuilder.equal(root.get("membershipInfo").get("commission").get("id"), commissionId);
     }
 

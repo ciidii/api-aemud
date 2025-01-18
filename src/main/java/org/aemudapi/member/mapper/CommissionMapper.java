@@ -9,14 +9,14 @@ public class CommissionMapper {
     public CommissionDto toDto(Commission commission) {
         CommissionDto dto = new CommissionDto();
         dto.setName(commission.getName());
-        dto.setId(commission.getId());
+       // dto.setId(commission.getId());
         return dto;
     }
 
     public Commission toEntity(CommissionDto commissionDto) {
         Commission commission = new Commission();
         commission.setName(commissionDto.getName());
-        commission.setId(commissionDto.getId());
+       // commission.setId(commissionDto.getId());
         return commission;
     }
 }

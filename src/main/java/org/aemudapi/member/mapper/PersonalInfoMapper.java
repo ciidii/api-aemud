@@ -16,7 +16,7 @@ public class PersonalInfoMapper {
         entity.setFirstname(dto.getFirstname());
         entity.setNationality(dto.getNationality());
         entity.setBirthday(dto.getBirthday());
-        entity.setMaritalStatus(dto.getMaritalStatus());
+        //entity.setMaritalStatus(dto.getMaritalStatus());
 
         return entity;
     }
@@ -31,7 +31,7 @@ public class PersonalInfoMapper {
         dto.setFirstname(entity.getFirstname());
         dto.setNationality(entity.getNationality());
         dto.setBirthday(entity.getBirthday());
-        dto.setMaritalStatus(entity.getMaritalStatus());
+       // dto.setMaritalStatus(entity.getMaritalStatus());
 
         return dto;
     }

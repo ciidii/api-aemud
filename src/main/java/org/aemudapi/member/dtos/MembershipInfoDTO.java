@@ -4,8 +4,7 @@ import lombok.Data;
 
 @Data
 public class MembershipInfoDTO {
-    private Long yearOfMembership;
-    private boolean pay;
+    private String yearOfMembership;
     private String legacyInstitution;
     private String bacSeries;
     private String bacMention;

@@ -6,6 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ClubDto {
-    private Long id;
+    private String id;
     private String name;
 }

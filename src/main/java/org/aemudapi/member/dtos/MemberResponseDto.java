@@ -6,7 +6,7 @@ import org.aemudapi.member.entity.PersonalInfo;
 
 @Data
 public class MemberResponseDto {
-    private Long id;
+    private String id;
     private PersonalInfo personalInfo;
     private MembershipInfo membershipInfo;
 
