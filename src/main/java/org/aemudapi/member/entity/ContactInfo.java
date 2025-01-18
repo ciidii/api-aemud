@@ -9,11 +9,9 @@ import java.util.List;
 
 @Setter
 @Getter
-@Entity
-public class ContactInfo extends BaseEntity {
+@Embeddable
+public class ContactInfo {
     private String numberPhone;
     private String email;
-    @OneToMany
-    @JoinTable(name = "persontocall_contact")
-    private List<PersonToCall> personToCalls;
+    private PersonToCall personToCall;
 }

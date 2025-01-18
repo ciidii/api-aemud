@@ -28,7 +28,6 @@ public class AddressInfoMapper {
         addressInfo.setAddressInDakar(dto.getAddressInDakar());
         addressInfo.setHolidayAddress(dto.getHolidayAddress());
         addressInfo.setAddressToCampus(dto.getAddressToCampus());
-        addressInfo.setId(dto.getMemberID());
         return addressInfo;
     }
 

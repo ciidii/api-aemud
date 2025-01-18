@@ -16,10 +16,10 @@ public class PersonToCallMapper {
         }
 
         PersonToCall entity = new PersonToCall();
-        entity.setLastname(dto.getLastname());
-        entity.setFirstname(dto.getFirstname());
-        entity.setRequiredNumberPhone(dto.getRequiredNumberPhone());
-        entity.setOptionalNumberPhone(dto.getOptionalNumberPhone());
+        entity.setPersonToCallName(dto.getLastname());
+        entity.setPersonToCallFirstname(dto.getFirstname());
+        entity.setPersonToCallRequiredNumberPhone(dto.getRequiredNumberPhone());
+        entity.setPersonToCallOptionalNumberPhone(dto.getOptionalNumberPhone());
         entity.setRelationship(dto.getRelationship());
 
         return entity;
@@ -31,10 +31,10 @@ public class PersonToCallMapper {
         }
 
         PersonToCallDto dto = new PersonToCallDto();
-        dto.setLastname(entity.getLastname());
-        dto.setFirstname(entity.getFirstname());
-        dto.setRequiredNumberPhone(entity.getRequiredNumberPhone());
-        dto.setOptionalNumberPhone(entity.getOptionalNumberPhone());
+        dto.setLastname(entity.getPersonToCallName());
+        dto.setFirstname(entity.getPersonToCallFirstname());
+        dto.setRequiredNumberPhone(entity.getPersonToCallRequiredNumberPhone());
+        dto.setOptionalNumberPhone(entity.getPersonToCallOptionalNumberPhone());
         dto.setRelationship(entity.getRelationship());
 
         return dto;

@@ -43,7 +43,6 @@ public class InscriptionServiceImpl implements InscriptionService {
                 String memberID = response.getBody().getData().getId();
                 AcademicInfoRequestDTO academicInfoRequestDTO = memberDataRequestDTO.getAcademicInfo();
                 academicInfoRequestDTO.setMemberID(memberID);
-                academicInfoRequestDTO.setIdYear(currentSession);
                 this.academicInfoService.createAcademicInfo(academicInfoRequestDTO);
 
                 AddressInfoRequestDto addressInfoRequestDto = memberDataRequestDTO.getAddressInfo();

@@ -34,9 +34,6 @@ public class ContactInfoServiceImpl implements ContactInfoService {
     public ResponseEntity<ResponseVO<Void>> createContactInfo(ContactInfoRequestDto contactInfoRequestDto) {
         ContactInfo contactInfo;
         contactInfo = this.contactInfoMapper.toEntity(contactInfoRequestDto);
-        List<PersonToCall> personToCalls = contactInfo.getPersonToCalls();
-        personToCalls = this.personToCallRepository.saveAll(personToCalls);
-        contactInfo.setPersonToCalls(personToCalls);
         this.contactInfoRepository.save(contactInfo);
         ResponseVO<Void> responseVO = new ResponseVOBuilder<Void>().success().build();
         return new ResponseEntity<>(responseVO, HttpStatus.CREATED);

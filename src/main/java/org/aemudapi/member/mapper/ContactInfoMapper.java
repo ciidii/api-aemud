@@ -26,7 +26,6 @@ public class ContactInfoMapper {
         ContactInfo entity = new ContactInfo();
         entity.setEmail(dto.getEmail());
         entity.setNumberPhone(dto.getNumberPhone());
-        entity.setPersonToCalls(this.personToCallMapper.toEntityList(dto.getPersonToCalls()));
         // entity.setId(d);
         return entity;
     }
@@ -41,10 +40,6 @@ public class ContactInfoMapper {
 //            dto.setMemberID(entity.getMemberSessionPK().getMemberID());
 //            dto.setIdYear(entity.getMemberSessionPK().getSessionID());
 //        }
-
-        if (entity.getPersonToCalls() != null) {
-            dto.setPersonToCalls(this.personToCallMapper.toDtoList(entity.getPersonToCalls()));
-        }
 
         return dto;
     }

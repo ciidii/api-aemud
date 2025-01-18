@@ -8,11 +8,10 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 public class Bourse extends BaseEntity {
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
     private String lebelle;
     private Double montant;
-    @OneToMany(mappedBy = "bourse")
-    private List<Member> member;
 }

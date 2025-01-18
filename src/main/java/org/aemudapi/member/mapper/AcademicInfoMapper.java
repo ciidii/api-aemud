@@ -23,10 +23,6 @@ public class AcademicInfoMapper {
         }
 
         AcademicInfo academicInfo = new AcademicInfo();
-        academicInfo.setUniversity(dto.getUniversity());
-        academicInfo.setFaculty(dto.getFaculty());
-        academicInfo.setDepartment(dto.getDepartment());
-        academicInfo.setSection(dto.getSection());
         academicInfo.setStudiesLevel(dto.getStudiesLevel());
 
         return academicInfo;
@@ -50,10 +46,6 @@ public class AcademicInfoMapper {
         }
 
         AcademicInfoRequestDTO dto = new AcademicInfoRequestDTO();
-        dto.setUniversity(academicInfo.getUniversity());
-        dto.setFaculty(academicInfo.getFaculty());
-        dto.setDepartment(academicInfo.getDepartment());
-        dto.setSection(academicInfo.getSection());
         dto.setStudiesLevel(academicInfo.getStudiesLevel());
 
         return dto;

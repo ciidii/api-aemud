@@ -8,8 +8,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Entity
-public class AddressInfo extends BaseEntity {
+@Embeddable
+public class AddressInfo {
     private String addressInDakar;
     private String holidayAddress;
     private String addressToCampus;
