@@ -24,6 +24,8 @@ public class AcademicInfoMapper {
 
         AcademicInfo academicInfo = new AcademicInfo();
         academicInfo.setStudiesLevel(dto.getStudiesLevel());
+        academicInfo.setStudiesDomain(dto.getStudiesDomain());
+        academicInfo.setInstitutionName(dto.getInstitutionName());
 
         return academicInfo;
     }
@@ -47,6 +49,8 @@ public class AcademicInfoMapper {
 
         AcademicInfoRequestDTO dto = new AcademicInfoRequestDTO();
         dto.setStudiesLevel(academicInfo.getStudiesLevel());
+        dto.setStudiesDomain(academicInfo.getStudiesDomain());
+        dto.setInstitutionName(academicInfo.getInstitutionName());
 
         return dto;
     }

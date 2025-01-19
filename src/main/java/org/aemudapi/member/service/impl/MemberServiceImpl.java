@@ -2,10 +2,16 @@ package org.aemudapi.member.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import org.aemudapi.club.entity.Club;
+import org.aemudapi.club.repository.ClubRepository;
+import org.aemudapi.commission.entity.Commission;
 import org.aemudapi.member.dtos.*;
+import org.aemudapi.member.entity.Bourse;
 import org.aemudapi.member.entity.Member;
 import org.aemudapi.member.mapper.MemberMapper;
 import org.aemudapi.member.mapper.MemberResponseMapper;
+import org.aemudapi.member.repository.BourseRepository;
+import org.aemudapi.member.repository.CommissionRepository;
 import org.aemudapi.member.repository.MemberRepository;
 import org.aemudapi.member.service.MemberService;
 import org.aemudapi.utils.RequestPageableVO;
@@ -20,9 +26,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 import static org.aemudapi.utils.Utils.makeFilterCriteriaSpec;
 
@@ -32,14 +36,16 @@ public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
     private final MemberMapper memberMapper;
     private final MemberResponseMapper memberResponseMapper;
+    private final ClubRepository clubRepository;
+    private final CommissionRepository commissionRepository;
+    private final BourseRepository bourseRepository;
 
     @Override
-    @Transactional
-    public ResponseEntity<ResponseVO<MemberRequestDto>> addMember(MemberRequestDto memberRequestDto) {
+    public ResponseEntity<ResponseVO<MemberDataResponseDTO>> addMember(MemberRequestDto memberRequestDto) {
         Member member = this.memberMapper.toEntity(memberRequestDto);
         Member memberFromDB = this.memberRepository.save(member);
-        MemberRequestDto dto = this.memberMapper.toDto(memberFromDB);
-        ResponseVO<MemberRequestDto> responseVO = new ResponseVOBuilder<MemberRequestDto>().addData(dto).build();
+        MemberDataResponseDTO dto = this.memberMapper.toDto(memberFromDB);
+        ResponseVO<MemberDataResponseDTO> responseVO = new ResponseVOBuilder<MemberDataResponseDTO>().addData(dto).build();
         return new ResponseEntity<>(responseVO, HttpStatus.CREATED);
     }
 
@@ -51,7 +57,6 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    @Transactional
     public ResponseEntity<ResponsePageableVO<MemberDataResponseDTO>> getAllMembers(RequestPageableVO requestPageableVO) {
         PageRequest pageRequest = PageRequest.of(requestPageableVO.getPage() - 1, requestPageableVO.getRpp());
         Page<Member> memberPage = memberRepository.findAll(pageRequest);
@@ -106,8 +111,6 @@ public class MemberServiceImpl implements MemberService {
         ContactInfoRequestDto contactInfoRequestDto;
         for (Member member : memberPage) {
             MemberDataResponseDTO memberDataResponseDTO = new MemberDataResponseDTO();
-
-            memberDataResponseDTO.setMember(this.memberResponseMapper.toDto(member));
             memberResponseDtos.add(memberDataResponseDTO);
         }
         return memberResponseDtos;

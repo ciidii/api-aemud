@@ -26,20 +26,21 @@ public class ContactInfoMapper {
         ContactInfo entity = new ContactInfo();
         entity.setEmail(dto.getEmail());
         entity.setNumberPhone(dto.getNumberPhone());
-        // entity.setId(d);
+        entity.setPersonToCall(personToCallMapper.toEntity(dto.getPersonToCall()));
         return entity;
     }
 
     public ContactInfoRequestDto toDTO(ContactInfo entity) {
+        if (entity == null) {
+            return null;
+        }
+
         ContactInfoRequestDto dto = new ContactInfoRequestDto();
 
         dto.setEmail(entity.getEmail());
         dto.setNumberPhone(entity.getNumberPhone());
+        dto.setPersonToCall(this.personToCallMapper.toDto(entity.getPersonToCall()));
 
-//        if (entity.getMemberSessionPK() != null) {
-//            dto.setMemberID(entity.getMemberSessionPK().getMemberID());
-//            dto.setIdYear(entity.getMemberSessionPK().getSessionID());
-//        }
 
         return dto;
     }

@@ -1,15 +1,17 @@
 package org.aemudapi.member.dtos;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.util.List;
-
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class ContactInfoRequestDto {
-    private String memberID;
-    private String idYear;
     private String numberPhone;
     private String email;
-    private List<PersonToCallDto> personToCalls;
+    private PersonToCallDto personToCall;
 
 }

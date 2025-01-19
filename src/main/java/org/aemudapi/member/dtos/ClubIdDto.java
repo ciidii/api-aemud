@@ -5,7 +5,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CommissionDto {
+public class ClubIdDto {
     private String id;
-    private String name;
 }

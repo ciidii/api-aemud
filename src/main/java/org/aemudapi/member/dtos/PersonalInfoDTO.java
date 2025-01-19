@@ -1,6 +1,7 @@
 package org.aemudapi.member.dtos;
 
 import lombok.Data;
+import org.aemudapi.member.entity.MaritalStatus;
 
 import java.time.LocalDate;
 
@@ -10,5 +11,5 @@ public class PersonalInfoDTO {
     private String firstname;
     private String nationality;
     private LocalDate birthday;
-    private String maritalStatus;
+    private MaritalStatus maritalStatus;
 }

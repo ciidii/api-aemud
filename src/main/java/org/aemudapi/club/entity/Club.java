@@ -10,13 +10,15 @@ import org.aemudapi.member.entity.Member;
 
 import java.util.List;
 
+@Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 public class Club extends BaseEntity {
     private String name;
-    @OneToMany(mappedBy = "clubs")
-    private List<Member> member;
+
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
 }

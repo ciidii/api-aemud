@@ -7,10 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AcademicInfoRequestDTO {
-    private String memberID;
-    private String university;
-    private String faculty;
-    private String department;
-    private String section;
+    private String institutionName;
+    private String studiesDomain;
     private String studiesLevel;
 }

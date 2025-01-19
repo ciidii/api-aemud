@@ -1,6 +1,7 @@
 package org.aemudapi.member.controller;
 
 import jakarta.validation.constraints.Min;
+import lombok.AllArgsConstructor;
 import org.aemudapi.member.dtos.FilterDTO;
 import org.aemudapi.member.dtos.MemberDataResponseDTO;
 import org.aemudapi.member.dtos.MemberRequestDto;
@@ -20,17 +21,14 @@ import java.util.List;
 
 @RestController()
 @RequestMapping(path = "members")
+@AllArgsConstructor
 public class MemberController {
     private final MemberService memberService;
     private final OrangeSmsService orangeSmsService;
 
-    public MemberController(MemberService memberService, OrangeSmsService orangeSmsService) {
-        this.memberService = memberService;
-        this.orangeSmsService = orangeSmsService;
-    }
 
     @PostMapping
-    ResponseEntity<ResponseVO<MemberRequestDto>> addMember(@RequestBody MemberRequestDto memberRequestDto) {
+    ResponseEntity<ResponseVO<MemberDataResponseDTO>> addMember(@RequestBody MemberRequestDto memberRequestDto) {
         return this.memberService.addMember(memberRequestDto);
     }
 

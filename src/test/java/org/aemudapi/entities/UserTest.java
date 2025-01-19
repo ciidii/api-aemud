@@ -20,17 +20,6 @@ class UserTest {
     @Mock
     private List<Role> roles;
 
-    @BeforeEach
-    void setUp() {
-        User user = new User();
-        List<Role> roles = new ArrayList<>();
-        roles.add(new Role(1L, "ROLE_ADMIN"));
-        roles.add(new Role(2L, "ROLE_USER"));
-        Commission commission = new Commission(1L, "Commission");
-        List<Club> clubs = new ArrayList<>();
-        clubs.add(new Club(1L, "Club Informatique"));
-        clubs.add(new Club(1L, "Club Maths"));
-    }
 
     @Test
     void testConstructorsWithAllAgrs() {

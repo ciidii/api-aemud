@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BourseRepository extends JpaRepository<Bourse, String> {
+    Bourse getBourseById(String id);
 }

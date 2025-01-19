@@ -1,16 +1,21 @@
 package org.aemudapi.member.dtos;
 
-import lombok.Data;
+import lombok.*;
 
-@Data
+import java.util.List;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class MemberRequestDto {
     private String id;
     private PersonalInfoDTO personalInfo;
     private MembershipInfoDTO membershipInfo;
-    private ClubDto club;
-    private CommissionDto commission;
-
-    public MemberRequestDto() {
-        //constructeur without params
-    }
+    private AcademicInfoRequestDTO academicInfoRequest;
+    private AddressInfoRequestDto addressInfo;
+    private ContactInfoRequestDto contactInfo;
+    private BourseIdDTO bourseId;
+    private List<ClubIdDto> clubsId;
+    private List<CommissionIdDto> commissionsId;
 }

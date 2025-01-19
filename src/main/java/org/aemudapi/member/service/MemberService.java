@@ -15,7 +15,7 @@ import java.util.List;
 
 @Service
 public interface MemberService {
-    ResponseEntity<ResponseVO<MemberRequestDto>> addMember(MemberRequestDto memberRequestDto);
+    ResponseEntity<ResponseVO<MemberDataResponseDTO>> addMember(MemberRequestDto memberRequestDto);
 
     ResponseEntity<ResponseVO<Void>> removeMember(String id);
 

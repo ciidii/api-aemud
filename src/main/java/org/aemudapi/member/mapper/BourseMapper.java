@@ -1,6 +1,7 @@
 package org.aemudapi.member.mapper;
 
 import org.aemudapi.member.dtos.BourseDTO;
+import org.aemudapi.member.dtos.BourseIdDTO;
 import org.aemudapi.member.entity.Bourse;
 import org.springframework.stereotype.Component;
 
@@ -16,7 +17,7 @@ public class BourseMapper {
         }
 
         BourseDTO dto = new BourseDTO();
-      //  dto.setBourseId(bourse.getIdBourse());
+        dto.setBourseId(bourse.getId());
         dto.setLebelle(bourse.getLebelle());
         dto.setMontant(bourse.getMontant());
 
@@ -39,9 +40,20 @@ public class BourseMapper {
         }
 
         Bourse bourse = new Bourse();
-       // bourse.setIdBourse(dto.getBourseId());
+        // bourse.setIdBourse(dto.getBourseId());
         bourse.setLebelle(dto.getLebelle());
         bourse.setMontant(dto.getMontant());
+
+        return bourse;
+    }
+
+    public Bourse toEntity(BourseIdDTO bourseId) {
+        if (bourseId == null) {
+            return null;
+        }
+
+        Bourse bourse = new Bourse();
+        bourse.setId(bourseId.getBourseId());
 
         return bourse;
     }

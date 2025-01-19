@@ -27,7 +27,6 @@ public class MembershipInfoMapper {
         }
         MembershipInfo entity = new MembershipInfo();
         Session session = new Session();
-        session.setId(dto.getYearOfMembership());
         entity.setLegacyInstitution(dto.getLegacyInstitution());
         entity.setYearOfBac(dto.getYearOfBac());
         entity.setBacMention(dto.getBacMention());
@@ -48,6 +47,9 @@ public class MembershipInfoMapper {
         MembershipInfoDTO dto = new MembershipInfoDTO();
         dto.setAemudCourses(entity.getAemudCourses());
         dto.setOtherCourses(entity.getOtherCourses());
+        dto.setBacSeries(entity.getBacSeries());
+        dto.setBacMention(entity.getBacMention());
+        dto.setYearOfBac(entity.getYearOfBac());
         dto.setParticipatedActivity(entity.getParticipatedActivity());
         dto.setPoliticOrganisation(entity.getPoliticOrganisation());
         dto.setLegacyInstitution(entity.getLegacyInstitution());
