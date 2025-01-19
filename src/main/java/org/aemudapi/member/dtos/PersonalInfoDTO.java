@@ -10,6 +10,7 @@ public class PersonalInfoDTO {
     private String name;
     private String firstname;
     private String nationality;
+    private String gender;
     private LocalDate birthday;
     private MaritalStatus maritalStatus;
 }

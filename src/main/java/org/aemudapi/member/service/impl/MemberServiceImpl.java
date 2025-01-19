@@ -50,19 +50,10 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public ResponseEntity<ResponseVO<MemberRequestDto>> updateMember(MemberRequestDto memberRequestDto) {
-        this.memberRepository.save(memberMapper.toEntity(memberRequestDto));
-        ResponseVO<MemberRequestDto> responseVO = new ResponseVOBuilder<MemberRequestDto>().addData(memberRequestDto).build();
+    public ResponseEntity<ResponseVO<MemberDataResponseDTO>> updateMember(MemberRequestDto memberRequestDto) {
+        Member save = this.memberRepository.save(memberMapper.toEntity(memberRequestDto));
+        ResponseVO<MemberDataResponseDTO> responseVO = new ResponseVOBuilder<MemberDataResponseDTO>().addData(this.memberMapper.toDto(save)).build();
         return new ResponseEntity<>(responseVO, HttpStatus.OK);
-    }
-
-    @Override
-    public ResponseEntity<ResponsePageableVO<MemberDataResponseDTO>> getAllMembers(RequestPageableVO requestPageableVO) {
-        PageRequest pageRequest = PageRequest.of(requestPageableVO.getPage() - 1, requestPageableVO.getRpp());
-        Page<Member> memberPage = memberRepository.findAll(pageRequest);
-        ResponsePageableVO<MemberDataResponseDTO> responsePageableVO = new ResponsePageableVO<>(memberPage.getTotalElements(), fetchPageToMemberResponseDTO(memberPage), requestPageableVO);
-
-        return new ResponseEntity<>(responsePageableVO, HttpStatus.OK);
     }
 
 
@@ -107,10 +98,8 @@ public class MemberServiceImpl implements MemberService {
 
     private <T extends Iterable<Member>> List<MemberDataResponseDTO> fetchPageToMemberResponseDTO(T memberPage) {
         List<MemberDataResponseDTO> memberResponseDtos = new ArrayList<>();
-        AddressInfoRequestDto addressInfo;
-        ContactInfoRequestDto contactInfoRequestDto;
         for (Member member : memberPage) {
-            MemberDataResponseDTO memberDataResponseDTO = new MemberDataResponseDTO();
+            MemberDataResponseDTO memberDataResponseDTO = this.memberMapper.toDto(member);
             memberResponseDtos.add(memberDataResponseDTO);
         }
         return memberResponseDtos;

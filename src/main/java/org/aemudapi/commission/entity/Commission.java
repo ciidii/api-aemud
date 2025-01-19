@@ -15,8 +15,7 @@ import java.util.List;
 public class Commission extends BaseEntity {
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "member_id")
-    private Member member;
+    @ManyToMany(mappedBy = "commissions")
+    private List<Member> member;
 }
 

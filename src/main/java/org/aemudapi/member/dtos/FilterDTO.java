@@ -9,5 +9,6 @@ public class FilterDTO {
     private String club;
     private String year;
     private String commission;
+    private String bourse;
 
 }

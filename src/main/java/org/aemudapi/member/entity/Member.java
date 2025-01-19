@@ -31,13 +31,23 @@ public class Member extends BaseEntity {
     @Embedded
     private AddressInfo addressInfo;
 
-    @OneToMany(mappedBy = "member")
+    @ManyToMany(cascade = {CascadeType.MERGE})
+    @JoinTable(
+            name = "membre_commission",
+            joinColumns = @JoinColumn(name = "membre_id"),
+            inverseJoinColumns = @JoinColumn(name = "commission_id")
+    )
     private List<Commission> commissions;
 
-    @OneToMany(mappedBy = "member")
+    @ManyToMany(cascade = {CascadeType.MERGE})
+    @JoinTable(
+            name = "membre_club",
+            joinColumns = @JoinColumn(name = "membre_id"),
+            inverseJoinColumns = @JoinColumn(name = "club_id")
+    )
     private List<Club> clubs;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "bourse_id")
     private Bourse bourse;
 }

@@ -55,6 +55,7 @@ public class MemberMapper {
             return null;
         }
         Member entity = new Member();
+        entity.setId(dto.getId());
         entity.setPersonalInfo(this.personalInfoMapper.toEntity(dto.getPersonalInfo()));
         entity.setMembershipInfo(this.membershipInfo.toEntity(dto.getMembershipInfo()));
         entity.setAcademicInfo(this.academicInfoMapper.toEntity(dto.getAcademicInfoRequest()));

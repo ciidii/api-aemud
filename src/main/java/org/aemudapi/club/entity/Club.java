@@ -18,7 +18,7 @@ import java.util.List;
 public class Club extends BaseEntity {
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "member_id")
-    private Member member;
+    @ManyToMany(mappedBy = "clubs", cascade = {CascadeType.PERSIST})
+    private List<Member> members;
 }
+

@@ -32,12 +32,6 @@ public class MemberController {
         return this.memberService.addMember(memberRequestDto);
     }
 
-    @GetMapping(path = "all")
-    ResponseEntity<ResponsePageableVO<MemberDataResponseDTO>> getMembers(@RequestParam("page") @Min(1) int page, @Min(1) @RequestParam("rpp") int rpp) {
-        RequestPageableVO requestPageableVO = new RequestPageableVO(page, rpp);
-        return this.memberService.getAllMembers(requestPageableVO);
-    }
-
     @GetMapping
     ResponseEntity<ResponseVO<MemberDataResponseDTO>> getMember(@RequestParam("member-id") String memberID) {
         return this.memberService.getMemberById(memberID);
@@ -45,7 +39,7 @@ public class MemberController {
 
 
     @PutMapping
-    ResponseEntity<ResponseVO<MemberRequestDto>> updateMember(@RequestBody MemberRequestDto memberRequestDto) throws GeneralSecurityException, IOException {
+    ResponseEntity<ResponseVO<MemberDataResponseDTO>> updateMember(@RequestBody MemberRequestDto memberRequestDto) throws GeneralSecurityException, IOException {
         return this.memberService.updateMember(memberRequestDto);
     }
 
@@ -68,10 +62,11 @@ public class MemberController {
              @RequestParam(name = "value", required = false) String value,
              @RequestParam(name = "club", required = false) String club,
              @RequestParam(name = "commission", required = false) String commission,
-             @RequestParam(name = "year", required = false) String year
+             @RequestParam(name = "year", required = false) String year,
+             @RequestParam(name = "bourse", required = false) String bourse
             ) {
         RequestPageableVO requestPageableVO = new RequestPageableVO(page, rpp);
-        FilterDTO filters = new FilterDTO(club, year, commission);
+        FilterDTO filters = new FilterDTO(club, year, commission, bourse);
         return this.memberService.searchMember(requestPageableVO, criteria, value, filters);
     }
 
@@ -81,9 +76,10 @@ public class MemberController {
             @RequestParam(name = "value", required = false) String value,
             @RequestParam(name = "club", required = false) String club,
             @RequestParam(name = "commission", required = false) String commission,
-            @RequestParam(name = "year", required = false) String year
+            @RequestParam(name = "year", required = false) String year,
+            @RequestParam(name = "bourse", required = false) String bourse
     ) {
-        FilterDTO filters = new FilterDTO(club, year, commission);
+        FilterDTO filters = new FilterDTO(club, year, commission, bourse);
         return this.memberService.searchMemberToPrint(criteria, value, filters);
     }
 }

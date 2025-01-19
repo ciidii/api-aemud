@@ -28,6 +28,9 @@ public class Utils {
             if (filterDTO.getCommission() != null) {
                 memberSpecification = memberSpecification.and(MemberSpecification.hasCommission(filterDTO.getCommission()));
             }
+            if (filterDTO.getBourse() != null) {
+                memberSpecification = memberSpecification.and(MemberSpecification.hasBourse(filterDTO.getBourse()));
+            }
         }
         return memberSpecification;
     }

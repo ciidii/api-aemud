@@ -16,18 +16,18 @@ public class MemberSpecification {
     }
 
     public static Specification<Member> hasClub(String clubId) {
-        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("membershipInfo").get("clubs").get("id"), clubId);
+        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.    get("clubs").get("id"), clubId);
     }
 
     public static Specification<Member> hasYearOfRegistration(String yearOfRegistration) {
-        return (root, query, criteriaBuilder) -> yearOfRegistration == null ? criteriaBuilder.conjunction() : criteriaBuilder.equal(root.get("membershipInfo").get("yearOfMembership").get("idYear"), yearOfRegistration);
+        return (root, query, criteriaBuilder) -> yearOfRegistration == null ? criteriaBuilder.conjunction() : criteriaBuilder.equal(root.get("member").get("yearOfMembership").get("id"), yearOfRegistration);
     }
 
     public static Specification<Member> hasCommission(String commissionId) {
-        return (root, query, criteriaBuilder) -> commissionId == null ? criteriaBuilder.conjunction() : criteriaBuilder.equal(root.get("membershipInfo").get("commission").get("id"), commissionId);
+        return (root, query, criteriaBuilder) -> commissionId == null ? criteriaBuilder.conjunction() : criteriaBuilder.equal(root.get("commissions").get("id"), commissionId);
     }
 
     public static Specification<Member> hasBourse(String bourseId) {
-        return (root, query, criteriaBuilder) -> bourseId == null ? criteriaBuilder.conjunction() : criteriaBuilder.equal(root.get("membershipInfo").get("bourse").get("idBourse"), bourseId);
+        return (root, query, criteriaBuilder) -> bourseId == null ? criteriaBuilder.conjunction() : criteriaBuilder.equal(root.get("bourse").get("id"), bourseId);
     }
 }
