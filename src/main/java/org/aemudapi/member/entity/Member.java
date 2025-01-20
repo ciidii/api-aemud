@@ -50,4 +50,7 @@ public class Member extends BaseEntity {
     @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "bourse_id")
     private Bourse bourse;
+
+    @OneToMany(cascade = {CascadeType.MERGE},mappedBy = "member")
+    private List<Registration> registration;
 }

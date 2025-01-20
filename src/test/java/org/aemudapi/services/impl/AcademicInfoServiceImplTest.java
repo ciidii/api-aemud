@@ -2,13 +2,12 @@ package org.aemudapi.services.impl;
 
 import org.aemudapi.club.entity.Club;
 import org.aemudapi.commission.entity.Commission;
-import org.aemudapi.member.entity.Member_Session_PK;
 import org.aemudapi.member.entity.MembershipInfo;
 import org.aemudapi.member.entity.PersonalInfo;
 import org.aemudapi.member.entity.Session;
 import org.aemudapi.member.entity.*;
 import org.aemudapi.member.mapper.AcademicInfoMapper;
-import org.aemudapi.member.repository.YearOfSessionRepository;
+import org.aemudapi.member.repository.SessionRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,7 +30,7 @@ class AcademicInfoServiceTest {
     @Mock
     private AcademicInfoRepository academicInfoRepository;
     @Mock
-    private YearOfSessionRepository yearOfSessionRepository;
+    private SessionRepository sessionRepository;
     AcademicInfo academicInfo;
     Session session = new Session();
     Member member = new Member();
@@ -41,7 +40,7 @@ class AcademicInfoServiceTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        this.underTest = new AcademicInfoServiceImpl(academicInfoMapper, academicInfoRepository, yearOfSessionRepository);
+        this.underTest = new AcademicInfoServiceImpl(academicInfoMapper, academicInfoRepository, sessionRepository);
 
         member.setId(1L);
         PersonalInfo personalInfo = new PersonalInfo();

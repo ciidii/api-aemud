@@ -54,7 +54,7 @@ public class ClubServiceImpl implements ClubService {
 
     @Override
     public ResponseEntity<ResponseVO<Void>> deleteClub(String id) {
-        FilterDTO filterDTO = new FilterDTO(id, null, null,null);
+        FilterDTO filterDTO = FilterDTO.builder().club(id).build();
         Specification<Member> memberSpecification = Utils.makeFilterCriteriaSpec(null, null, filterDTO);
         List<Member> members = memberRepository.findAll(memberSpecification);
         if (members.isEmpty()) {

@@ -31,6 +31,9 @@ public class Utils {
             if (filterDTO.getBourse() != null) {
                 memberSpecification = memberSpecification.and(MemberSpecification.hasBourse(filterDTO.getBourse()));
             }
+            if (filterDTO.getRegistrationStatus() != null) {
+                memberSpecification = memberSpecification.and(MemberSpecification.registrationStatus(filterDTO.getRegistrationStatus()));
+            }
         }
         return memberSpecification;
     }

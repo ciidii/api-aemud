@@ -5,8 +5,9 @@ import lombok.AllArgsConstructor;
 import org.aemudapi.member.dtos.FilterDTO;
 import org.aemudapi.member.dtos.MemberDataResponseDTO;
 import org.aemudapi.member.dtos.MemberRequestDto;
-import org.aemudapi.notification.dtos.MessageDto;
+import org.aemudapi.member.entity.RegistrationStatus;
 import org.aemudapi.member.service.MemberService;
+import org.aemudapi.notification.dtos.MessageDto;
 import org.aemudapi.notification.services.OrangeSmsService;
 import org.aemudapi.utils.RequestPageableVO;
 import org.aemudapi.utils.ResponsePageableVO;
@@ -55,21 +56,32 @@ public class MemberController {
     }
 
     @GetMapping(path = "search")
-    ResponseEntity<ResponsePageableVO<MemberDataResponseDTO>> searchMember
-            (@RequestParam("page") @Min(1) int page,
-             @Min(1) @RequestParam("rpp") int rpp,
-             @RequestParam(name = "criteria", required = false) String criteria,
-             @RequestParam(name = "value", required = false) String value,
-             @RequestParam(name = "club", required = false) String club,
-             @RequestParam(name = "commission", required = false) String commission,
-             @RequestParam(name = "year", required = false) String year,
-             @RequestParam(name = "bourse", required = false) String bourse
-            ) {
+    ResponseEntity<ResponsePageableVO<MemberDataResponseDTO>> searchMember(
+            @RequestParam("page") @Min(1) int page,
+            @Min(1) @RequestParam("rpp") int rpp,
+            @RequestParam(name = "criteria", required = false) String criteria,
+            @RequestParam(name = "value", required = false) String value,
+            @RequestParam(name = "club", required = false) String club,
+            @RequestParam(name = "commission", required = false) String commission,
+            @RequestParam(name = "year", required = false) String year,
+            @RequestParam(name = "paymentStatus", required = false) boolean paymentStatus,
+            @RequestParam(name = "bourse", required = false) String bourse,
+            @RequestParam(name = "registrationStatus", required = false) RegistrationStatus registrationStatus
+
+    ) {
         RequestPageableVO requestPageableVO = new RequestPageableVO(page, rpp);
-        FilterDTO filters = new FilterDTO(club, year, commission, bourse);
+        FilterDTO filters = FilterDTO
+                .builder()
+                .bourse(club)
+                .year(year)
+                .commission(commission)
+                .bourse(bourse)
+                .statusPayment(paymentStatus)
+                .registrationStatus(registrationStatus)
+                .build();
         return this.memberService.searchMember(requestPageableVO, criteria, value, filters);
     }
-
+    //TODO refactoring check if we can find this last page
     @GetMapping(path = "print")
     ResponseEntity<ResponseVO<List<MemberDataResponseDTO>>> searchMemberToPrint(
             @RequestParam(name = "criteria", required = false) String criteria,
@@ -77,9 +89,19 @@ public class MemberController {
             @RequestParam(name = "club", required = false) String club,
             @RequestParam(name = "commission", required = false) String commission,
             @RequestParam(name = "year", required = false) String year,
-            @RequestParam(name = "bourse", required = false) String bourse
+            @RequestParam(name = "bourse", required = false) String bourse,
+            @RequestParam(name = "paymentStatus", required = false) boolean paymentStatus,
+            @RequestParam(name = "registrationStatus", required = false) RegistrationStatus registrationStatus
     ) {
-        FilterDTO filters = new FilterDTO(club, year, commission, bourse);
+        FilterDTO filters = FilterDTO
+                .builder()
+                .bourse(club)
+                .year(year)
+                .commission(commission)
+                .bourse(bourse)
+                .statusPayment(paymentStatus)
+                .registrationStatus(registrationStatus)
+                .build();
         return this.memberService.searchMemberToPrint(criteria, value, filters);
     }
 }

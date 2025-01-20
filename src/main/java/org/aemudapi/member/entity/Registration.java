@@ -27,8 +27,8 @@ public class Registration extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private TypeInscription registrationType;
 
-    private Boolean statutPaiement = false;
-
-    private boolean registrationStatus = false;
+    private boolean statusPayment = false;
+    @Enumerated(EnumType.STRING)
+    private RegistrationStatus registrationStatus;
 
 }

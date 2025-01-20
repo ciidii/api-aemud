@@ -1,7 +1,7 @@
 package org.aemudapi.repositories;
 
 import org.aemudapi.member.entity.Session;
-import org.aemudapi.member.repository.YearOfSessionRepository;
+import org.aemudapi.member.repository.SessionRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -13,16 +13,16 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 class YearOfSessionServiceRepositoryTest {
 
     @Autowired
-    private YearOfSessionRepository yearOfSessionRepository;
+    private SessionRepository sessionRepository;
 
     @Test
     void updateCurrentYear() {
         //given
         Session session = new Session(1L, 2020, true);
-        yearOfSessionRepository.save(session);
+        sessionRepository.save(session);
         //when
-        this.yearOfSessionRepository.updateCurrentYear();
-        Session year = this.yearOfSessionRepository.findById(1L).orElseThrow();
+        this.sessionRepository.updateCurrentYear();
+        Session year = this.sessionRepository.findById(1L).orElseThrow();
         //then
         assertThat(year.isCurrentYear()).isTrue();
     }
@@ -31,7 +31,7 @@ class YearOfSessionServiceRepositoryTest {
     void checkIfTheCurrentYearExists() {
         //given
         Session session = new Session(1L, 2020, true);
-        this.yearOfSessionRepository.save(session);
+        this.sessionRepository.save(session);
         //when
         //SessionService year = this.yearOfSessionRepository.findCurrentSession();
         //then
