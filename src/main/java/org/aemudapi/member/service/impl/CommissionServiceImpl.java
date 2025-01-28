@@ -54,7 +54,7 @@ public class CommissionServiceImpl implements CommissionService {
 
     @Override
     public ResponseEntity<ResponseVO<Void>> deleteCommission(String commissionID) {
-        FilterDTO filterDTO = new FilterDTO(null, null, commissionID,null);
+        FilterDTO filterDTO = FilterDTO.builder().commission(commissionID).build();
         Specification<Member> memberSpecification = Utils.makeFilterCriteriaSpec(null, null, filterDTO);
         List<Member> members = this.memberRepository.findAll(memberSpecification);
         if (members.isEmpty()) {

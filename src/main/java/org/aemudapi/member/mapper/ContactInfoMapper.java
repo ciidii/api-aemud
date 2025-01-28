@@ -22,7 +22,7 @@ public class ContactInfoMapper {
         ContactInfo entity = new ContactInfo();
         entity.setEmail(dto.getEmail());
         entity.setNumberPhone(dto.getNumberPhone());
-        entity.setPersonToCall(personToCallMapper.toEntity(dto.getPersonToCall()));
+        entity.setPersonToCalls(personToCallMapper.toEntityList(dto.getPersonToCalls()));
         return entity;
     }
 
@@ -35,7 +35,7 @@ public class ContactInfoMapper {
 
         dto.setEmail(entity.getEmail());
         dto.setNumberPhone(entity.getNumberPhone());
-        dto.setPersonToCall(this.personToCallMapper.toDto(entity.getPersonToCall()));
+        dto.setPersonToCalls(this.personToCallMapper.toDtoList(entity.getPersonToCalls()));
 
 
         return dto;

@@ -1,0 +1,82 @@
+package org.aemudapi.contribution.mapper;
+
+import jakarta.persistence.EntityNotFoundException;
+import lombok.AllArgsConstructor;
+import org.aemudapi.contribution.dto.ContributionDTO;
+import org.aemudapi.contribution.entity.Contribution;
+import org.aemudapi.contribution.entity.Month;
+import org.aemudapi.contribution.repository.MonthRepository;
+import org.aemudapi.member.entity.Member;
+import org.aemudapi.member.entity.Session;
+import org.aemudapi.member.repository.MemberRepository;
+import org.aemudapi.member.repository.SessionRepository;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Component
+@AllArgsConstructor
+public class ContributionMapper {
+    private final SessionRepository sessionRepository;
+    private final MemberRepository memberRepository;
+    private final MonthRepository monthRepository;
+
+    public ContributionDTO toDTO(Contribution contribution) {
+        if (contribution == null) {
+            return null;
+        }
+
+        ContributionDTO dto = new ContributionDTO();
+        dto.setContributionId(contribution.getId() != null ? contribution.getId() : null);
+        dto.setMemberId(contribution.getMember() != null ? contribution.getMember().getId() : null);
+        dto.setSessionId(contribution.getSession() != null ? contribution.getSession().getId() : null);
+        dto.setMonthId(contribution.getMonth() != null ? contribution.getMonth().getId() : null);
+        dto.setAmount(contribution.getAmount());
+        dto.setPaymentDate(contribution.getPaymentDate());
+
+        return dto;
+    }
+
+
+    public Contribution toEntity(ContributionDTO dto) {
+        if (dto == null) {
+            return null;
+        }
+
+        Contribution contribution = new Contribution();
+        if (dto.getContributionId() != null) {
+            contribution.setId(dto.getContributionId());
+        }
+        Session session = this.sessionRepository.findById(dto.getSessionId()).orElseThrow(() -> new EntityNotFoundException("Session with id " + dto.getSessionId() + " not found"));
+        Member member = this.memberRepository.findById(dto.getMemberId()).orElseThrow(() -> new EntityNotFoundException("Member with id " + dto.getMemberId() + " not found"));
+        Month month = this.monthRepository.findById(dto.getMonthId()).orElseThrow(() -> new EntityNotFoundException("Member with id " + dto.getMemberId() + " not found"));
+        contribution.setMember(member);
+        contribution.setMonth(month);
+        contribution.setSession(session);
+        contribution.setAmount(member.getBourse().getMontant());
+        contribution.setId(dto.getContributionId());
+
+        return contribution;
+    }
+
+    public List<ContributionDTO> toDTOList(List<Contribution> contributions) {
+        if (contributions == null || contributions.isEmpty()) {
+            return List.of();
+        }
+
+        return contributions.stream()
+                .map(this::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    public List<Contribution> toEntityList(List<ContributionDTO> dtos) {
+        if (dtos == null || dtos.isEmpty()) {
+            return List.of();
+        }
+
+        return dtos.stream()
+                .map(this::toEntity)
+                .collect(Collectors.toList());
+    }
+}

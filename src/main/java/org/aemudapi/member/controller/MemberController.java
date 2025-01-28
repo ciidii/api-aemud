@@ -25,7 +25,6 @@ import java.util.List;
 @AllArgsConstructor
 public class MemberController {
     private final MemberService memberService;
-    private final OrangeSmsService orangeSmsService;
 
 
     @PostMapping
@@ -45,14 +44,8 @@ public class MemberController {
     }
 
     @DeleteMapping
-    ResponseEntity<ResponseVO<Void>> removeMember(@RequestParam("userId") String userId) {
-        return this.memberService.removeMember(userId);
-    }
-
-    @PostMapping(path = "sms")
-    ResponseEntity<String> sendMessage(@RequestBody MessageDto message) throws IOException {
-        this.orangeSmsService.sendSmsToMultipleRecipients(message.getRecipientNumbers(), message.getMessage());
-        return new ResponseEntity<>("Message envoyer avec succes", HttpStatus.OK);
+        ResponseEntity<ResponseVO<Void>> removeMember(@RequestParam("memberId") String memberId) {
+        return this.memberService.removeMember(memberId);
     }
 
     @GetMapping(path = "search")
@@ -64,7 +57,7 @@ public class MemberController {
             @RequestParam(name = "club", required = false) String club,
             @RequestParam(name = "commission", required = false) String commission,
             @RequestParam(name = "year", required = false) String year,
-            @RequestParam(name = "paymentStatus", required = false) boolean paymentStatus,
+            @RequestParam(name = "paymentStatus", required = false) String paymentStatus,
             @RequestParam(name = "bourse", required = false) String bourse,
             @RequestParam(name = "registrationStatus", required = false) RegistrationStatus registrationStatus
 
@@ -81,6 +74,7 @@ public class MemberController {
                 .build();
         return this.memberService.searchMember(requestPageableVO, criteria, value, filters);
     }
+
     //TODO refactoring check if we can find this last page
     @GetMapping(path = "print")
     ResponseEntity<ResponseVO<List<MemberDataResponseDTO>>> searchMemberToPrint(
@@ -90,7 +84,7 @@ public class MemberController {
             @RequestParam(name = "commission", required = false) String commission,
             @RequestParam(name = "year", required = false) String year,
             @RequestParam(name = "bourse", required = false) String bourse,
-            @RequestParam(name = "paymentStatus", required = false) boolean paymentStatus,
+            @RequestParam(name = "paymentStatus", required = false) String paymentStatus,
             @RequestParam(name = "registrationStatus", required = false) RegistrationStatus registrationStatus
     ) {
         FilterDTO filters = FilterDTO

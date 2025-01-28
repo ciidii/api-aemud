@@ -20,9 +20,6 @@ public class MemberSpecification {
         return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("clubs").get("id"), clubId);
     }
 
-    public static Specification<Member> hasYearOfRegistration(String yearOfRegistration) {
-        return (root, query, criteriaBuilder) -> yearOfRegistration == null ? criteriaBuilder.conjunction() : criteriaBuilder.equal(root.get("member").get("yearOfMembership").get("id"), yearOfRegistration);
-    }
 
     public static Specification<Member> hasCommission(String commissionId) {
         return (root, query, criteriaBuilder) -> commissionId == null ? criteriaBuilder.conjunction() : criteriaBuilder.equal(root.get("commissions").get("id"), commissionId);

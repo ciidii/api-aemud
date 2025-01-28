@@ -18,5 +18,5 @@ public class PersonalInfo {
     private LocalDate birthday;
     @Enumerated(EnumType.STRING)
     private MaritalStatus maritalStatus;
-    private String gender;
+    private String gender ="MALE";
 }

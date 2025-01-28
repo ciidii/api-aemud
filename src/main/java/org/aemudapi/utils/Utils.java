@@ -19,20 +19,26 @@ public class Utils {
         }
 
         if (filterDTO != null) {
-            if (filterDTO.getClub() != null) {
+            if (filterDTO.getClub() != null && !filterDTO.getClub().isEmpty()) {
                 memberSpecification = memberSpecification.and(MemberSpecification.hasClub(filterDTO.getClub()));
             }
-            if (filterDTO.getYear() != null) {
-                memberSpecification = memberSpecification.and(MemberSpecification.hasYearOfRegistration(filterDTO.getYear()));
-            }
-            if (filterDTO.getCommission() != null) {
+
+            if (filterDTO.getCommission() != null && !filterDTO.getCommission().isEmpty()) {
                 memberSpecification = memberSpecification.and(MemberSpecification.hasCommission(filterDTO.getCommission()));
             }
-            if (filterDTO.getBourse() != null) {
+            if (filterDTO.getBourse() != null && !filterDTO.getBourse().isEmpty()) {
                 memberSpecification = memberSpecification.and(MemberSpecification.hasBourse(filterDTO.getBourse()));
             }
             if (filterDTO.getRegistrationStatus() != null) {
                 memberSpecification = memberSpecification.and(MemberSpecification.registrationStatus(filterDTO.getRegistrationStatus()));
+            }
+            if (filterDTO.getStatusPayment() != null) {
+                if (filterDTO.getStatusPayment().equalsIgnoreCase("oui")) {
+                    memberSpecification = memberSpecification.and(MemberSpecification.havePayed(true));
+
+                } else if (filterDTO.getStatusPayment().equalsIgnoreCase("non")) {
+                    memberSpecification = memberSpecification.and(MemberSpecification.havePayed(false));
+                }
             }
         }
         return memberSpecification;

@@ -12,10 +12,10 @@ public class MemberRequestDto {
     private String id;
     private PersonalInfoDTO personalInfo;
     private MembershipInfoDTO membershipInfo;
-    private AcademicInfoRequestDTO academicInfoRequest;
+    private AcademicInfoRequestDTO academicInfo;
     private AddressInfoRequestDto addressInfo;
     private ContactInfoRequestDto contactInfo;
-    private BourseIdDTO bourseId;
-    private List<ClubIdDto> clubsId;
-    private List<CommissionIdDto> commissionsId;
+    private BourseIdDTO bourse;
+    private List<ClubIdDto> clubs;
+    private List<CommissionIdDto> commissions;
 }

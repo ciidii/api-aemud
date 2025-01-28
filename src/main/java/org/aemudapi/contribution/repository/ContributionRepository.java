@@ -1,0 +1,47 @@
+package org.aemudapi.contribution.repository;
+
+import org.aemudapi.contribution.entity.Contribution;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public interface ContributionRepository extends JpaRepository<Contribution, String> {
+
+    @Query("""
+            select count(c) from Contribution c
+            """)
+    Integer countContributions();
+
+    @Query("""
+            select count(c) from Contribution c where c.session.id = :sessionId
+            """)
+    Integer countContributionBySessionId(String sessionId);
+
+    @Query("""
+            select count(c) from Contribution c where c.month = :monthId
+            """)
+    int countContributionPeerMonth(String monthId);
+
+    @Query("""
+            select c from Contribution c where c.month = :monthId and c.session.id = :sessionId
+            """)
+    List<Contribution> findContributionByMonth(String monthId, String sessionId);
+
+    @Query("""
+            select c from Contribution c where c.member.id = :memberId and c.session.id = :sessionId
+            """)
+    List<Contribution> findMemberContributionsBySessionId(String memberId, String sessionId);
+
+    @Query("""
+            select sum(c.amount) from Contribution c where c.session.id = :sessionId
+            """)
+    Double sumContributionsBySessionId(String sessionId);
+
+    @Query("""
+            select sum(c.amount) from Contribution c where c.session.id = :sessionId and c.month.id = :monthId
+            """)
+    Double sumContributionsByMonth(String sessionId, String monthId);
+}

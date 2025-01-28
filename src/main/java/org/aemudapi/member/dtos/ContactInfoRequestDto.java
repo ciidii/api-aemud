@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -12,6 +15,6 @@ import lombok.Setter;
 public class ContactInfoRequestDto {
     private String numberPhone;
     private String email;
-    private PersonToCallDto personToCall;
+    private List<PersonToCallDto> personToCalls;
 
 }

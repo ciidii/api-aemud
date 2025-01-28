@@ -3,7 +3,6 @@ package org.aemudapi.member.mapper;
 import lombok.AllArgsConstructor;
 import org.aemudapi.member.dtos.MemberDataResponseDTO;
 import org.aemudapi.member.dtos.MemberRequestDto;
-import org.aemudapi.member.dtos.MemberResponseDto;
 import org.aemudapi.member.entity.Member;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +14,6 @@ import java.util.List;
 public class MemberMapper {
     private final PersonalInfoMapper personalInfoMapper;
     private final MembershipInfoMapper membershipInfo;
-    private final MemberResponseMapper memberResponseMapper;
     private final AcademicInfoMapper academicInfoMapper;
     private final AddressInfoMapper addressInfoMapper;
     private final BourseMapper bourseMapper;
@@ -33,7 +31,7 @@ public class MemberMapper {
         dto.setPersonalInfo(this.personalInfoMapper.toDto(member.getPersonalInfo()));
         dto.setPersonalInfo(this.personalInfoMapper.toDto(member.getPersonalInfo()));
         dto.setMembershipInfo(this.membershipInfo.toDto(member.getMembershipInfo()));
-        dto.setAcademicInfoRequest(academicInfoMapper.toDto(member.getAcademicInfo()));
+        dto.setAcademicInfo(academicInfoMapper.toDto(member.getAcademicInfo()));
         dto.setAddressInfo(this.addressInfoMapper.toDto(member.getAddressInfo()));
         dto.setContactInfo(this.contactInfoMapper.toDTO(member.getContactInfo()));
         dto.setBourse(this.bourseMapper.toDTO(member.getBourse()));
@@ -42,7 +40,8 @@ public class MemberMapper {
         return dto;
     }
 
-    public MemberDataResponseDTO memberDataDto(Member member) {
+    public MemberDataResponseDTO
+    memberDataDto(Member member) {
         if (member == null) {
             return null;
         }
@@ -58,12 +57,12 @@ public class MemberMapper {
         entity.setId(dto.getId());
         entity.setPersonalInfo(this.personalInfoMapper.toEntity(dto.getPersonalInfo()));
         entity.setMembershipInfo(this.membershipInfo.toEntity(dto.getMembershipInfo()));
-        entity.setAcademicInfo(this.academicInfoMapper.toEntity(dto.getAcademicInfoRequest()));
+        entity.setAcademicInfo(this.academicInfoMapper.toEntity(dto.getAcademicInfo()));
         entity.setAddressInfo(this.addressInfoMapper.toEntity(dto.getAddressInfo()));
         entity.setContactInfo(this.contactInfoMapper.toEntity(dto.getContactInfo()));
-        entity.setBourse(this.bourseMapper.toEntity(dto.getBourseId()));
-        entity.setClubs(this.clubMapper.toEntity(dto.getClubsId()));
-        entity.setCommissions(this.commissionMapper.toEntity(dto.getCommissionsId()));
+        entity.setBourse(this.bourseMapper.toEntity(dto.getBourse()));
+        entity.setClubs(this.clubMapper.toEntity(dto.getClubs()));
+        entity.setCommissions(this.commissionMapper.toEntity(dto.getCommissions()));
         return entity;
     }
 

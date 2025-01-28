@@ -2,16 +2,11 @@ package org.aemudapi.member.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
-import org.aemudapi.club.entity.Club;
-import org.aemudapi.club.repository.ClubRepository;
-import org.aemudapi.commission.entity.Commission;
-import org.aemudapi.member.dtos.*;
-import org.aemudapi.member.entity.Bourse;
+import org.aemudapi.member.dtos.FilterDTO;
+import org.aemudapi.member.dtos.MemberDataResponseDTO;
+import org.aemudapi.member.dtos.MemberRequestDto;
 import org.aemudapi.member.entity.Member;
 import org.aemudapi.member.mapper.MemberMapper;
-import org.aemudapi.member.mapper.MemberResponseMapper;
-import org.aemudapi.member.repository.BourseRepository;
-import org.aemudapi.member.repository.CommissionRepository;
 import org.aemudapi.member.repository.MemberRepository;
 import org.aemudapi.member.service.MemberService;
 import org.aemudapi.utils.RequestPageableVO;
@@ -24,9 +19,9 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.aemudapi.utils.Utils.makeFilterCriteriaSpec;
 
@@ -35,10 +30,6 @@ import static org.aemudapi.utils.Utils.makeFilterCriteriaSpec;
 public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
     private final MemberMapper memberMapper;
-    private final MemberResponseMapper memberResponseMapper;
-    private final ClubRepository clubRepository;
-    private final CommissionRepository commissionRepository;
-    private final BourseRepository bourseRepository;
 
     @Override
     public ResponseEntity<ResponseVO<MemberDataResponseDTO>> addMember(MemberRequestDto memberRequestDto) {
@@ -60,7 +51,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public ResponseEntity<ResponseVO<MemberDataResponseDTO>> getMemberById(String id) {
         return memberRepository.findById(id).map(member -> {
-            MemberDataResponseDTO memberRequestDto = memberMapper.memberDataDto(member);
+            MemberDataResponseDTO memberRequestDto = memberMapper.toDto(member);
             ResponseVO<MemberDataResponseDTO> responseVO = new ResponseVOBuilder<MemberDataResponseDTO>().addData(memberRequestDto).build();
             return ResponseEntity.status(HttpStatus.OK).body(responseVO);
         }).orElseThrow(() -> new EntityNotFoundException("Un membre avec l'id " + id + " n'existe pas"));
@@ -70,7 +61,6 @@ public class MemberServiceImpl implements MemberService {
     public ResponseEntity<ResponsePageableVO<MemberDataResponseDTO>> searchMember(RequestPageableVO requestPageableVO, String criteria, String value, FilterDTO filterDTO) {
         PageRequest pageRequest = PageRequest.of(requestPageableVO.getPage() - 1, requestPageableVO.getRpp());
         Specification<Member> memberSpecification = makeFilterCriteriaSpec(criteria, value, filterDTO);
-
 
         Page<Member> memberPage = memberRepository.findAll(memberSpecification, pageRequest);
         List<MemberDataResponseDTO> memberDataResponseDTO = this.fetchPageToMemberResponseDTO(memberPage);

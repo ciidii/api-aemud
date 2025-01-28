@@ -7,4 +7,5 @@ import lombok.Setter;
 @Setter
 public class ClubIdDto {
     private String id;
+
 }

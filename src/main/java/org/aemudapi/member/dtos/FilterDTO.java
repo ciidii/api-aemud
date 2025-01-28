@@ -13,5 +13,5 @@ public class FilterDTO {
     private String commission;
     private String bourse;
     private RegistrationStatus registrationStatus;
-    private boolean statusPayment;
+    private String statusPayment;
 }

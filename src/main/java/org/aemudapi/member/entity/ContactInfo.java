@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 @Setter
@@ -13,5 +15,6 @@ import java.util.List;
 public class ContactInfo {
     private String numberPhone;
     private String email;
-    private PersonToCall personToCall;
+    @ElementCollection
+    private List<PersonToCall> personToCalls;
 }
