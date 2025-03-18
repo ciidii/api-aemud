@@ -7,12 +7,9 @@ import org.aemudapi.member.dtos.MemberDataResponseDTO;
 import org.aemudapi.member.dtos.MemberRequestDto;
 import org.aemudapi.member.entity.RegistrationStatus;
 import org.aemudapi.member.service.MemberService;
-import org.aemudapi.notification.dtos.MessageDto;
-import org.aemudapi.notification.services.OrangeSmsService;
 import org.aemudapi.utils.RequestPageableVO;
 import org.aemudapi.utils.ResponsePageableVO;
 import org.aemudapi.utils.ResponseVO;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,6 +34,11 @@ public class MemberController {
         return this.memberService.getMemberById(memberID);
     }
 
+    @GetMapping("numberphone")
+    ResponseEntity<ResponseVO<MemberDataResponseDTO>> findMemberByNumberPhone(@RequestParam("numberphone") String numberphone) {
+        return this.memberService.findMemberByNumberPhone(numberphone);
+    }
+
 
     @PutMapping
     ResponseEntity<ResponseVO<MemberDataResponseDTO>> updateMember(@RequestBody MemberRequestDto memberRequestDto) throws GeneralSecurityException, IOException {
@@ -44,7 +46,7 @@ public class MemberController {
     }
 
     @DeleteMapping
-        ResponseEntity<ResponseVO<Void>> removeMember(@RequestParam("memberId") String memberId) {
+    ResponseEntity<ResponseVO<Void>> removeMember(@RequestParam("memberId") String memberId) {
         return this.memberService.removeMember(memberId);
     }
 
@@ -59,7 +61,8 @@ public class MemberController {
             @RequestParam(name = "year", required = false) String year,
             @RequestParam(name = "paymentStatus", required = false) String paymentStatus,
             @RequestParam(name = "bourse", required = false) String bourse,
-            @RequestParam(name = "registrationStatus", required = false) RegistrationStatus registrationStatus
+            @RequestParam(name = "registrationStatus", required = false) RegistrationStatus registrationStatus,
+            @RequestParam(name = "sessionIdForRegistration", required = false) String sessionIdForRegistration
 
     ) {
         RequestPageableVO requestPageableVO = new RequestPageableVO(page, rpp);
@@ -71,6 +74,7 @@ public class MemberController {
                 .bourse(bourse)
                 .statusPayment(paymentStatus)
                 .registrationStatus(registrationStatus)
+                .registration(sessionIdForRegistration)
                 .build();
         return this.memberService.searchMember(requestPageableVO, criteria, value, filters);
     }

@@ -20,6 +20,7 @@ public class MemberMapper {
     private final ContactInfoMapper contactInfoMapper;
     private final ClubMapper clubMapper;
     private final CommissionMapper commissionMapper;
+    private final RegistrationMapper registrationMapper;
 
 
     public MemberDataResponseDTO toDto(Member member) {
@@ -37,6 +38,7 @@ public class MemberMapper {
         dto.setBourse(this.bourseMapper.toDTO(member.getBourse()));
         dto.setClubs(this.clubMapper.toDto(member.getClubs()));
         dto.setCommissions(this.commissionMapper.toDto(member.getCommissions()));
+        dto.setRegistration(this.registrationMapper.toDto(member.getRegistration()));
         return dto;
     }
 

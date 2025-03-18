@@ -1,5 +1,6 @@
 package org.aemudapi.member.mapper;
 
+import org.aemudapi.member.dtos.SessionRequestDTO;
 import org.aemudapi.member.dtos.SessionResponseDTO;
 import org.aemudapi.member.entity.Session;
 import org.springframework.stereotype.Component;
@@ -23,7 +24,7 @@ public class SessionMapper {
     }
 
     // Mapper un DTO SessionResponseDTO vers une entité SessionService
-    public Session toEntity(SessionResponseDTO dto) {
+    public Session toEntity(SessionRequestDTO dto) {
         if (dto == null) {
             return null;
         }

@@ -1,5 +1,6 @@
 package org.aemudapi.contribution.service.impl;
 
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.aemudapi.contribution.dto.ContributionDTO;
@@ -7,6 +8,7 @@ import org.aemudapi.contribution.entity.Contribution;
 import org.aemudapi.contribution.mapper.ContributionMapper;
 import org.aemudapi.contribution.repository.ContributionRepository;
 import org.aemudapi.contribution.service.ContributionService;
+import org.aemudapi.member.service.MemberService;
 import org.aemudapi.utils.ResponseVO;
 import org.aemudapi.utils.ResponseVOBuilder;
 import org.springframework.http.HttpStatus;
@@ -20,6 +22,7 @@ import java.util.List;
 public class ContributionServiceImpl implements ContributionService {
     private ContributionMapper contributionMapper;
     private ContributionRepository contributionRepository;
+    private final MemberService memberService;
 
     @Override
     public ResponseEntity<ResponseVO<ContributionDTO>> contribute(ContributionDTO contributionDTO) {
@@ -80,4 +83,16 @@ public class ContributionServiceImpl implements ContributionService {
         double contributionsAmount = this.contributionRepository.sumContributionsBySessionId(sessionId);
         return new ResponseEntity<>(new ResponseVOBuilder<Double>().addData(contributionsAmount).build(), HttpStatus.OK);
     }
+
+    @Override
+    public ResponseEntity<ResponseVO<ContributionDTO>> contributeUsingNumPhone(String phoneNumber, String yearId, String monthId) {
+        Contribution contribution = this.contributionMapper.toEntity(phoneNumber, yearId, monthId);
+        List<Contribution> monthMemberContribution = this.contributionRepository.findMonthMemberByPhoneNumberContribution(yearId, monthId, phoneNumber);
+        if (!monthMemberContribution.isEmpty()) {
+            throw new EntityExistsException("Ce member à déjà cotiser pour ce mois");
+        }
+        ContributionDTO contributionDTO = this.contributionMapper.toDTO(this.contributionRepository.save(contribution));
+        return new ResponseEntity<>(new ResponseVOBuilder<ContributionDTO>().addData(contributionDTO).build(), HttpStatus.OK);
+    }
+
 }

@@ -17,4 +17,5 @@ public class MemberDataResponseDTO {
     private BourseDTO bourse;
     private List<ClubDto> clubs;
     private List<CommissionDto> commissions;
+    private List<RegistrationResponseDto> registration;
 }

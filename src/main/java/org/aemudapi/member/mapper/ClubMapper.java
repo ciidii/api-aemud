@@ -1,15 +1,20 @@
 package org.aemudapi.member.mapper;
 
+import lombok.RequiredArgsConstructor;
 import org.aemudapi.club.entity.Club;
 import org.aemudapi.member.dtos.ClubDto;
 import org.aemudapi.member.dtos.ClubIdDto;
+import org.aemudapi.member.entity.Member;
+import org.aemudapi.member.repository.MemberRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@RequiredArgsConstructor
 public class ClubMapper {
+    private final MemberRepository memberRepository;
     public ClubDto toDto(Club club) {
         ClubDto dto = new ClubDto();
         dto.setId(club.getId());
@@ -21,6 +26,7 @@ public class ClubMapper {
         Club club = new Club();
         club.setId(clubDto.getId());
         club.setName(clubDto.getName());
+        List<Member> member =  this.memberRepository.findAllById(clubDto.getMembers());
         return club;
     }
 

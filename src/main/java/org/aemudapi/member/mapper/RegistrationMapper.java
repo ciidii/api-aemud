@@ -3,6 +3,7 @@ package org.aemudapi.member.mapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.aemudapi.member.dtos.RegistrationRequestDto;
+import org.aemudapi.member.dtos.RegistrationRequestWithPhoneNumberDto;
 import org.aemudapi.member.dtos.RegistrationResponseDto;
 import org.aemudapi.member.entity.Member;
 import org.aemudapi.member.entity.Registration;
@@ -28,6 +29,24 @@ public class RegistrationMapper {
 
         Registration registration = new Registration();
         Member member = this.getMember(dto.getMember());
+        Session session = this.getSession(dto.getSession());
+        registration.setId(dto.getId());
+        registration.setMember(member);
+        registration.setSession(session);
+        registration.setRegistrationType(dto.getRegistrationType());
+        registration.setStatusPayment(dto.isStatusPayment());
+        registration.setRegistrationStatus(dto.getRegistrationStatus());
+
+        // dateInscription est automatiquement initialisée dans l'entité, mais on peut l'ajuster si besoin.
+        return registration;
+    }
+
+    public Registration toEntity(RegistrationRequestWithPhoneNumberDto dto,Member member) {
+        if (dto == null) {
+            return null;
+        }
+
+        Registration registration = new Registration();
         Session session = this.getSession(dto.getSession());
         registration.setId(dto.getId());
         registration.setMember(member);

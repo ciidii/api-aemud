@@ -1,8 +1,9 @@
 package org.aemudapi.member.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
-import org.aemudapi.exceptions.customeExceptions.EntityCannotBeDeletedException;
-import org.aemudapi.exceptions.customeExceptions.NoActiveSection;
+import lombok.RequiredArgsConstructor;
+import org.aemudapi.exceptions.customeExceptions.CantDeletActiveSectionException;
+import org.aemudapi.member.dtos.SessionRequestDTO;
 import org.aemudapi.member.dtos.SessionResponseDTO;
 import org.aemudapi.member.entity.Session;
 import org.aemudapi.member.mapper.SessionMapper;
@@ -19,24 +20,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class SessionServiceImpl implements SessionService {
     private final SessionRepository sessionRepository;
     private final SessionMapper sessionMapper;
-    private final MemberRepository memberRepository;
-
-    public SessionServiceImpl(SessionRepository yearOfSessionServices, SessionMapper sessionMapper, MemberRepository memberRepository) {
-        this.sessionRepository = yearOfSessionServices;
-        this.sessionMapper = sessionMapper;
-        this.memberRepository = memberRepository;
-    }
-
 
     @Override
-    public ResponseEntity<ResponseVO<Void>> openNewSession(int year_) {
-        org.aemudapi.member.entity.Session session = new org.aemudapi.member.entity.Session();
-        session.setYear_(year_);
-        session.setCurrent(true);
-        this.sessionRepository.updateCurrentYear();
+    public ResponseEntity<ResponseVO<Void>> openNewSession(SessionRequestDTO sessionRequestDTO) {
+        Session session = this.sessionMapper.toEntity(sessionRequestDTO);
+        if (sessionRequestDTO.isCurrentYear()) {
+            this.sessionRepository.updateCurrentYear();
+        }
         this.sessionRepository.save(session);
         return new ResponseEntity<>(new ResponseVOBuilder<Void>().success().build(), HttpStatus.CREATED);
     }
@@ -53,7 +47,7 @@ public class SessionServiceImpl implements SessionService {
 
     @Override
     public ResponseEntity<ResponseVO<SessionResponseDTO>> getCurrentSession() {
-        org.aemudapi.member.entity.Session currentSession = this.sessionRepository.findCurrentSession().orElseThrow(() -> new NoActiveSection("No active session"));
+        org.aemudapi.member.entity.Session currentSession = this.sessionRepository.findCurrentSession().orElseThrow(() -> new CantDeletActiveSectionException("No active session"));
         SessionResponseDTO sessionResponseDTO = this.sessionMapper.toDto(currentSession);
         ResponseVO<SessionResponseDTO> responseVO = new ResponseVOBuilder<SessionResponseDTO>().addData(sessionResponseDTO).build();
 
@@ -71,8 +65,11 @@ public class SessionServiceImpl implements SessionService {
 
     @Override
     public ResponseEntity<ResponseVO<Void>> deleteSession(String sessionid) {
-        Session session = this.sessionRepository.findById(sessionid).orElseThrow(() -> new EntityNotFoundException("No active session"));
-
-        throw new EntityCannotBeDeletedException("La fonction n'est encors implementer");
+        Session session = this.sessionRepository.findById(sessionid).orElseThrow(() -> new EntityNotFoundException("No session"));
+        if (session.isCurrent()) {
+            throw new CantDeletActiveSectionException("Active can't be deleted");
+        }
+        this.sessionRepository.delete(session);
+        return new ResponseEntity<>(new ResponseVOBuilder<Void>().success().build(), HttpStatus.OK);
     }
 }

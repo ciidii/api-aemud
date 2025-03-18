@@ -57,6 +57,7 @@ public class OrangeSmsServiceImpl implements OrangeSmsService {
 
                     if (statusCode >= 200 && statusCode < 300) {
                         responses.append(responseBody).append("\n");
+                        log.info("---------status-code: " + statusCode + "-------response: " + responseBody);
                     } else {
                         throw new RuntimeException("Failed to send SMS. Status Code: " + statusCode + ", Response: " + responseBody);
                     }

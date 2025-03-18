@@ -26,4 +26,6 @@ public interface ContributionService {
     ResponseEntity<ResponseVO<Double>> getContributionsAmountPeerMonth(String monthId, String sessionId);
 
     ResponseEntity<ResponseVO<Double>> getContributionsAmountPeerSessions(String sessionId);
+
+    ResponseEntity<ResponseVO<ContributionDTO>> contributeUsingNumPhone(String phoneNumber, String yearId, String monthId);
 }

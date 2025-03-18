@@ -40,6 +40,10 @@ public class Utils {
                     memberSpecification = memberSpecification.and(MemberSpecification.havePayed(false));
                 }
             }
+
+            if (filterDTO.getRegistration() != null && !filterDTO.getRegistration().isEmpty()) {
+                memberSpecification = memberSpecification.and(MemberSpecification.registeredMembersForYear(filterDTO.getRegistration()));
+            }
         }
         return memberSpecification;
     }

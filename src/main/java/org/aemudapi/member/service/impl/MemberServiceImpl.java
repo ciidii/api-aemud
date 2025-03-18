@@ -61,7 +61,6 @@ public class MemberServiceImpl implements MemberService {
     public ResponseEntity<ResponsePageableVO<MemberDataResponseDTO>> searchMember(RequestPageableVO requestPageableVO, String criteria, String value, FilterDTO filterDTO) {
         PageRequest pageRequest = PageRequest.of(requestPageableVO.getPage() - 1, requestPageableVO.getRpp());
         Specification<Member> memberSpecification = makeFilterCriteriaSpec(criteria, value, filterDTO);
-
         Page<Member> memberPage = memberRepository.findAll(memberSpecification, pageRequest);
         List<MemberDataResponseDTO> memberDataResponseDTO = this.fetchPageToMemberResponseDTO(memberPage);
         ResponsePageableVO<MemberDataResponseDTO> responsePageableVO = new ResponsePageableVO<>(memberPage.getTotalElements(), memberDataResponseDTO, requestPageableVO);
@@ -75,6 +74,14 @@ public class MemberServiceImpl implements MemberService {
         List<MemberDataResponseDTO> responseDTOS = this.fetchPageToMemberResponseDTO(members);
         ResponseVO<List<MemberDataResponseDTO>> listResponseVO = new ResponseVOBuilder<List<MemberDataResponseDTO>>().addData(responseDTOS).build();
         return new ResponseEntity<>(listResponseVO, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<ResponseVO<MemberDataResponseDTO>> findMemberByNumberPhone(String numberphone) {
+        Member member = this.memberRepository.findByNumberPhone(numberphone).orElseThrow(() -> new EntityNotFoundException("Member Introuvable"));
+        MemberDataResponseDTO memberDataResponseDTO = memberMapper.toDto(member);
+
+        return new ResponseEntity<>(new ResponseVOBuilder<MemberDataResponseDTO>().addData(memberDataResponseDTO).build(), HttpStatus.OK);
     }
 
 

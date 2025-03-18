@@ -3,13 +3,17 @@ package org.aemudapi.member.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import org.aemudapi.exceptions.customeExceptions.MemberAllReadyRegisterException;
 import org.aemudapi.member.dtos.MemberDataResponseDTO;
 import org.aemudapi.member.dtos.RegistrationRequestDto;
+import org.aemudapi.member.dtos.RegistrationRequestWithPhoneNumberDto;
 import org.aemudapi.member.entity.Member;
 import org.aemudapi.member.entity.Registration;
 import org.aemudapi.member.entity.RegistrationStatus;
+import org.aemudapi.member.entity.TypeInscription;
 import org.aemudapi.member.mapper.MemberMapper;
 import org.aemudapi.member.mapper.RegistrationMapper;
+import org.aemudapi.member.repository.MemberRepository;
 import org.aemudapi.member.repository.RegistrationRepository;
 import org.aemudapi.member.service.RegistrationService;
 import org.aemudapi.utils.ResponseVO;
@@ -19,6 +23,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -26,10 +31,24 @@ public class RegistrationServiceImpl implements RegistrationService {
     private final RegistrationMapper registrationMapper;
     private final RegistrationRepository registrationRepository;
     private final MemberMapper memberMapper;
+    private MemberRepository memberRepository;
 
     @Override
     public ResponseEntity<ResponseVO<Void>> registerMember(RegistrationRequestDto registrationRequestDto) {
         Registration registration = this.registrationMapper.toEntity(registrationRequestDto);
+        this.registrationRepository.save(registration);
+        ResponseVO<Void> responseVO = new ResponseVOBuilder<Void>().success().build();
+        return new ResponseEntity<>(responseVO, HttpStatus.CREATED);
+    }
+
+    @Override
+    public ResponseEntity<ResponseVO<Void>> registerMemberWithNumberPhone(RegistrationRequestWithPhoneNumberDto registrationRequestDto) {
+        Member member = this.memberRepository.findByNumberPhone(registrationRequestDto.getMemberPhoneNumber()).orElseThrow(() -> new EntityNotFoundException("Member Not Found"));
+        Optional<Member> memberFromDB = this.registrationRepository.findMemberRegisteredMemberForSession(registrationRequestDto.getSession(), member.getId());
+        if (memberFromDB.isPresent()) {
+            throw new MemberAllReadyRegisterException("Member Already Registered");
+        }
+        Registration registration = this.registrationMapper.toEntity(registrationRequestDto, member);
         this.registrationRepository.save(registration);
         ResponseVO<Void> responseVO = new ResponseVOBuilder<Void>().success().build();
         return new ResponseEntity<>(responseVO, HttpStatus.CREATED);
@@ -53,8 +72,14 @@ public class RegistrationServiceImpl implements RegistrationService {
     }
 
     @Override
-    public ResponseEntity<ResponseVO<Integer>> getPayedOrNoPayedSessionCountPeerSession(String session, Boolean statusPayment) {
+        public ResponseEntity<ResponseVO<Integer>> getPayedOrNoPayedSessionCountPeerSession(String session, Boolean statusPayment) {
         int num = this.registrationRepository.getPayedOrNoPayedSessionCountPeerSession(session, statusPayment);
+        return new ResponseEntity<>(new ResponseVOBuilder<Integer>().addData(num).build(), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<ResponseVO<Integer>> getNewOrRenewalAdherentForASession(String session, TypeInscription typeInscription) {
+        int num = this.registrationRepository.getNewOrRenewalAdherentForASession(session, typeInscription);
         return new ResponseEntity<>(new ResponseVOBuilder<Integer>().addData(num).build(), HttpStatus.OK);
     }
 

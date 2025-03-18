@@ -20,7 +20,7 @@ public class SessionController {
 
     @PostMapping
     ResponseEntity<ResponseVO<Void>> openNewSession(@RequestBody SessionRequestDTO year_) {
-        return this.session.openNewSession(year_.getYear_());
+        return this.session.openNewSession(year_);
     }
 
     @GetMapping("current")

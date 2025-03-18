@@ -34,4 +34,9 @@ public class MonthController {
     public ResponseEntity<ResponseVO<Void>> deleteMonth(MonthDTO month) {
         return this.monthService.deleteMonth(month);
     }
+
+    @GetMapping
+    public ResponseEntity<ResponseVO<List<MonthDTO>>> getMonths() {
+        return this.monthService.getAllMonth();
+    }
 }

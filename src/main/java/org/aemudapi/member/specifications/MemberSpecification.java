@@ -1,19 +1,27 @@
 package org.aemudapi.member.specifications;
 
+import jakarta.persistence.criteria.Join;
 import org.aemudapi.member.entity.Member;
+import org.aemudapi.member.entity.Registration;
 import org.aemudapi.member.entity.RegistrationStatus;
 import org.springframework.data.jpa.domain.Specification;
+
+import java.util.List;
 
 public class MemberSpecification {
     public static Specification<Member> hasName(String name) {
         return (root, query, criteriaBuilder) -> {
             query.multiselect(root.get("personalInfo").get("name"));
-            return criteriaBuilder.like(root.get("personalInfo").get("name"), "%" + name + "%");
+            // Conversion en minuscules pour une comparaison insensible à la casse
+            return criteriaBuilder.like(criteriaBuilder.lower(root.get("personalInfo").get("name")), "%" + name.toLowerCase() + "%");
         };
     }
 
     public static Specification<Member> hasLastname(String firstname) {
-        return (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("personalInfo").get("firstname"), "%" + firstname.toLowerCase() + "%");
+        return (root, query, criteriaBuilder) -> {
+            // Conversion en minuscules pour comparaison insensible à la casse
+            return criteriaBuilder.like(criteriaBuilder.lower(root.get("personalInfo").get("firstname")), "%" + firstname.toLowerCase() + "%");
+        };
     }
 
     public static Specification<Member> hasClub(String clubId) {
@@ -35,5 +43,20 @@ public class MemberSpecification {
 
     public static Specification<Member> registrationStatus(RegistrationStatus registrationStatus) {
         return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("registration").get("registrationStatus"), registrationStatus);
+    }
+
+    public static Specification<Member> registeredMembersForYear(String sessionId) {
+        return (root, query, criteriaBuilder) -> {
+            if (Member.class.equals(query.getResultType())) {
+                root.fetch("registration");
+            }
+
+            Join<Member, Registration> registrationJoin = root.join("registration");
+
+            return criteriaBuilder.equal(
+                    registrationJoin.get("session").get("id"),
+                    sessionId
+            );
+        };
     }
 }

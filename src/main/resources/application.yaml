@@ -19,7 +19,7 @@ spring:
     url: jdbc:${DBMS}://${DB_HOST}:${DB_PORT}/${DB_NAME}?createDatabaseIfNotExist=true
     password: ${DB_PASSWORD}
     username: ${DB_USERNAME}
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: ${JDBC_DRIVER:com.mysql.cj.jdbc.Driver}
   jpa:
     database-platform:
     generate-ddl: true
@@ -28,7 +28,7 @@ spring:
       ddl-auto: update
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQL8Dialect
+        dialect: ${DIALECT:org.hibernate.dialect.MySQL8Dialect}
         format_sql: true
   sql:
     init:

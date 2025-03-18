@@ -6,10 +6,14 @@ import org.aemudapi.contribution.dto.ContributionDTO;
 import org.aemudapi.contribution.entity.Contribution;
 import org.aemudapi.contribution.entity.Month;
 import org.aemudapi.contribution.repository.MonthRepository;
+import org.aemudapi.member.dtos.MemberDataResponseDTO;
 import org.aemudapi.member.entity.Member;
 import org.aemudapi.member.entity.Session;
 import org.aemudapi.member.repository.MemberRepository;
 import org.aemudapi.member.repository.SessionRepository;
+import org.aemudapi.member.service.MemberService;
+import org.aemudapi.utils.ResponseVO;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -56,6 +60,19 @@ public class ContributionMapper {
         contribution.setSession(session);
         contribution.setAmount(member.getBourse().getMontant());
         contribution.setId(dto.getContributionId());
+
+        return contribution;
+    }
+
+    public Contribution toEntity(String memberPhoneNumber, String sessionId, String monthId) {
+        Contribution contribution = new Contribution();
+        Session session = this.sessionRepository.findById(sessionId).orElseThrow(() -> new EntityNotFoundException("Session with id " + sessionId + " not found"));
+        Member member = this.memberRepository.findByNumberPhone(memberPhoneNumber).orElseThrow(() -> new EntityNotFoundException("Member with id " + memberPhoneNumber + " not found"));
+        Month month = this.monthRepository.findById(monthId).orElseThrow(() -> new EntityNotFoundException("Member with id " + monthId + " not found"));
+        contribution.setMember(member);
+        contribution.setMonth(month);
+        contribution.setSession(session);
+        contribution.setAmount(member.getBourse().getMontant());
 
         return contribution;
     }

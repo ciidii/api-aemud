@@ -14,4 +14,5 @@ public class FilterDTO {
     private String bourse;
     private RegistrationStatus registrationStatus;
     private String statusPayment;
+    private String registration;
 }

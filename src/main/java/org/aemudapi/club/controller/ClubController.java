@@ -1,4 +1,4 @@
-package org.aemudapi.commission.controller;
+package org.aemudapi.club.controller;
 
 import org.aemudapi.member.dtos.ClubDto;
 import org.aemudapi.member.service.ClubService;

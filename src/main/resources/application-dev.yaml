@@ -1,8 +1,10 @@
 SEV_PORT: 8081
 ACTIVE_PROFILE: dev
-DBMS: mysql
+DBMS: postgresql
 DB_HOST: localhost
-DB_PORT: 3306
+DB_PORT: 5432
 DB_NAME: aemud
-DB_PASSWORD:
-DB_USERNAME: root
+DB_PASSWORD: '#Wollaj@1'
+DB_USERNAME: postgres
+JDBC_DRIVER: org.postgresql.Driver
+DIALECT: org.hibernate.dialect.PostgreSQLDialect

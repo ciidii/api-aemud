@@ -17,4 +17,6 @@ public interface BourseService {
     public ResponseEntity<ResponseVO<Boolean>>  checkIfCanDeleteBourse(String bourseId);
 
     ResponseEntity<ResponseVO<BourseDTO>> findBourseById(String bourseId);
+
+    ResponseEntity<ResponseVO<Double>> getMemberOfContributionAmount(String numberPhone);
 }

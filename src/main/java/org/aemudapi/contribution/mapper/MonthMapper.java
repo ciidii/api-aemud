@@ -33,6 +33,7 @@ public class MonthMapper {
         }
         month.setMonthName(dto.getMonthName());
         month.setMonthNumber(dto.getMonthNumber());
+        month.setId(dto.getId());
         return month;
     }
 

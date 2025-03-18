@@ -26,4 +26,6 @@ public interface MemberService {
     ResponseEntity<ResponsePageableVO<MemberDataResponseDTO>> searchMember(RequestPageableVO requestPageableVO, String criteria, String value, FilterDTO filterDTO);
 
     ResponseEntity<ResponseVO<List<MemberDataResponseDTO>>> searchMemberToPrint(String criteria, String value, FilterDTO filters);
+
+    ResponseEntity<ResponseVO<MemberDataResponseDTO>> findMemberByNumberPhone(String numberphone);
 }

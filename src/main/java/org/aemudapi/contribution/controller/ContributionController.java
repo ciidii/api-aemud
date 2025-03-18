@@ -2,6 +2,7 @@ package org.aemudapi.contribution.controller;
 
 import lombok.AllArgsConstructor;
 import org.aemudapi.contribution.dto.ContributionDTO;
+import org.aemudapi.contribution.dto.ContributionWithPhoneNumberDTO;
 import org.aemudapi.contribution.service.ContributionService;
 import org.aemudapi.utils.ResponseVO;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,11 @@ public class ContributionController {
     @PostMapping("contribute")
     public ResponseEntity<ResponseVO<ContributionDTO>> contribute(@RequestBody ContributionDTO contributionDTO) {
         return this.contributionService.contribute(contributionDTO);
+    }
+
+    @PostMapping("contribute-phone")
+    public ResponseEntity<ResponseVO<ContributionDTO>> contributeUsingNumberPhone(@RequestBody ContributionWithPhoneNumberDTO contributionDTO) {
+        return this.contributionService.contributeUsingNumPhone(contributionDTO.getPhoneNumber(), contributionDTO.getSessionId(), contributionDTO.getMonthId());
     }
 
     @PutMapping

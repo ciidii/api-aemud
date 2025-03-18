@@ -48,4 +48,11 @@ public class MonthServiceImpl implements MonthService {
         return new ResponseEntity<>(new ResponseVOBuilder<Void>().success().build(), HttpStatus.OK);
     }
 
+    @Override
+    public ResponseEntity<ResponseVO<List<MonthDTO>>> getAllMonth() {
+        List<Month> months = this.monthRepository.findAll();
+        List<MonthDTO> monthDTOs = this.monthMapper.toDTOList(months);
+        return new ResponseEntity<>(new ResponseVOBuilder<List<MonthDTO>>().addData(monthDTOs).build(), HttpStatus.OK);
+    }
+
 }

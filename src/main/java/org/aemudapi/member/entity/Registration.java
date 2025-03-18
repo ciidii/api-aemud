@@ -1,5 +1,6 @@
 package org.aemudapi.member.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,6 +18,7 @@ public class Registration extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "member_id", nullable = false)
+    @JsonIgnoreProperties
     private Member member;
 
     @ManyToOne

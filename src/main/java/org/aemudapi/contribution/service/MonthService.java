@@ -16,4 +16,6 @@ public interface MonthService {
     public ResponseEntity<ResponseVO<Void>> updateMonth(MonthDTO month);
 
     public ResponseEntity<ResponseVO<Void>> deleteMonth(MonthDTO month);
+
+    ResponseEntity<ResponseVO<List<MonthDTO>>> getAllMonth();
 }

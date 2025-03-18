@@ -1,10 +1,8 @@
 package org.aemudapi.exceptions;
 
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
-import org.aemudapi.exceptions.customeExceptions.ContributionAlreadyExistsException;
-import org.aemudapi.exceptions.customeExceptions.EntityCannotBeDeletedException;
-import org.aemudapi.exceptions.customeExceptions.ReRegistrationRequiredException;
-import org.aemudapi.exceptions.customeExceptions.UserAlreadyExistsException;
+import org.aemudapi.exceptions.customeExceptions.*;
 import org.aemudapi.utils.ResponseErrorVo;
 import org.aemudapi.utils.ResponseVO;
 import org.aemudapi.utils.ResponseVOBuilder;
@@ -17,7 +15,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
-//@RestControllerAdvice
+  @RestControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(GeneralSecurityException.class)
@@ -79,6 +77,20 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(EntityCannotBeDeletedException.class)
     public ResponseEntity<ResponseVO<Void>> SessionCannotBeDeletedException(EntityCannotBeDeletedException ex) {
         ResponseErrorVo errorVo = new ResponseErrorVo("CANNOT_DELETE_ENTITY", ex.getMessage());
+        ResponseVO<Void> response = new ResponseVOBuilder<Void>().fail(HttpStatus.CONFLICT).error(errorVo, HttpStatus.CONFLICT).build();
+        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(MemberAllReadyRegisterException.class)
+    public ResponseEntity<ResponseVO<Void>> MemberAllReadyRegisterException(MemberAllReadyRegisterException ex) {
+        ResponseErrorVo errorVo = new ResponseErrorVo("MEMBER_ALL_READY_REGISTERED", ex.getMessage());
+        ResponseVO<Void> response = new ResponseVOBuilder<Void>().fail(HttpStatus.CONFLICT).error(errorVo, HttpStatus.CONFLICT).build();
+        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(EntityExistsException.class)
+    public ResponseEntity<ResponseVO<Void>> EntityAllReadyException(EntityExistsException ex) {
+        ResponseErrorVo errorVo = new ResponseErrorVo("ENTITY_ALL_READY_EXIST", ex.getMessage());
         ResponseVO<Void> response = new ResponseVOBuilder<Void>().fail(HttpStatus.CONFLICT).error(errorVo, HttpStatus.CONFLICT).build();
         return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }

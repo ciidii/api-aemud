@@ -1,8 +1,13 @@
 package org.aemudapi.member.mapper;
 
+import lombok.RequiredArgsConstructor;
 import org.aemudapi.member.dtos.BourseDTO;
 import org.aemudapi.member.dtos.BourseIdDTO;
+import org.aemudapi.member.dtos.MemberResponseDto;
 import org.aemudapi.member.entity.Bourse;
+import org.aemudapi.member.entity.Member;
+import org.aemudapi.member.repository.MemberRepository;
+import org.aemudapi.member.service.MemberService;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -10,7 +15,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
+@RequiredArgsConstructor
 public class BourseMapper {
+    private final MemberRepository memberService;
+
     public BourseDTO toDTO(Bourse bourse) {
         if (bourse == null) {
             return null;
@@ -40,7 +48,9 @@ public class BourseMapper {
         }
 
         Bourse bourse = new Bourse();
-        // bourse.setIdBourse(dto.getBourseId());
+        List<Member> members = this.memberService.findAllById(dto.getMembers());
+        bourse.setMembers(members);
+        bourse.setId(dto.getBourseId());
         bourse.setLebelle(dto.getLebelle());
         bourse.setMontant(dto.getMontant());
 

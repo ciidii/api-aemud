@@ -1,5 +1,6 @@
 package org.aemudapi.member.service;
 
+import org.aemudapi.member.dtos.SessionRequestDTO;
 import org.aemudapi.member.dtos.SessionResponseDTO;
 import org.aemudapi.utils.ResponseVO;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +10,7 @@ import java.util.List;
 
 
 public interface SessionService {
-    ResponseEntity<ResponseVO<Void>> openNewSession(int year_);
+    ResponseEntity<ResponseVO<Void>> openNewSession(SessionRequestDTO session);
 
     ResponseEntity<ResponseVO<List<SessionResponseDTO>>> getAllSessions();
 

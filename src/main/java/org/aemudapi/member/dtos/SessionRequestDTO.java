@@ -6,5 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SessionRequestDTO {
-    private int year_;
+    private String id;
+    private boolean currentYear;
+    private int session;
 }

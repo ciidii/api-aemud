@@ -27,6 +27,12 @@ public class BourseController {
         return this.bourseService.getAllBourse();
     }
 
+    @GetMapping("member-Contribution-amount")
+    ResponseEntity<ResponseVO<Double>> getMemberOfContributionAmount(@RequestParam String numberPhone) {
+
+        return this.bourseService.getMemberOfContributionAmount(numberPhone.trim());
+    }
+
     @PutMapping()
     ResponseEntity<ResponseVO<BourseDTO>> updateBourse(@RequestBody BourseDTO bourseDTO) {
         return this.bourseService.addBourse(bourseDTO);
@@ -39,6 +45,6 @@ public class BourseController {
 
     @GetMapping()
     ResponseEntity<ResponseVO<BourseDTO>> findBourseById(@RequestParam("bourseId") String bourseId) {
-        return  this.bourseService.findBourseById(bourseId);
+        return this.bourseService.findBourseById(bourseId);
     }
 }
