@@ -1,10 +1,11 @@
 package org.aemudapi.member.service.impl;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aemudapi.member.entity.Member;
+import org.aemudapi.member.repository.MemberRepository;
 import org.aemudapi.notification.prodivers.OrangeCrendentialsProvider;
 import org.aemudapi.notification.services.OrangeSmsService;
-import org.apache.catalina.valves.rewrite.InternalRewriteMap;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -16,23 +17,17 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.TimeUnit;
-
-import static java.rmi.server.LogStream.log;
 
 @Slf4j
 @Service
+@AllArgsConstructor
 public class OrangeSmsServiceImpl implements OrangeSmsService {
 
     private static final String ORANGE_API_URL = "https://api.orange.com/smsmessaging/v1/outbound/tel%3A%2B{sender_number}/requests";
     private static final String SENDER_NUMBER = "221782156437";
     private final OrangeCrendentialsProvider credentialsProvider;
-
-
-    public OrangeSmsServiceImpl(OrangeCrendentialsProvider credentialsProvider) {
-        this.credentialsProvider = credentialsProvider;
-    }
+    private final MemberRepository memberRepository;
 
     @Override
     public String sendSms(String recipientNumber, String message) throws IOException {
@@ -50,45 +45,47 @@ public class OrangeSmsServiceImpl implements OrangeSmsService {
         try (CloseableHttpClient client = HttpClients.createDefault()) {
             int counter = 0;
             for (String recipientNumber : recipientNumbers) {
-                HttpPost httpPost = getHttpPost(recipientNumber, message, url, token);
+                HttpPost httpPost = this.getHttpPost(recipientNumber, message, url, token);
+
                 try (CloseableHttpResponse response = client.execute(httpPost)) {
                     int statusCode = response.getStatusLine().getStatusCode();
                     String responseBody = EntityUtils.toString(response.getEntity(), "UTF-8");
-
+                    log.debug(responseBody);
                     if (statusCode >= 200 && statusCode < 300) {
                         responses.append(responseBody).append("\n");
-                        log.info("---------status-code: " + statusCode + "-------response: " + responseBody);
                     } else {
                         throw new RuntimeException("Failed to send SMS. Status Code: " + statusCode + ", Response: " + responseBody);
                     }
                 }
-
-
                 counter++;
                 if (counter % 5 == 0) {
                     TimeUnit.SECONDS.sleep(1);
-                    log.info("----------------------------On fait déjà un pose");
-                    // Respect TPS limit of 5 SMS per second
                 }
             }
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-
         return responses.toString();
     }
 
-    private HttpPost getHttpPost(String recipientNumber, String message, String url, String token) throws UnsupportedEncodingException {
-        HttpPost httpPost = new HttpPost(url);
+    private HttpPost getHttpPost(String recipientNumber, String message, String url, String token)
+            throws UnsupportedEncodingException {
 
+        HttpPost httpPost = new HttpPost(url);
         httpPost.setHeader("Authorization", "Bearer " + token);
         httpPost.setHeader("Content-Type", "application/json");
 
-        String json = "{\"outboundSMSMessageRequest\": {\"address\": \"tel:+"
-                + recipientNumber + "\",\"senderAddress\": \"tel:+"
-                + SENDER_NUMBER + "\",\"outboundSMSTextMessage\": {\"message\": \""
-                + message + "\"}}}";
+        String json = "{"
+                + "\"outboundSMSMessageRequest\": {"
+                + "\"address\": \"tel:+" + recipientNumber + "\","
+                + "\"senderAddress\": \"tel:+" + SENDER_NUMBER + "\","
+                + "\"outboundSMSTextMessage\": {"
+                + "\"message\": \"" + message + "\""
+                + "}"
+                + "}"
+                + "}";
 
+        log.debug("Request JSON: {}", json); // ✅ Debug du contenu envoyé
         StringEntity entity = new StringEntity(json);
         httpPost.setEntity(entity);
         return httpPost;

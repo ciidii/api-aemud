@@ -70,4 +70,8 @@ public class RegistrationController {
     ResponseEntity<ResponseVO<List<MemberDataResponseDTO>>> getMembersRegistrationsStatusForSessions(@RequestParam String session, @RequestParam RegistrationStatus registrationStatus) {
         return this.registrationService.getMembersRegistrationsStatusForSessions(session, registrationStatus);
     }
+    @GetMapping("members-by-registration-year")
+    ResponseEntity<ResponseVO<List<MemberDataResponseDTO>>> getMemberByYearOfRegistration(@RequestParam String session) {
+        return this.registrationService.getMemberByYearOfRegistration(session);
+    }
 }

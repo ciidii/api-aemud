@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import javax.swing.text.html.Option;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -18,4 +18,9 @@ public interface MemberRepository extends JpaRepository<Member, String>, JpaSpec
 
     @Query("SELECT m from Member m where m.contactInfo.numberPhone =:numberphone")
     Optional<Member> findByNumberPhone(String numberphone);
+
+    @Query("""
+            SELECT m from Member m join Registration r where m.id=r.id and r.session.id =:registrationNumber
+            """)
+    List<Member> findMemberByRegistration(String registrationNumber);
 }

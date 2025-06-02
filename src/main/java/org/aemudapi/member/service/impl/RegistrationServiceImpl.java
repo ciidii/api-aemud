@@ -22,8 +22,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -72,7 +74,7 @@ public class RegistrationServiceImpl implements RegistrationService {
     }
 
     @Override
-        public ResponseEntity<ResponseVO<Integer>> getPayedOrNoPayedSessionCountPeerSession(String session, Boolean statusPayment) {
+    public ResponseEntity<ResponseVO<Integer>> getPayedOrNoPayedSessionCountPeerSession(String session, Boolean statusPayment) {
         int num = this.registrationRepository.getPayedOrNoPayedSessionCountPeerSession(session, statusPayment);
         return new ResponseEntity<>(new ResponseVOBuilder<Integer>().addData(num).build(), HttpStatus.OK);
     }
@@ -81,6 +83,14 @@ public class RegistrationServiceImpl implements RegistrationService {
     public ResponseEntity<ResponseVO<Integer>> getNewOrRenewalAdherentForASession(String session, TypeInscription typeInscription) {
         int num = this.registrationRepository.getNewOrRenewalAdherentForASession(session, typeInscription);
         return new ResponseEntity<>(new ResponseVOBuilder<Integer>().addData(num).build(), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<ResponseVO<List<MemberDataResponseDTO>>> getMemberByYearOfRegistration(String session) {
+        List<Member> members = this.memberRepository.findMemberByRegistration(session);
+        List<MemberDataResponseDTO> memberDataResponseDTOS = this.memberMapper.toDto(members);
+        ResponseVO<List<MemberDataResponseDTO>> responseVO = new ResponseVOBuilder<List<MemberDataResponseDTO>>().addData(memberDataResponseDTOS).build();
+        return new ResponseEntity<>(responseVO, HttpStatus.OK);
     }
 
     @Override

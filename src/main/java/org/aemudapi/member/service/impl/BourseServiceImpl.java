@@ -84,6 +84,7 @@ public class BourseServiceImpl implements BourseService {
     public ResponseEntity<ResponseVO<Double>> getMemberOfContributionAmount(String numberPhone) {
         Member member = this.memberRepository.findByNumberPhone(numberPhone).orElseThrow(EntityNotFoundException::new);
 
+
         return new ResponseEntity<>(new ResponseVOBuilder<Double>().addData(member.getBourse().getMontant()).build(), HttpStatus.OK);
     }
 }

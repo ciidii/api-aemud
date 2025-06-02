@@ -1,0 +1,21 @@
+$primary: #278F8F;
+$secondary: #D09C0A;
+
+$success: #388E3C;
+$info: #1E88E5;
+$warning: #F57C00;
+$danger: #D32F2F;
+$light: #EDEDED;
+$dark: #1B1B1B;
+
+// Couleurs supplémentaires
+$background-color: $light;
+$text-color: $dark;
+$border-color: #ddd;
+$hover-color: darken($primary, 10%);
+
+// Thème sombre
+$dark-background-color: #121212;
+$dark-text-color: #ffffff;
+$dark-border-color: #333;
+$dark-hover-color: lighten($primary, 10%);

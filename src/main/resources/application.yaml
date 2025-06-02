@@ -34,9 +34,15 @@ spring:
     init:
       mode: never
       continue-on-error: false
+  mvc:
+    path match:
+      matching-strategy: ant_path_matcher
+    static-path-pattern: /**
+  web:
+    resources:
+      static-locations: classpath:/META-INF/resources/, classpath:/resources/, classpath:/static/, classpath:/public/
 logging:
   level:
     org:
       springframework:
-        web:
-          cors: DEBUG
+        web: DEBUG

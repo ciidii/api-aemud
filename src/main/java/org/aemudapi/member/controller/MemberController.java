@@ -13,8 +13,6 @@ import org.aemudapi.utils.ResponseVO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-import java.security.GeneralSecurityException;
 import java.util.List;
 
 @RestController()
@@ -41,7 +39,7 @@ public class MemberController {
 
 
     @PutMapping
-    ResponseEntity<ResponseVO<MemberDataResponseDTO>> updateMember(@RequestBody MemberRequestDto memberRequestDto) throws GeneralSecurityException, IOException {
+    ResponseEntity<ResponseVO<MemberDataResponseDTO>> updateMember(@RequestBody MemberRequestDto memberRequestDto) {
         return this.memberService.updateMember(memberRequestDto);
     }
 

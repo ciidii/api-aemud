@@ -6,6 +6,7 @@ import org.aemudapi.member.entity.RegistrationStatus;
 import org.aemudapi.member.entity.TypeInscription;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,7 +28,7 @@ public interface RegistrationRepository extends JpaRepository<Registration, Stri
     @Query("""
             SELECT r.member FROM Registration r where r.session.id =:session
             """)
-    List<Member> getMembersBySession(String session);
+    List<Member> getMembersBySession(@Param("session") String session);
 
     @Query("""
             SELECT r.member FROM Registration r where r.session.id =:session and r.statusPayment=:statusPayment
