@@ -17,6 +17,14 @@ public class MemberSpecification {
         };
     }
 
+    public static Specification<Member> hasPhone(String name) {
+        return (root, query, criteriaBuilder) -> {
+            query.multiselect(root.get("contactInfo").get("numberPhone"));
+            // Conversion en minuscules pour une comparaison insensible à la casse
+            return criteriaBuilder.like(criteriaBuilder.lower(root.get("contactInfo").get("numberPhone")), "%" + name.toLowerCase() + "%");
+        };
+    }
+
     public static Specification<Member> hasLastname(String firstname) {
         return (root, query, criteriaBuilder) -> {
             // Conversion en minuscules pour comparaison insensible à la casse
@@ -53,10 +61,7 @@ public class MemberSpecification {
 
             Join<Member, Registration> registrationJoin = root.join("registration");
 
-            return criteriaBuilder.equal(
-                    registrationJoin.get("session").get("id"),
-                    sessionId
-            );
+            return criteriaBuilder.equal(registrationJoin.get("session").get("id"), sessionId);
         };
     }
 }

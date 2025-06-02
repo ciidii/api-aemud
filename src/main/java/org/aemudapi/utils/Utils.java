@@ -5,17 +5,16 @@ import org.aemudapi.member.entity.Member;
 import org.aemudapi.member.specifications.MemberSpecification;
 import org.springframework.data.jpa.domain.Specification;
 
-import java.util.Objects;
-
 public class Utils {
     public static Specification<Member> makeFilterCriteriaSpec(String criteria, String value, FilterDTO filterDTO) {
         Specification<Member> memberSpecification = Specification.where(null);
         if (criteria != null && value != null) {
-            if (Objects.equals(criteria, "firstname")) {
-                memberSpecification = memberSpecification.and(MemberSpecification.hasLastname(value));
-            } else if (criteria.equals("name")) {
-                memberSpecification = memberSpecification.and(MemberSpecification.hasName(value));
-            }
+            memberSpecification = switch (criteria) {
+                case "firstname" -> memberSpecification.and(MemberSpecification.hasLastname(value));
+                case "name" -> memberSpecification.and(MemberSpecification.hasName(value));
+                case "phone" -> memberSpecification.and(MemberSpecification.hasPhone(value));
+                default -> memberSpecification;
+            };
         }
 
         if (filterDTO != null) {
