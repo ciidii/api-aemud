@@ -50,7 +50,10 @@ public class MemberSpecification {
     }
 
     public static Specification<Member> registrationStatus(RegistrationStatus registrationStatus) {
-        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("registration").get("registrationStatus"), registrationStatus);
+        return (root, query, criteriaBuilder) -> {
+            query.distinct(false);
+            return criteriaBuilder.equal(root.get("registration").get("registrationStatus"), registrationStatus);
+        };
     }
 
     public static Specification<Member> registeredMembersForYear(String sessionId) {

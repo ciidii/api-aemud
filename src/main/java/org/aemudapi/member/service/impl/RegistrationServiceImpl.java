@@ -38,6 +38,10 @@ public class RegistrationServiceImpl implements RegistrationService {
     @Override
     public ResponseEntity<ResponseVO<Void>> registerMember(RegistrationRequestDto registrationRequestDto) {
         Registration registration = this.registrationMapper.toEntity(registrationRequestDto);
+        Optional<Member> member = this.registrationRepository.findMemberRegisteredMemberForSession(registrationRequestDto.getSession(), registrationRequestDto.getMember());
+        if (member.isPresent()) {
+            throw new MemberAllReadyRegisterException("Member Already Registered");
+        }
         this.registrationRepository.save(registration);
         ResponseVO<Void> responseVO = new ResponseVOBuilder<Void>().success().build();
         return new ResponseEntity<>(responseVO, HttpStatus.CREATED);
