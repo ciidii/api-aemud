@@ -9,8 +9,8 @@ server:
     whitelabel:
       enabled: true
   port: ${SEV_PORT:8080}
-  servlet:
-    context-path: /aemud/api/v1
+  #servlet:
+  #  context-path: /aemud/api/v1
 
 spring:
   profiles:

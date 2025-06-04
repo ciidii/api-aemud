@@ -4,9 +4,8 @@ import jakarta.persistence.criteria.Join;
 import org.aemudapi.member.entity.Member;
 import org.aemudapi.member.entity.Registration;
 import org.aemudapi.member.entity.RegistrationStatus;
+import org.aemudapi.member.entity.TypeInscription;
 import org.springframework.data.jpa.domain.Specification;
-
-import java.util.List;
 
 public class MemberSpecification {
     public static Specification<Member> hasName(String name) {
@@ -51,7 +50,7 @@ public class MemberSpecification {
 
     public static Specification<Member> registrationStatus(RegistrationStatus registrationStatus) {
         return (root, query, criteriaBuilder) -> {
-            query.distinct(false);
+            query.distinct(true);
             return criteriaBuilder.equal(root.get("registration").get("registrationStatus"), registrationStatus);
         };
     }
@@ -65,6 +64,13 @@ public class MemberSpecification {
             Join<Member, Registration> registrationJoin = root.join("registration");
 
             return criteriaBuilder.equal(registrationJoin.get("session").get("id"), sessionId);
+        };
+    }
+
+    public static Specification<Member> registrationType(TypeInscription registrationType) {
+        return (root, query, criteriaBuilder) -> {
+            query.distinct(true);
+            return criteriaBuilder.equal(root.get("registration").get("registrationType"), registrationType);
         };
     }
 }

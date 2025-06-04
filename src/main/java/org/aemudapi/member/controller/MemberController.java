@@ -6,6 +6,7 @@ import org.aemudapi.member.dtos.FilterDTO;
 import org.aemudapi.member.dtos.MemberDataResponseDTO;
 import org.aemudapi.member.dtos.MemberRequestDto;
 import org.aemudapi.member.entity.RegistrationStatus;
+import org.aemudapi.member.entity.TypeInscription;
 import org.aemudapi.member.service.MemberService;
 import org.aemudapi.utils.RequestPageableVO;
 import org.aemudapi.utils.ResponsePageableVO;
@@ -60,7 +61,8 @@ public class MemberController {
             @RequestParam(name = "paymentStatus", required = false) String paymentStatus,
             @RequestParam(name = "bourse", required = false) String bourse,
             @RequestParam(name = "registrationStatus", required = false) RegistrationStatus registrationStatus,
-            @RequestParam(name = "sessionIdForRegistration", required = false) String sessionIdForRegistration
+            @RequestParam(name = "sessionIdForRegistration", required = false) String sessionIdForRegistration,
+            @RequestParam(name = "registrationType", required = false) TypeInscription registrationType
 
     ) {
         RequestPageableVO requestPageableVO = new RequestPageableVO(page, rpp);
@@ -73,6 +75,7 @@ public class MemberController {
                 .statusPayment(paymentStatus)
                 .registrationStatus(registrationStatus)
                 .registration(sessionIdForRegistration)
+                .registrationType(registrationType)
                 .build();
         return this.memberService.searchMember(requestPageableVO, criteria, value, filters);
     }

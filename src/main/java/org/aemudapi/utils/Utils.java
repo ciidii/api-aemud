@@ -43,6 +43,9 @@ public class Utils {
             if (filterDTO.getRegistration() != null && !filterDTO.getRegistration().isEmpty()) {
                 memberSpecification = memberSpecification.and(MemberSpecification.registeredMembersForYear(filterDTO.getRegistration()));
             }
+            if (filterDTO.getRegistrationType() != null && !filterDTO.getRegistrationType().toString().isEmpty()) {
+                memberSpecification = memberSpecification.and(MemberSpecification.registrationType(filterDTO.getRegistrationType()));
+            }
         }
         return memberSpecification;
     }

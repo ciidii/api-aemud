@@ -15,7 +15,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
-@RestControllerAdvice
+//@RestControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(GeneralSecurityException.class)
