@@ -1,4 +1,4 @@
-SEV_PORT: 8080
+SEV_PORT: 8081
 ACTIVE_PROFILE: dev
 DBMS: postgresql
 DB_HOST: localhost

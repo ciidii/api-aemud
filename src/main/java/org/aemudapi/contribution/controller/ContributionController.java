@@ -36,23 +36,23 @@ public class ContributionController {
         return this.contributionService.deleteContribution(contributionId);
     }
 
-    @GetMapping("all")
-    public ResponseEntity<ResponseVO<Integer>> getAllContributions() {
+    @GetMapping("count-all-contribution")
+    public ResponseEntity<ResponseVO<Integer>> countAllContributions() {
         return this.contributionService.countAllContributions();
     }
 
-    @GetMapping("contribution-year")
-    public ResponseEntity<ResponseVO<Integer>> getContributionPeerSession(@RequestParam String sessionId) {
+    @GetMapping("count-contribution-peer-year")
+    public ResponseEntity<ResponseVO<Integer>> countContributionPeerSession(@RequestParam("sessionId") String sessionId) {
         return this.contributionService.countContributionPeerSession(sessionId);
     }
 
-    @GetMapping("contribution-month")
-    public ResponseEntity<ResponseVO<List<ContributionDTO>>> getContributionPeerMonth(@RequestParam String sessionId, @RequestParam String monthId) {
+    @GetMapping("list-member-contribution-peer-month")
+    public ResponseEntity<ResponseVO<List<ContributionDTO>>> getContributionPeerMonth(@RequestParam("sessionId") String sessionId, @RequestParam("monthId") String monthId) {
         return this.contributionService.getContributionPeerMonth(sessionId, monthId);
     }
 
-    @GetMapping("contribution-member")
-    public ResponseEntity<ResponseVO<List<ContributionDTO>>> getMemberContributions(@RequestParam String memberId, @RequestParam String sessionId) {
+    @GetMapping("member-contributions")
+    public ResponseEntity<ResponseVO<List<ContributionDTO>>> getMemberContributions(@RequestParam("memberId") String memberId, @RequestParam("sessionId") String sessionId) {
         return this.contributionService.getMemberContributions(memberId, sessionId);
     }
 

@@ -23,7 +23,8 @@ public class RegistrationController {
 
     @PostMapping
     public ResponseEntity<ResponseVO<Void>> register(@RequestBody RegistrationRequestDto registrationRequestDto) {
-        return this.registrationService.registerMember(registrationRequestDto);
+        return this.registrationService.
+                registerMember(registrationRequestDto);
     }
 
     @PostMapping("number-phone")
@@ -37,41 +38,42 @@ public class RegistrationController {
     }
 
     @DeleteMapping
-    public ResponseEntity<ResponseVO<Void>> deleteRegistration(@RequestParam String id) {
+    public ResponseEntity<ResponseVO<Void>> deleteRegistration(@RequestParam("id") String id) {
         return this.registrationService.deleteRegistration(id);
     }
 
     @GetMapping("registration-peer-session")
-    public ResponseEntity<ResponseVO<Integer>> getRegistrationBySession(@RequestParam String session) {
+    public ResponseEntity<ResponseVO<Integer>> getRegistrationBySession(@RequestParam("session") String session) {
         return this.registrationService.getRegistrationCountBySession(session);
     }
 
     @GetMapping("new-inscription-session")
-    public ResponseEntity<ResponseVO<Integer>> getNewOrRenewalAdherentForASession(@RequestParam String session, @RequestParam TypeInscription typeInscription) {
+    public ResponseEntity<ResponseVO<Integer>> getNewOrRenewalAdherentForASession(@RequestParam("session") String session, @RequestParam("typeInscription") TypeInscription typeInscription) {
         return this.registrationService.getNewOrRenewalAdherentForASession(session, typeInscription);
     }
 
     @GetMapping("payed-or-no-payed")
-    public ResponseEntity<ResponseVO<Integer>> getPayedOrNoPayedSessionCountPeerSession(@RequestParam String session, @RequestParam Boolean statusPayment) {
+    public ResponseEntity<ResponseVO<Integer>> getPayedOrNoPayedSessionCountPeerSession(@RequestParam("session") String session, @RequestParam("statusPayment") Boolean statusPayment) {
         return this.registrationService.getPayedOrNoPayedSessionCountPeerSession(session, statusPayment);
     }
 
     @GetMapping("member-by-session")
-    public ResponseEntity<ResponseVO<List<MemberDataResponseDTO>>> getMemberBySession(@RequestParam String session) {
+    public ResponseEntity<ResponseVO<List<MemberDataResponseDTO>>> getMemberBySession(@RequestParam("session") String session) {
         return this.registrationService.getMemberBySession(session);
     }
 
     @GetMapping("members-payment-status")
-    ResponseEntity<ResponseVO<List<MemberDataResponseDTO>>> getPayedOrNoPayedMembersPeerSession(@RequestParam String session, @RequestParam Boolean statusPayment) {
+    ResponseEntity<ResponseVO<List<MemberDataResponseDTO>>> getPayedOrNoPayedMembersPeerSession(@RequestParam("session") String session, @RequestParam("statusPayment") Boolean statusPayment) {
         return this.registrationService.getPayedOrNoPayedMembersPeerSession(session, statusPayment);
     }
 
     @GetMapping("members-registration-status")
-    ResponseEntity<ResponseVO<List<MemberDataResponseDTO>>> getMembersRegistrationsStatusForSessions(@RequestParam String session, @RequestParam RegistrationStatus registrationStatus) {
+    ResponseEntity<ResponseVO<List<MemberDataResponseDTO>>> getMembersRegistrationsStatusForSessions(@RequestParam("session") String session, @RequestParam("registrationStatus") RegistrationStatus registrationStatus) {
         return this.registrationService.getMembersRegistrationsStatusForSessions(session, registrationStatus);
     }
+
     @GetMapping("members-by-registration-year")
-    ResponseEntity<ResponseVO<List<MemberDataResponseDTO>>> getMemberByYearOfRegistration(@RequestParam String session) {
+    ResponseEntity<ResponseVO<List<MemberDataResponseDTO>>> getMemberByYearOfRegistration(@RequestParam("session") String session) {
         return this.registrationService.getMemberByYearOfRegistration(session);
     }
 }

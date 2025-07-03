@@ -18,12 +18,12 @@ public interface RegistrationRepository extends JpaRepository<Registration, Stri
     @Query("""
             SELECT count(*) FROM Registration r where r.session.id =:session
             """)
-    int getRegistrationCountBySession(String session);
+    int getRegistrationCountBySession(@Param("session") String session);
 
     @Query("""
             SELECT count(*) FROM Registration r where r.session.id =:session and r.statusPayment=:statusPayment
             """)
-    int getPayedOrNoPayedSessionCountPeerSession(String session, Boolean statusPayment);
+    int getPayedOrNoPayedSessionCountPeerSession(@Param("session") String session, @Param("statusPayment") Boolean statusPayment);
 
     @Query("""
             SELECT r.member FROM Registration r where r.session.id =:session
@@ -33,21 +33,21 @@ public interface RegistrationRepository extends JpaRepository<Registration, Stri
     @Query("""
             SELECT r.member FROM Registration r where r.session.id =:session and r.statusPayment=:statusPayment
             """)
-    List<Member> getPayedOrNoPayedMembersPeerSession(String session, Boolean statusPayment);
+    List<Member> getPayedOrNoPayedMembersPeerSession(@Param("session") String session, @Param("statusPayment") Boolean statusPayment);
 
     @Query("""
             SELECT r.member FROM Registration r where r.session.id =:session and r.registrationStatus =:registrationStatus
             """)
-    List<Member> getMembersRegistrationsStatusForSessions(String session, RegistrationStatus registrationStatus);
+    List<Member> getMembersRegistrationsStatusForSessions(@Param("session") String session, @Param("registrationStatus") RegistrationStatus registrationStatus);
 
     @Query("""
             select r.member from Registration r where r.session.id =:session and r.member.id =:memberId
             """)
-    Optional<Member> findMemberRegisteredMemberForSession(String session, String memberId);
+    Optional<Member> findMemberRegisteredMemberForSession(@Param("session") String session, @Param("memberId") String memberId);
 
 
     @Query("""
             SELECT count(*) FROM Registration r where r.session.id =:session AND r.registrationType =:typeInscription
             """)
-    int getNewOrRenewalAdherentForASession(String session, TypeInscription typeInscription);
+    int getNewOrRenewalAdherentForASession(@Param("session") String session,@Param("typeInscription") TypeInscription typeInscription);
 }

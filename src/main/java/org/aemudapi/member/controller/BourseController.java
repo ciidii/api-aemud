@@ -28,7 +28,7 @@ public class BourseController {
     }
 
     @GetMapping("member-Contribution-amount")
-    ResponseEntity<ResponseVO<Double>> getMemberOfContributionAmount(@RequestParam String numberPhone) {
+    ResponseEntity<ResponseVO<Double>> getMemberOfContributionAmount(@RequestParam("numberPhone") String numberPhone) {
 
         return this.bourseService.getMemberOfContributionAmount(numberPhone.trim());
     }
