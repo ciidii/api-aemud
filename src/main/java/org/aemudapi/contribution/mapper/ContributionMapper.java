@@ -35,9 +35,9 @@ public class ContributionMapper {
         dto.setContributionId(contribution.getId() != null ? contribution.getId() : null);
         dto.setMemberId(contribution.getMember() != null ? contribution.getMember().getId() : null);
         dto.setSessionId(contribution.getSession() != null ? contribution.getSession().getId() : null);
-        dto.setMonthId(contribution.getMonth() != null ? contribution.getMonth().getId() : null);
-        dto.setAmount(contribution.getAmount());
-        dto.setPaymentDate(contribution.getPaymentDate());
+//        dto.setMonthId(contribution.getMonth() != null ? contribution.getMonth().getId() : null);
+//        dto.setAmount(contribution.getAmount());
+//        dto.setPaymentDate(contribution.getPaymentDate());
 
         return dto;
     }
@@ -56,9 +56,9 @@ public class ContributionMapper {
         Member member = this.memberRepository.findById(dto.getMemberId()).orElseThrow(() -> new EntityNotFoundException("Member with id " + dto.getMemberId() + " not found"));
         Month month = this.monthRepository.findById(dto.getMonthId()).orElseThrow(() -> new EntityNotFoundException("Member with id " + dto.getMemberId() + " not found"));
         contribution.setMember(member);
-        contribution.setMonth(month);
+//        contribution.setMonth(month);
         contribution.setSession(session);
-        contribution.setAmount(member.getBourse().getMontant());
+//        contribution.setAmount(member.getBourse().getMontant());
         contribution.setId(dto.getContributionId());
 
         return contribution;
@@ -70,9 +70,9 @@ public class ContributionMapper {
         Member member = this.memberRepository.findByNumberPhone(memberPhoneNumber).orElseThrow(() -> new EntityNotFoundException("Member with id " + memberPhoneNumber + " not found"));
         Month month = this.monthRepository.findById(monthId).orElseThrow(() -> new EntityNotFoundException("Member with id " + monthId + " not found"));
         contribution.setMember(member);
-        contribution.setMonth(month);
+//        contribution.setMonth(month);
         contribution.setSession(session);
-        contribution.setAmount(member.getBourse().getMontant());
+//        contribution.setAmount(member.getBourse().getMontant());
 
         return contribution;
     }

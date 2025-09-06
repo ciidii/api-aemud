@@ -36,18 +36,18 @@ public interface ContributionRepository extends JpaRepository<Contribution, Stri
             """)
     List<Contribution> findMemberContributionsBySessionId(String memberId, String sessionId);
 
-    @Query("""
-            select sum(c.amount) from Contribution c where c.session.id = :sessionId
-            """)
-    Double sumContributionsBySessionId(String sessionId);
+//    @Query("""
+//            select sum(c.amount) from Contribution c where c.session.id = :sessionId
+//            """)
+//    Double sumContributionsBySessionId(String sessionId);
 
-    @Query("""
-            select sum(c.amount) from Contribution c where c.session.id = :sessionId and c.month.id = :monthId
-            """)
-    Double sumContributionsByMonth(String sessionId, String monthId);
+//    @Query("""
+//            select sum(c.amount) from Contribution c where c.session.id = :sessionId and c.month.id = :monthId
+//            """)
+//    Double sumContributionsByMonth(String sessionId, String monthId);
 
-    @Query("""
-            select c from Contribution c where c.session.id = :sessionId and c.month.id = :monthId and c.member.contactInfo.numberPhone=:memberId
-            """)
-    List<Contribution> findMonthMemberByPhoneNumberContribution(@Param("sessionId") String sessionId, @Param("monthId") String monthId, @Param("memberId") String memberId);
+//    @Query("""
+//            select c from Contribution c where c.session.id = :sessionId and c.month.id = :monthId and c.member.contactInfo.numberPhone=:memberId
+//            """)
+//    List<Contribution> findMonthMemberByPhoneNumberContribution(@Param("sessionId") String sessionId, @Param("monthId") String monthId, @Param("memberId") String memberId);
 }

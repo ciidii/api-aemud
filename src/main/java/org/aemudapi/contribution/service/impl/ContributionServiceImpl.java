@@ -72,27 +72,27 @@ public class ContributionServiceImpl implements ContributionService {
         return new ResponseEntity<>(new ResponseVOBuilder<List<ContributionDTO>>().addData(contributionDTOS).build(), HttpStatus.OK);
     }
 
-    @Override
-    public ResponseEntity<ResponseVO<Double>> getContributionsAmountPeerMonth(String monthId, String sessionId) {
-        double contributionsAmount = this.contributionRepository.sumContributionsByMonth(sessionId, monthId);
-        return new ResponseEntity<>(new ResponseVOBuilder<Double>().addData(contributionsAmount).build(), HttpStatus.OK);
-    }
+//    @Override
+//    public ResponseEntity<ResponseVO<Double>> getContributionsAmountPeerMonth(String monthId, String sessionId) {
+////        double contributionsAmount = this.contributionRepository.sumContributionsByMonth(sessionId, monthId);
+////        return new ResponseEntity<>(new ResponseVOBuilder<Double>().addData(contributionsAmount).build(), HttpStatus.OK);
+//    }
 
-    @Override
-    public ResponseEntity<ResponseVO<Double>> getContributionsAmountPeerSessions(String sessionId) {
-        double contributionsAmount = this.contributionRepository.sumContributionsBySessionId(sessionId);
-        return new ResponseEntity<>(new ResponseVOBuilder<Double>().addData(contributionsAmount).build(), HttpStatus.OK);
-    }
+//    @Override
+//    public ResponseEntity<ResponseVO<Double>> getContributionsAmountPeerSessions(String sessionId) {
+//        double contributionsAmount = this.contributionRepository.sumContributionsBySessionId(sessionId);
+//        return new ResponseEntity<>(new ResponseVOBuilder<Double>().addData(contributionsAmount).build(), HttpStatus.OK);
+//    }
 
-    @Override
-    public ResponseEntity<ResponseVO<ContributionDTO>> contributeUsingNumPhone(String phoneNumber, String yearId, String monthId) {
-        Contribution contribution = this.contributionMapper.toEntity(phoneNumber, yearId, monthId);
-        List<Contribution> monthMemberContribution = this.contributionRepository.findMonthMemberByPhoneNumberContribution(yearId, monthId, phoneNumber);
-        if (!monthMemberContribution.isEmpty()) {
-            throw new EntityExistsException("Ce member à déjà cotiser pour ce mois");
-        }
-        ContributionDTO contributionDTO = this.contributionMapper.toDTO(this.contributionRepository.save(contribution));
-        return new ResponseEntity<>(new ResponseVOBuilder<ContributionDTO>().addData(contributionDTO).build(), HttpStatus.OK);
-    }
+//    @Override
+//    public ResponseEntity<ResponseVO<ContributionDTO>> contributeUsingNumPhone(String phoneNumber, String yearId, String monthId) {
+//        Contribution contribution = this.contributionMapper.toEntity(phoneNumber, yearId, monthId);
+//        List<Contribution> monthMemberContribution = this.contributionRepository.findMonthMemberByPhoneNumberContribution(yearId, monthId, phoneNumber);
+//        if (!monthMemberContribution.isEmpty()) {
+//            throw new EntityExistsException("Ce member à déjà cotiser pour ce mois");
+//        }
+//        ContributionDTO contributionDTO = this.contributionMapper.toDTO(this.contributionRepository.save(contribution));
+//        return new ResponseEntity<>(new ResponseVOBuilder<ContributionDTO>().addData(contributionDTO).build(), HttpStatus.OK);
+//    }
 
 }

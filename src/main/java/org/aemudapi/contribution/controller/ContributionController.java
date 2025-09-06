@@ -21,10 +21,10 @@ public class ContributionController {
         return this.contributionService.contribute(contributionDTO);
     }
 
-    @PostMapping("contribute-phone")
-    public ResponseEntity<ResponseVO<ContributionDTO>> contributeUsingNumberPhone(@RequestBody ContributionWithPhoneNumberDTO contributionDTO) {
-        return this.contributionService.contributeUsingNumPhone(contributionDTO.getPhoneNumber(), contributionDTO.getSessionId(), contributionDTO.getMonthId());
-    }
+//    @PostMapping("contribute-phone")
+//    public ResponseEntity<ResponseVO<ContributionDTO>> contributeUsingNumberPhone(@RequestBody ContributionWithPhoneNumberDTO contributionDTO) {
+//        return this.contributionService.contributeUsingNumPhone(contributionDTO.getPhoneNumber(), contributionDTO.getSessionId(), contributionDTO.getMonthId());
+//    }
 
     @PutMapping
     public ResponseEntity<ResponseVO<ContributionDTO>> modifyContribution(ContributionDTO contributionDTO) {
@@ -55,14 +55,14 @@ public class ContributionController {
     public ResponseEntity<ResponseVO<List<ContributionDTO>>> getMemberContributions(@RequestParam("memberId") String memberId, @RequestParam("sessionId") String sessionId) {
         return this.contributionService.getMemberContributions(memberId, sessionId);
     }
-
-    @GetMapping("amount-peer-month")
-    ResponseEntity<ResponseVO<Double>> getContributionsAmountPeerMonth(@RequestParam("monthId") String monthId, @RequestParam("sessionId") String sessionId) {
-        return this.contributionService.getContributionsAmountPeerMonth(monthId, sessionId);
-    }
-
-    @GetMapping("amount-peer-session")
-    ResponseEntity<ResponseVO<Double>> getContributionsAmountPeerMonth(@RequestParam("sessionId") String sessionId) {
-        return this.contributionService.getContributionsAmountPeerSessions(sessionId);
-    }
+//
+//    @GetMapping("amount-peer-month")
+//    ResponseEntity<ResponseVO<Double>> getContributionsAmountPeerMonth(@RequestParam("monthId") String monthId, @RequestParam("sessionId") String sessionId) {
+//        return this.contributionService.getContributionsAmountPeerMonth(monthId, sessionId);
+//    }
+//
+//    @GetMapping("amount-peer-session")
+//    ResponseEntity<ResponseVO<Double>> getContributionsAmountPeerMonth(@RequestParam("sessionId") String sessionId) {
+//        return this.contributionService.getContributionsAmountPeerSessions(sessionId);
+//    }
 }

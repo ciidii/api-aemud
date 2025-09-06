@@ -11,6 +11,7 @@ import org.aemudapi.member.entity.Member;
 import org.aemudapi.member.entity.Session;
 
 import java.time.LocalDate;
+import java.time.Month;
 
 @Entity
 @Setter
@@ -20,14 +21,11 @@ public class Contribution extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
-
     @ManyToOne
     @JoinColumn(name = "session_id")
     private Session session;
-    @ManyToOne
-    @JoinColumn(name = "month_id", nullable = false)
     private Month month;
-
-    private Double amount;
-    private LocalDate paymentDate = LocalDate.now();
+    private double amountDue;
+    private double amountPaid;
+    private ContributionStatus status;
 }
