@@ -1,0 +1,92 @@
+// =========================================================================
+// DESIGN SYSTEM - TYPOGRAPHY MIXINS
+// =========================================================================
+// Ce fichier contient les mixins pour appliquer des styles de texte
+// sémantiques de manière cohérente dans toute l'application.
+//
+// Chaque mixin combine font-size, font-weight, et line-height.
+// =========================================================================
+
+// On importe les variables pour les utiliser dans les mixins.
+@import 'variables';
+
+// --- Mixins pour les Titres (Headings) ---
+
+@mixin text-heading-1 {
+  font-family: $font-family-base;
+  font-size: $font-size-h1;
+  font-weight: $font-weight-bold;
+  line-height: $line-height-heading;
+}
+
+@mixin text-heading-2 {
+  font-family: $font-family-base;
+  font-size: $font-size-h2;
+  font-weight: $font-weight-bold;
+  line-height: $line-height-heading;
+}
+
+@mixin text-heading-3 {
+  font-family: $font-family-base;
+  font-size: $font-size-h3;
+  font-weight: $font-weight-bold;
+  line-height: $line-height-heading;
+}
+
+@mixin text-heading-4 {
+  font-family: $font-family-base;
+  font-size: $font-size-h4;
+  font-weight: $font-weight-bold;
+  line-height: $line-height-heading;
+}
+
+@mixin text-heading-5 {
+  font-family: $font-family-base;
+  font-size: $font-size-h5;
+  font-weight: $font-weight-bold;
+  line-height: $line-height-heading;
+}
+
+@mixin text-heading-6 {
+  font-family: $font-family-base;
+  font-size: $font-size-h6;
+  font-weight: $font-weight-bold;
+  line-height: $line-height-heading;
+}
+
+// --- Mixins pour le Corps de Texte (Body) ---
+
+@mixin text-body-regular {
+  font-family: $font-family-base;
+  font-size: $font-size-body;
+  font-weight: $font-weight-regular;
+  line-height: $line-height-base;
+}
+
+@mixin text-body-bold {
+  @include text-body-regular;
+  font-weight: $font-weight-bold;
+}
+
+@mixin text-body-small {
+  font-family: $font-family-base;
+  font-size: $font-size-small;
+  font-weight: $font-weight-regular;
+  line-height: $line-height-base;
+}
+
+// --- Mixins pour les Composants UI ---
+
+@mixin text-button {
+  font-family: $font-family-base;
+  font-size: $button-font-size;
+  font-weight: $font-weight-bold;
+  line-height: 1; // Les boutons ont souvent une hauteur de ligne de 1
+}
+
+@mixin text-label {
+  font-family: $font-family-base;
+  font-size: $font-size-small;
+  font-weight: $font-weight-bold;
+  line-height: $line-height-base;
+}

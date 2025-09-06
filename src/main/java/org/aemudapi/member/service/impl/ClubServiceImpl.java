@@ -1,6 +1,7 @@
 package org.aemudapi.member.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
+import lombok.AllArgsConstructor;
 import org.aemudapi.member.dtos.ClubDto;
 import org.aemudapi.member.dtos.FilterDTO;
 import org.aemudapi.exceptions.customeExceptions.EntityCannotBeDeletedException;
@@ -22,16 +23,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class ClubServiceImpl implements ClubService {
     private final ClubRepository clubRepository;
     private final ClubMapper clubMapper;
     private final MemberRepository memberRepository;
 
-    public ClubServiceImpl(ClubRepository clubRepository, ClubMapper clubMapper, MemberRepository memberRepository) {
-        this.clubRepository = clubRepository;
-        this.clubMapper = clubMapper;
-        this.memberRepository = memberRepository;
-    }
 
     @Override
     public ResponseEntity<ResponseVO<ClubDto>> addClub(ClubDto clubDto) {

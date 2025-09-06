@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkamued_frontend=self.webpackChunkamued_frontend||[]).push([[750],{4750:(e,n,u)=>{u.r(n),u.d(n,{CONTRIBUTION_ROUTES:()=>d});const d=[{}]}}]);

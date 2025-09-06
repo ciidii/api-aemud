@@ -9,7 +9,8 @@ DB_PORT: 3306
 DB_NAME: aemud
 DB_PASSWORD: Wollaj@1
 DB_USERNAME: root
-
+JWT_SECRET: "KmDWmBsu4p8ZVN2194WtSSx17oqr7q0sL0+SSLIkoPI="
+JWT_EXPIRATION: 1800000
 #ui config
 
 # UI_APP_URL: http://localhost:4200

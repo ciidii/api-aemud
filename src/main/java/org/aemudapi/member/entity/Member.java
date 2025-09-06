@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.aemudapi.club.entity.Club;
 import org.aemudapi.commission.entity.Commission;
+import org.aemudapi.user.entity.User;
 
 import java.util.List;
 
@@ -53,4 +54,7 @@ public class Member extends BaseEntity {
 
     @OneToMany(cascade = {CascadeType.MERGE},mappedBy = "member")
     private List<Registration> registration;
+
+    @OneToOne
+    private User user;
 }

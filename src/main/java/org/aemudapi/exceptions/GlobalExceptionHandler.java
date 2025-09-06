@@ -8,14 +8,17 @@ import org.aemudapi.utils.ResponseVO;
 import org.aemudapi.utils.ResponseVOBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.time.LocalDateTime;
 
-//@RestControllerAdvice
+@RestControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(GeneralSecurityException.class)
@@ -93,5 +96,26 @@ public class GlobalExceptionHandler {
         ResponseErrorVo errorVo = new ResponseErrorVo("ENTITY_ALL_READY_EXIST", ex.getMessage());
         ResponseVO<Void> response = new ResponseVOBuilder<Void>().fail(HttpStatus.CONFLICT).error(errorVo, HttpStatus.CONFLICT).build();
         return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<ResponseVO<Void>> handleBadCredentialsException(BadCredentialsException ex) {
+        ResponseErrorVo errorVo = new ResponseErrorVo("INVALID_CREDENTIALS", "Les informations d'identification sont invalides", ex.getMessage());
+        ResponseVO<Void> response = new ResponseVOBuilder<Void>().fail(HttpStatus.UNAUTHORIZED).error(errorVo, HttpStatus.UNAUTHORIZED).build();
+        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(JwtTokenMalformedException.class)
+    public ResponseEntity<ResponseVO<Void>> handleJwtTokenMalformedException(JwtTokenMalformedException ex) {
+        ResponseErrorVo errorVo = new ResponseErrorVo("JWT_TOKEN_MALFORMED", "Le jeton JWT est malformé", ex.getMessage());
+        ResponseVO<Void> response = new ResponseVOBuilder<Void>().fail(HttpStatus.UNAUTHORIZED).error(errorVo, HttpStatus.UNAUTHORIZED).build();
+        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(JwtTokenExpiredException.class)
+    public ResponseEntity<ResponseVO<Void>> handleJwtTokenExpiredException(JwtTokenExpiredException ex) {
+        ResponseErrorVo errorVo = new ResponseErrorVo("JWT_TOKEN_EXPIRED", "Le jeton JWT a expiré", ex.getMessage());
+        ResponseVO<Void> response = new ResponseVOBuilder<Void>().fail(HttpStatus.UNAUTHORIZED).error(errorVo, HttpStatus.UNAUTHORIZED).build();
+        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }
 }

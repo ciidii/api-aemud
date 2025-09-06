@@ -1,7 +1,7 @@
 # JWT
-jwt:
-  secret:${JWT_SECRET}
-
+app:
+  jwtSecret: ${JWT_SECRET} # Doit correspondre à @Value("${app.jwtSecret}")
+  jwtExpirationMs: ${JWT_EXPIRATION}
 
 server:
   error:
