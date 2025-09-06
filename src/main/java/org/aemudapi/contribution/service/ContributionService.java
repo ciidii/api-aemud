@@ -19,9 +19,9 @@ public interface ContributionService {
 
     ResponseEntity<ResponseVO<Integer>> countContributionPeerSession(String sessionId);
 
-    ResponseEntity<ResponseVO<List<ContributionDTO>>> getContributionPeerMonth(String sessionId, String monthId);
+    ResponseEntity<ResponseVO<List<ContributionResponseDTO>>> getContributionPeerMonth(String sessionId, String monthId);
 
-    ResponseEntity<ResponseVO<List<ContributionDTO>>> getMemberContributions(String memberId, String sessionId);
+    ResponseEntity<ResponseVO<List<ContributionResponseDTO>>> getMemberContributions(String memberId, String sessionId);
 
     ResponseEntity<ResponseVO<ContributionsPayementResponse>> payContributions(ContributionsPayementRequest payementRequest);
 

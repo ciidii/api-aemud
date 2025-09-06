@@ -28,20 +28,12 @@ public class ContributionMapper {
     private final MemberRepository memberRepository;
     private final MonthRepository monthRepository;
 
-    public ContributionDTO toDTO(Contribution contribution) {
+    public ContributionResponseDTO toDTO(Contribution contribution) {
         if (contribution == null) {
             return null;
         }
 
-        ContributionDTO dto = new ContributionDTO();
-        dto.setContributionId(contribution.getId() != null ? contribution.getId() : null);
-        dto.setMemberId(contribution.getMember() != null ? contribution.getMember().getId() : null);
-        dto.setSessionId(contribution.getSession() != null ? contribution.getSession().getId() : null);
-//        dto.setMonthId(contribution.getMonth() != null ? contribution.getMonth().getId() : null);
-//        dto.setAmount(contribution.getAmount());
-//        dto.setPaymentDate(contribution.getPaymentDate());
-
-        return dto;
+        return new ContributionResponseDTO(contribution.getId(), contribution.getSession().getId(), contribution.getMember().getId(), contribution.getMonth(), contribution.getAmountDue(), contribution.getAmountPaid(), contribution.getStatus());
     }
 
 
@@ -75,7 +67,7 @@ public class ContributionMapper {
         return contribution;
     }
 
-    public List<ContributionDTO> toDTOList(List<Contribution> contributions) {
+    public List<ContributionResponseDTO> toDTOList(List<Contribution> contributions) {
         if (contributions == null || contributions.isEmpty()) {
             return List.of();
         }

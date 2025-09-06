@@ -20,6 +20,7 @@ public class ContributionController {
         return this.contributionService.addContribute(contributionDTO);
     }
 
+    @PostMapping("pay-contributions")
     ResponseEntity<ResponseVO<ContributionsPayementResponse>> payContributions(@RequestBody ContributionsPayementRequest payementRequest) {
         return this.contributionService.payContributions(payementRequest);
     }
@@ -49,12 +50,12 @@ public class ContributionController {
     }
 
     @GetMapping("list-member-contribution-peer-month")
-    public ResponseEntity<ResponseVO<List<ContributionDTO>>> getContributionPeerMonth(@RequestParam("sessionId") String sessionId, @RequestParam("monthId") String monthId) {
+    public ResponseEntity<ResponseVO<List<ContributionResponseDTO>>> getContributionPeerMonth(@RequestParam("sessionId") String sessionId, @RequestParam("monthId") String monthId) {
         return this.contributionService.getContributionPeerMonth(sessionId, monthId);
     }
 
     @GetMapping("member-contributions")
-    public ResponseEntity<ResponseVO<List<ContributionDTO>>> getMemberContributions(@RequestParam("memberId") String memberId, @RequestParam("sessionId") String sessionId) {
+    public ResponseEntity<ResponseVO<List<ContributionResponseDTO>>> getMemberContributions(@RequestParam("memberId") String memberId, @RequestParam("sessionId") String sessionId) {
         return this.contributionService.getMemberContributions(memberId, sessionId);
     }
 //

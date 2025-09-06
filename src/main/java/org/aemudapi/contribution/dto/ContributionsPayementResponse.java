@@ -1,4 +1,7 @@
 package org.aemudapi.contribution.dto;
 
-public record ContributionsPayementResponse() {
+import java.util.List;
+
+public record ContributionsPayementResponse(PayementResponseDTO payements,
+                                            List<ContributionResponseDTO> contributions) {
 }
