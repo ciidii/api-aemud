@@ -3,6 +3,8 @@ package org.aemudapi.contribution.mapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.aemudapi.contribution.dto.ContributionDTO;
+import org.aemudapi.contribution.dto.ContributionRequestDTO;
+import org.aemudapi.contribution.dto.ContributionResponseDTO;
 import org.aemudapi.contribution.entity.Contribution;
 import org.aemudapi.contribution.entity.Month;
 import org.aemudapi.contribution.repository.MonthRepository;
@@ -43,24 +45,20 @@ public class ContributionMapper {
     }
 
 
-    public Contribution toEntity(ContributionDTO dto) {
+    public Contribution toEntity(ContributionRequestDTO dto) {
         if (dto == null) {
             return null;
         }
 
         Contribution contribution = new Contribution();
-        if (dto.getContributionId() != null) {
-            contribution.setId(dto.getContributionId());
-        }
-        Session session = this.sessionRepository.findById(dto.getSessionId()).orElseThrow(() -> new EntityNotFoundException("Session with id " + dto.getSessionId() + " not found"));
-        Member member = this.memberRepository.findById(dto.getMemberId()).orElseThrow(() -> new EntityNotFoundException("Member with id " + dto.getMemberId() + " not found"));
-        Month month = this.monthRepository.findById(dto.getMonthId()).orElseThrow(() -> new EntityNotFoundException("Member with id " + dto.getMemberId() + " not found"));
+        Session session = this.sessionRepository.findById(dto.sessionID()).orElseThrow(() -> new EntityNotFoundException("Session with id " + dto.sessionID() + " not found"));
+        Member member = this.memberRepository.findById(dto.memberID()).orElseThrow(() -> new EntityNotFoundException("Member with id " + dto.memberID() + " not found"));
         contribution.setMember(member);
-//        contribution.setMonth(month);
+        contribution.setMonth(dto.month());
         contribution.setSession(session);
-//        contribution.setAmount(member.getBourse().getMontant());
-        contribution.setId(dto.getContributionId());
-
+        contribution.setAmountDue(member.getBourse().getMontant());
+        contribution.setAmountPaid(dto.amountPaid());
+        contribution.setStatus(dto.status());
         return contribution;
     }
 
@@ -87,7 +85,7 @@ public class ContributionMapper {
                 .collect(Collectors.toList());
     }
 
-    public List<Contribution> toEntityList(List<ContributionDTO> dtos) {
+    public List<Contribution> toEntityList(List<ContributionRequestDTO> dtos) {
         if (dtos == null || dtos.isEmpty()) {
             return List.of();
         }

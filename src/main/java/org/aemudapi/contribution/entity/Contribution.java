@@ -25,7 +25,7 @@ public class Contribution extends BaseEntity {
     @JoinColumn(name = "session_id")
     private Session session;
     private Month month;
-    private double amountDue;
-    private double amountPaid;
+    private Double amountDue;
+    private Double amountPaid;
     private ContributionStatus status;
 }

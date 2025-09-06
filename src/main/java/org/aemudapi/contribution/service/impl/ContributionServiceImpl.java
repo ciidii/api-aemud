@@ -1,9 +1,8 @@
 package org.aemudapi.contribution.service.impl;
 
-import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
-import org.aemudapi.contribution.dto.ContributionDTO;
+import org.aemudapi.contribution.dto.*;
 import org.aemudapi.contribution.entity.Contribution;
 import org.aemudapi.contribution.mapper.ContributionMapper;
 import org.aemudapi.contribution.repository.ContributionRepository;
@@ -25,15 +24,16 @@ public class ContributionServiceImpl implements ContributionService {
     private final MemberService memberService;
 
     @Override
-    public ResponseEntity<ResponseVO<ContributionDTO>> contribute(ContributionDTO contributionDTO) {
-        Contribution contribution = this.contributionMapper.toEntity(contributionDTO);
-        this.contributionRepository.save(contribution);
-        return new ResponseEntity<>(new ResponseVOBuilder<ContributionDTO>().addData(contributionDTO).build(), HttpStatus.OK);
+    public ResponseEntity<ResponseVO<ContributionResponseDTO>> addContribute(ContributionRequestDTO contributionRequestDTO) {
+        Contribution contribution = this.contributionMapper.toEntity(contributionRequestDTO);
+        contribution = this.contributionRepository.save(contribution);
+        ContributionResponseDTO contributionResponseDTO = new ContributionResponseDTO(contribution.getId(),contribution.getSession().getId(),contribution.getMember().getId(),contribution.getMonth(),contribution.getAmountDue(),contribution.getAmountPaid(),contribution.getStatus());
+        return new ResponseEntity<>(new ResponseVOBuilder<ContributionResponseDTO>().addData(contributionResponseDTO).build(), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<ResponseVO<ContributionDTO>> modifyContribution(ContributionDTO contributionDTO) {
-        return this.contribute(contributionDTO);
+    public ResponseEntity<ResponseVO<ContributionResponseDTO>> modifyContribution(ContributionRequestDTO contributionDTO) {
+        return this.addContribute(contributionDTO);
     }
 
     @Override
@@ -70,6 +70,11 @@ public class ContributionServiceImpl implements ContributionService {
         List<Contribution> contributions = this.contributionRepository.findMemberContributionsBySessionId(memberId, sessionId);
         List<ContributionDTO> contributionDTOS = this.contributionMapper.toDTOList(contributions);
         return new ResponseEntity<>(new ResponseVOBuilder<List<ContributionDTO>>().addData(contributionDTOS).build(), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<ResponseVO<ContributionsPayementResponse>> payContributions(ContributionsPayementRequest payementRequest) {
+        return null;
     }
 
 //    @Override

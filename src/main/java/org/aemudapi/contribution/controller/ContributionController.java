@@ -1,8 +1,7 @@
 package org.aemudapi.contribution.controller;
 
 import lombok.AllArgsConstructor;
-import org.aemudapi.contribution.dto.ContributionDTO;
-import org.aemudapi.contribution.dto.ContributionWithPhoneNumberDTO;
+import org.aemudapi.contribution.dto.*;
 import org.aemudapi.contribution.service.ContributionService;
 import org.aemudapi.utils.ResponseVO;
 import org.springframework.http.ResponseEntity;
@@ -17,17 +16,20 @@ public class ContributionController {
     private final ContributionService contributionService;
 
     @PostMapping("contribute")
-    public ResponseEntity<ResponseVO<ContributionDTO>> contribute(@RequestBody ContributionDTO contributionDTO) {
-        return this.contributionService.contribute(contributionDTO);
+    public ResponseEntity<ResponseVO<ContributionResponseDTO>> contribute(@RequestBody ContributionRequestDTO contributionDTO) {
+        return this.contributionService.addContribute(contributionDTO);
     }
 
+    ResponseEntity<ResponseVO<ContributionsPayementResponse>> payContributions(@RequestBody ContributionsPayementRequest payementRequest) {
+        return this.contributionService.payContributions(payementRequest);
+    }
 //    @PostMapping("contribute-phone")
 //    public ResponseEntity<ResponseVO<ContributionDTO>> contributeUsingNumberPhone(@RequestBody ContributionWithPhoneNumberDTO contributionDTO) {
 //        return this.contributionService.contributeUsingNumPhone(contributionDTO.getPhoneNumber(), contributionDTO.getSessionId(), contributionDTO.getMonthId());
 //    }
 
     @PutMapping
-    public ResponseEntity<ResponseVO<ContributionDTO>> modifyContribution(ContributionDTO contributionDTO) {
+    public ResponseEntity<ResponseVO<ContributionResponseDTO>> modifyContribution(ContributionRequestDTO contributionDTO) {
         return this.contributionService.modifyContribution(contributionDTO);
     }
 
