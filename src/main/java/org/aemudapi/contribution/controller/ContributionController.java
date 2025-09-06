@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.aemudapi.contribution.dto.*;
 import org.aemudapi.contribution.service.ContributionService;
 import org.aemudapi.utils.ResponseVO;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -57,6 +58,12 @@ public class ContributionController {
     @GetMapping("member-contributions")
     public ResponseEntity<ResponseVO<List<ContributionResponseDTO>>> getMemberContributions(@RequestParam("memberId") String memberId, @RequestParam("sessionId") String sessionId) {
         return this.contributionService.getMemberContributions(memberId, sessionId);
+    }
+
+    @PostMapping("create-membre-calendar")
+    public ResponseEntity<ResponseVO<Void>> createContributionCalendar(@RequestBody MembreCalendarDTO membreCalendarDTO) {
+        this.contributionService.createMemberCalendar(membreCalendarDTO.memberID(), membreCalendarDTO.sessionID());
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 //
 //    @GetMapping("amount-peer-month")

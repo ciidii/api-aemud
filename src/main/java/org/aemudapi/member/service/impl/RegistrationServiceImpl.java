@@ -3,6 +3,7 @@ package org.aemudapi.member.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import org.aemudapi.contribution.service.ContributionService;
 import org.aemudapi.exceptions.customeExceptions.MemberAllReadyRegisterException;
 import org.aemudapi.member.dtos.MemberDataResponseDTO;
 import org.aemudapi.member.dtos.RegistrationRequestDto;
@@ -34,6 +35,7 @@ public class RegistrationServiceImpl implements RegistrationService {
     private final RegistrationRepository registrationRepository;
     private final MemberMapper memberMapper;
     private MemberRepository memberRepository;
+    private ContributionService contributionService;
 
     @Override
     public ResponseEntity<ResponseVO<Void>> registerMember(RegistrationRequestDto registrationRequestDto) {
@@ -42,7 +44,9 @@ public class RegistrationServiceImpl implements RegistrationService {
         if (member.isPresent()) {
             throw new MemberAllReadyRegisterException("Member Already Registered");
         }
+
         this.registrationRepository.save(registration);
+        this.contributionService.createMemberCalendar(registrationRequestDto.getSession(), registrationRequestDto.getMember());
         ResponseVO<Void> responseVO = new ResponseVOBuilder<Void>().success().build();
         return new ResponseEntity<>(responseVO, HttpStatus.CREATED);
     }

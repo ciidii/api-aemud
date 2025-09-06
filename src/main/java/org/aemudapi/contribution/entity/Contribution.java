@@ -13,6 +13,7 @@ import org.aemudapi.member.entity.Session;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.YearMonth;
 
 @Entity
 @Setter
@@ -26,7 +27,7 @@ public class Contribution extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "session_id")
     private Session session;
-    private Month month;
+    private YearMonth month;
     private Double amountDue;
     private Double amountPaid;
     private ContributionStatus status;

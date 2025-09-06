@@ -15,7 +15,9 @@ import org.aemudapi.contribution.repository.ContributionRepository;
 import org.aemudapi.contribution.repository.PayementRepository;
 import org.aemudapi.contribution.service.ContributionService;
 import org.aemudapi.member.entity.Member;
+import org.aemudapi.member.entity.Session;
 import org.aemudapi.member.repository.MemberRepository;
+import org.aemudapi.member.repository.SessionRepository;
 import org.aemudapi.utils.ResponseVO;
 import org.aemudapi.utils.ResponseVOBuilder;
 import org.springframework.http.HttpStatus;
@@ -24,6 +26,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.Month;
+import java.time.Year;
+import java.time.YearMonth;
 import java.util.List;
 
 @Service
@@ -34,6 +39,7 @@ public class ContributionServiceImpl implements ContributionService {
     private final MemberRepository memberRepository;
     private final PayementRepository payementRepository;
     private final PayementMapper payementMapper;
+    private final SessionRepository sessionRepository;
 
     @Override
     public ResponseEntity<ResponseVO<ContributionResponseDTO>> addContribute(ContributionRequestDTO contributionRequestDTO) {
@@ -100,6 +106,45 @@ public class ContributionServiceImpl implements ContributionService {
         ContributionsPayementResponse contributionsPayementResponse = new ContributionsPayementResponse(this.payementMapper.toDto(payement), this.contributionMapper.toDTOList(contributions));
         return new ResponseEntity<>(new ResponseVOBuilder<ContributionsPayementResponse>().addData(contributionsPayementResponse).build(), HttpStatus.OK);
     }
+
+    @Override
+    public void createMemberCalendar(String memberId, String sessionId) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new EntityNotFoundException("Member not found"));
+        Session session = sessionRepository.findById(sessionId)
+                .orElseThrow(() -> new EntityNotFoundException("Session not found"));
+
+        YearMonth adhesionMonth = YearMonth.from(member.getMembershipInfo().getAdhesionDate());
+
+        for (int month = 1; month <= 12; month++) {
+            YearMonth current = YearMonth.of(session.getYear_(), month);
+
+            boolean exists = contributionRepository
+                    .existsByMemberAndSessionAndMonth(memberId, sessionId, current);
+
+            if (!exists) {
+                ContributionStatus status;
+
+                if (current.isBefore(adhesionMonth)) {
+                    status = ContributionStatus.NOT_APPLICABLE; // nouveau statut
+                } else {
+                    status = ContributionStatus.PENDING;
+                }
+
+                Contribution contribution = new Contribution(
+                        member,
+                        session,
+                        current,
+                        member.getBourse().getMontant(),
+                        0.0,
+                        status
+                );
+
+                contributionRepository.save(contribution);
+            }
+        }
+    }
+
 
     public Double getMemberAmountDue(String memberId, int months) {
 

@@ -30,4 +30,5 @@ public interface ContributionService {
 //    ResponseEntity<ResponseVO<Double>> getContributionsAmountPeerSessions(String sessionId);
 
 //    ResponseEntity<ResponseVO<ContributionDTO>> contributeUsingNumPhone(String phoneNumber, String yearId, String monthId);
+    public void createMemberCalendar(String memberId, String sessionId);
 }
