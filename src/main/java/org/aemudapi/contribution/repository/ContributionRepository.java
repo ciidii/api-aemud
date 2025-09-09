@@ -40,12 +40,16 @@ public interface ContributionRepository extends JpaRepository<Contribution, Stri
     List<Contribution> findMemberContributionsBySessionId(String memberId, String sessionId);
 
     @Query("""
-        select count(c) > 0 from Contribution c 
-        where c.member.id = :memberId 
-          and c.session.id = :sessionId 
-          and c.month = :month
-       """)
+             select count(c) > 0 from Contribution c 
+             where c.member.id = :memberId 
+               and c.session.id = :sessionId 
+               and c.month = :month
+            """)
     boolean existsByMemberAndSessionAndMonth(String memberId, String sessionId, YearMonth month);
+
+    @Query("""
+            select c from Contribution c where c.member.id = :memberId and c.session.id = :sessionId""")
+    List<Contribution> findMemberContributionsCalendarByMemberIdAndSessionId(String memberId, String sessionId);
 
 
 //    @Query("""

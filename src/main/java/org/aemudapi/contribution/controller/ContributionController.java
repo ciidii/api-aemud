@@ -65,6 +65,12 @@ public class ContributionController {
         this.contributionService.createMemberCalendar(membreCalendarDTO.memberID(), membreCalendarDTO.sessionID());
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+
+    @GetMapping("member-contribution-calendar")
+    public ResponseEntity<ResponseVO<List<ContributionResponseDTO>>> getMemberContributionCalendar(@RequestParam("memberId") String memberId, @RequestParam("sessionId") String sessionId) {
+        return  this.contributionService.getMemberContributionsCalendar(memberId,sessionId);
+    }
 //
 //    @GetMapping("amount-peer-month")
 //    ResponseEntity<ResponseVO<Double>> getContributionsAmountPeerMonth(@RequestParam("monthId") String monthId, @RequestParam("sessionId") String sessionId) {

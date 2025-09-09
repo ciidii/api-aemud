@@ -145,6 +145,13 @@ public class ContributionServiceImpl implements ContributionService {
         }
     }
 
+    @Override
+    public ResponseEntity<ResponseVO<List<ContributionResponseDTO>>> getMemberContributionsCalendar(String memberId, String sessionId) {
+        List<Contribution> contributions = this.contributionRepository.findMemberContributionsCalendarByMemberIdAndSessionId(memberId, sessionId);
+        List<ContributionResponseDTO> contributionResponseDTOS = this.contributionMapper.toDTOList(contributions);
+        return new ResponseEntity<>(new ResponseVOBuilder<List<ContributionResponseDTO>>().addData(contributionResponseDTOS).build(), HttpStatus.OK);
+    }
+
 
     public Double getMemberAmountDue(String memberId, int months) {
 
