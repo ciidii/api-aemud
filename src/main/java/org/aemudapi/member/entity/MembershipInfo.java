@@ -19,8 +19,8 @@ public class MembershipInfo {
     private String bacSeries;
     private String bacMention;
     private String yearOfBac;
-    private String aemudCourses;
-    private String otherCourses;
+    //private String aemudCourses;
+    //private String otherCourses;
     private String participatedActivity;
     private String politicOrganisation;
     private LocalDateTime adhesionDate = LocalDateTime.now();

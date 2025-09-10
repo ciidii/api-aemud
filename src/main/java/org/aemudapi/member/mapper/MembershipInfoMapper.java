@@ -31,8 +31,8 @@ public class MembershipInfoMapper {
         entity.setYearOfBac(dto.getYearOfBac());
         entity.setBacMention(dto.getBacMention());
         entity.setBacSeries(dto.getBacSeries());
-        entity.setAemudCourses(dto.getAemudCourses());
-        entity.setOtherCourses(dto.getOtherCourses());
+      //  entity.setAemudCourses(dto.getAemudCourses());
+      //  entity.setOtherCourses(dto.getOtherCourses());
         entity.setParticipatedActivity(dto.getParticipatedActivity());
         entity.setPoliticOrganisation(dto.getPoliticOrganisation());
         return entity;
@@ -45,8 +45,8 @@ public class MembershipInfoMapper {
         }
 
         MembershipInfoDTO dto = new MembershipInfoDTO();
-        dto.setAemudCourses(entity.getAemudCourses());
-        dto.setOtherCourses(entity.getOtherCourses());
+      //  dto.setAemudCourses(entity.getAemudCourses());
+      //  dto.setOtherCourses(entity.getOtherCourses());
         dto.setBacSeries(entity.getBacSeries());
         dto.setBacMention(entity.getBacMention());
         dto.setYearOfBac(entity.getYearOfBac());

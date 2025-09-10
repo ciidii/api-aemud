@@ -18,4 +18,5 @@ public class MemberRequestDto {
     private BourseIdDTO bourse;
     private List<ClubIdDto> clubs;
     private List<CommissionIdDto> commissions;
+    private ReligiousKnowledgeDto religiousKnowledge;
 }

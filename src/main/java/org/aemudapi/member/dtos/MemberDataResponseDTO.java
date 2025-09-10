@@ -18,4 +18,5 @@ public class MemberDataResponseDTO {
     private List<ClubDto> clubs;
     private List<CommissionDto> commissions;
     private List<RegistrationResponseDto> registration;
+    private ReligiousKnowledgeDto religiousKnowledge;
 }

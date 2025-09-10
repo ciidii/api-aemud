@@ -15,6 +15,7 @@ import org.aemudapi.utils.ResponseVO;
 import org.aemudapi.utils.ResponseVOBuilder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -58,8 +59,9 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public ResponseEntity<ResponsePageableVO<MemberDataResponseDTO>> searchMember(RequestPageableVO requestPageableVO, String criteria, String value, FilterDTO filterDTO) {
-        PageRequest pageRequest = PageRequest.of(requestPageableVO.getPage() - 1, requestPageableVO.getRpp());
+    public ResponseEntity<ResponsePageableVO<MemberDataResponseDTO>> searchMember(RequestPageableVO requestPageableVO, String criteria, String value, FilterDTO filterDTO, String sortColumn, boolean sortDirection) {
+        Sort sort = sortDirection ? Sort.by(sortColumn).ascending() : Sort.by(sortColumn).descending();
+        PageRequest pageRequest = PageRequest.of(requestPageableVO.getPage() - 1, requestPageableVO.getRpp(), sort);
         Specification<Member> memberSpecification = makeFilterCriteriaSpec(criteria, value, filterDTO);
         Page<Member> memberPage = memberRepository.findAll(memberSpecification, pageRequest);
         List<MemberDataResponseDTO> memberDataResponseDTO = this.fetchPageToMemberResponseDTO(memberPage);

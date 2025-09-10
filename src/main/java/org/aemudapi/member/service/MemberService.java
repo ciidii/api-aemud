@@ -23,7 +23,7 @@ public interface MemberService {
 
     ResponseEntity<ResponseVO<MemberDataResponseDTO>> getMemberById(String id);
 
-    ResponseEntity<ResponsePageableVO<MemberDataResponseDTO>> searchMember(RequestPageableVO requestPageableVO, String criteria, String value, FilterDTO filterDTO);
+    ResponseEntity<ResponsePageableVO<MemberDataResponseDTO>> searchMember(RequestPageableVO requestPageableVO, String criteria, String value, FilterDTO filterDTO, String sortColumn,boolean sortDirection);
 
     ResponseEntity<ResponseVO<List<MemberDataResponseDTO>>> searchMemberToPrint(String criteria, String value, FilterDTO filters);
 

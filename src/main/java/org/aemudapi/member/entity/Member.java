@@ -32,6 +32,10 @@ public class Member extends BaseEntity {
     @Embedded
     private AddressInfo addressInfo;
 
+    @Embedded
+    @Enumerated(EnumType.STRING)
+    private ReligiousKnowledge religiousKnowledge;
+
     @ManyToMany(cascade = {CascadeType.MERGE})
     @JoinTable(
             name = "membre_commission",
@@ -52,7 +56,7 @@ public class Member extends BaseEntity {
     @JoinColumn(name = "bourse_id")
     private Bourse bourse;
 
-    @OneToMany(cascade = {CascadeType.MERGE},mappedBy = "member")
+    @OneToMany(cascade = {CascadeType.MERGE}, mappedBy = "member")
     private List<Registration> registration;
 
     @OneToOne
