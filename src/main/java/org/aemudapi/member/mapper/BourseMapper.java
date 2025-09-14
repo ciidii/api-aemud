@@ -55,13 +55,13 @@ public class BourseMapper {
         return bourse;
     }
 
-    public Bourse toEntity(BourseIdDTO bourseId) {
+    public Bourse toEntity(String bourseId) {
         if (bourseId == null) {
             return null;
         }
 
         Bourse bourse = new Bourse();
-        bourse.setId(bourseId.getBourseId());
+        bourse.setId(bourseId);
 
         return bourse;
     }

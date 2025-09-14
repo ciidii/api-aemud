@@ -32,9 +32,9 @@ public class CommissionMapper {
         return commission;
     }
 
-    public Commission toEntity(CommissionIdDto commissionDtoId) {
+    public Commission toEntity(String commissionDtoId) {
         Commission commission = new Commission();
-        commission.setId(commissionDtoId.getId());
+        commission.setId(commissionDtoId);
         return commission;
     }
 
@@ -46,9 +46,9 @@ public class CommissionMapper {
         return dtos;
     }
 
-    public List<Commission> toEntity(List<CommissionIdDto> dtos) {
+    public List<Commission> toEntity(List<String> dtos) {
         List<Commission> commissions = new ArrayList<>();
-        for (CommissionIdDto dto : dtos) {
+        for (String dto : dtos) {
             commissions.add(toEntity(dto));
         }
         return commissions;

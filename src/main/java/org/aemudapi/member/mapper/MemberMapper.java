@@ -23,7 +23,6 @@ public class MemberMapper {
     private final RegistrationMapper registrationMapper;
     private final ReligiousKnowledgeMapper religiousKnowledgeMapper;
 
-
     public MemberDataResponseDTO toDto(Member member) {
         if (member == null) {
             return null;

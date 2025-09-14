@@ -89,16 +89,17 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
+        <!--
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
-            <version>10.17.2</version> <!-- mets la version que tu veux -->
+            <version>10.17.2</version>
         </dependency>
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-database-postgresql</artifactId>
-            <version>10.17.2</version> <!-- idem -->
-        </dependency>
+            <version>10.17.2</version>
+        </dependency> -->
     </dependencies>
     <build>
         <plugins>

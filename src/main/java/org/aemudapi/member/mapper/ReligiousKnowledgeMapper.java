@@ -1,4 +1,5 @@
 package org.aemudapi.member.mapper;
+
 import org.aemudapi.member.dtos.ReligiousKnowledgeDto;
 import org.aemudapi.member.entity.ReligiousKnowledge;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +21,10 @@ public class ReligiousKnowledgeMapper {
         }
 
         ReligiousKnowledgeDto dto = new ReligiousKnowledgeDto();
-        dto.setWriteReadArabic(religiousKnowledge.getWriteReadArabic());
-        dto.setReadArabic(religiousKnowledge.getReadArabic());
+        dto.setArabicProficiency(religiousKnowledge.getArabicProficiency());
         dto.setCoranLevel(religiousKnowledge.getCoranLevel());
-        dto.setAqida(knowledgeMapper.toDto(religiousKnowledge.getAqida()));
-        dto.setFiqh(knowledgeMapper.toDto(religiousKnowledge.getFiqh()));
-
+        dto.setAqida(knowledgeMapper.toDto(religiousKnowledge.getAqidaBooks()));
+        dto.setFiqhs(knowledgeMapper.toDto(religiousKnowledge.getFiqhBooks()));
         return dto;
     }
 
@@ -35,37 +34,13 @@ public class ReligiousKnowledgeMapper {
         }
 
         ReligiousKnowledge religiousKnowledge = new ReligiousKnowledge();
-        religiousKnowledge.setWriteReadArabic(religiousKnowledgeDto.getWriteReadArabic());
-        religiousKnowledge.setReadArabic(religiousKnowledgeDto.getReadArabic());
+        religiousKnowledge.setArabicProficiency(religiousKnowledgeDto.getArabicProficiency());
+        religiousKnowledge.setAqidaBooks(this.knowledgeMapper.toEntity(religiousKnowledgeDto.getAqida()));
         religiousKnowledge.setCoranLevel(religiousKnowledgeDto.getCoranLevel());
-        religiousKnowledge.setAqida(knowledgeMapper.toEntity(religiousKnowledgeDto.getAqida()));
-        religiousKnowledge.setFiqh(knowledgeMapper.toEntity(religiousKnowledgeDto.getFiqh()));
+        religiousKnowledge.setFiqhBooks(knowledgeMapper.toEntity(religiousKnowledgeDto.getFiqhs()));
 
         return religiousKnowledge;
     }
 
-    public void updateEntityFromDto(ReligiousKnowledgeDto religiousKnowledgeDto, ReligiousKnowledge religiousKnowledge) {
-        if (religiousKnowledgeDto == null || religiousKnowledge == null) {
-            return;
-        }
 
-        religiousKnowledge.setWriteReadArabic(religiousKnowledgeDto.getWriteReadArabic());
-        religiousKnowledge.setReadArabic(religiousKnowledgeDto.getReadArabic());
-        religiousKnowledge.setCoranLevel(religiousKnowledgeDto.getCoranLevel());
-
-        // Mise à jour des objets embarqués
-        if (religiousKnowledgeDto.getAqida() != null) {
-            if (religiousKnowledge.getAqida() == null) {
-                religiousKnowledge.setAqida(new org.aemudapi.member.entity.Knowledge());
-            }
-            knowledgeMapper.updateEntityFromDto(religiousKnowledgeDto.getAqida(), religiousKnowledge.getAqida());
-        }
-
-        if (religiousKnowledgeDto.getFiqh() != null) {
-            if (religiousKnowledge.getFiqh() == null) {
-                religiousKnowledge.setFiqh(new org.aemudapi.member.entity.Knowledge());
-            }
-            knowledgeMapper.updateEntityFromDto(religiousKnowledgeDto.getFiqh(), religiousKnowledge.getFiqh());
-        }
-    }
 }
