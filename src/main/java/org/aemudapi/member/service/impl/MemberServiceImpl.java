@@ -1,14 +1,21 @@
 package org.aemudapi.member.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.aemudapi.member.dtos.FilterDTO;
 import org.aemudapi.member.dtos.MemberDataResponseDTO;
 import org.aemudapi.member.dtos.MemberRequestDto;
+import org.aemudapi.member.dtos.RegistrationRequestDto;
 import org.aemudapi.member.entity.Member;
+import org.aemudapi.member.entity.RegistrationStatus;
+import org.aemudapi.member.entity.Session;
+import org.aemudapi.member.entity.TypeInscription;
 import org.aemudapi.member.mapper.MemberMapper;
 import org.aemudapi.member.repository.MemberRepository;
+import org.aemudapi.member.repository.SessionRepository;
 import org.aemudapi.member.service.MemberService;
+import org.aemudapi.member.service.RegistrationService;
 import org.aemudapi.utils.RequestPageableVO;
 import org.aemudapi.utils.ResponsePageableVO;
 import org.aemudapi.utils.ResponseVO;
@@ -31,12 +38,23 @@ import static org.aemudapi.utils.Utils.makeFilterCriteriaSpec;
 public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
     private final MemberMapper memberMapper;
+    private final RegistrationService registrationService;
+    private final SessionRepository sessionRepository;
 
     @Override
+    @Transactional
     public ResponseEntity<ResponseVO<MemberDataResponseDTO>> addMember(MemberRequestDto memberRequestDto) {
+        Session session = this.sessionRepository.findCurrentSession().orElseThrow(EntityNotFoundException::new);
         Member member = this.memberMapper.toEntity(memberRequestDto);
         Member memberFromDB = this.memberRepository.save(member);
         MemberDataResponseDTO dto = this.memberMapper.toDto(memberFromDB);
+        RegistrationRequestDto registrationRequestDto = new RegistrationRequestDto();
+        registrationRequestDto.setMember(memberFromDB.getId());
+        registrationRequestDto.setRegistrationStatus(RegistrationStatus.UNCOMPLETED);
+        registrationRequestDto.setRegistrationType(TypeInscription.INITIAL);
+        registrationRequestDto.setSession(session.getId());
+        registrationRequestDto.setStatusPayment(false);
+        this.registrationService.registerMember(registrationRequestDto);
         ResponseVO<MemberDataResponseDTO> responseVO = new ResponseVOBuilder<MemberDataResponseDTO>().addData(dto).build();
         return new ResponseEntity<>(responseVO, HttpStatus.CREATED);
     }
