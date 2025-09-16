@@ -2,20 +2,14 @@ package org.aemudapi.contribution.mapper;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
-import org.aemudapi.contribution.dto.ContributionDTO;
 import org.aemudapi.contribution.dto.ContributionRequestDTO;
 import org.aemudapi.contribution.dto.ContributionResponseDTO;
 import org.aemudapi.contribution.entity.Contribution;
 import org.aemudapi.contribution.entity.Month;
-import org.aemudapi.contribution.repository.MonthRepository;
-import org.aemudapi.member.dtos.MemberDataResponseDTO;
 import org.aemudapi.member.entity.Member;
 import org.aemudapi.member.entity.Session;
 import org.aemudapi.member.repository.MemberRepository;
 import org.aemudapi.member.repository.SessionRepository;
-import org.aemudapi.member.service.MemberService;
-import org.aemudapi.utils.ResponseVO;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -26,7 +20,6 @@ import java.util.stream.Collectors;
 public class ContributionMapper {
     private final SessionRepository sessionRepository;
     private final MemberRepository memberRepository;
-    private final MonthRepository monthRepository;
 
     public ContributionResponseDTO toDTO(Contribution contribution) {
         if (contribution == null) {
@@ -58,7 +51,6 @@ public class ContributionMapper {
         Contribution contribution = new Contribution();
         Session session = this.sessionRepository.findById(sessionId).orElseThrow(() -> new EntityNotFoundException("Session with id " + sessionId + " not found"));
         Member member = this.memberRepository.findByNumberPhone(memberPhoneNumber).orElseThrow(() -> new EntityNotFoundException("Member with id " + memberPhoneNumber + " not found"));
-        Month month = this.monthRepository.findById(monthId).orElseThrow(() -> new EntityNotFoundException("Member with id " + monthId + " not found"));
         contribution.setMember(member);
 //        contribution.setMonth(month);
         contribution.setSession(session);

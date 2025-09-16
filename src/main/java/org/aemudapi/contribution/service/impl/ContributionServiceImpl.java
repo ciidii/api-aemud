@@ -108,6 +108,7 @@ public class ContributionServiceImpl implements ContributionService {
     }
 
     @Override
+    @Transactional
     public void createMemberCalendar(String memberId, String sessionId) {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new EntityNotFoundException("Member not found"));

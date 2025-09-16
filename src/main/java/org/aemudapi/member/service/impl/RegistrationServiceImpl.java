@@ -22,6 +22,7 @@ import org.aemudapi.utils.ResponseVOBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +39,7 @@ public class RegistrationServiceImpl implements RegistrationService {
     private ContributionService contributionService;
 
     @Override
+    @Transactional
     public ResponseEntity<ResponseVO<Void>> registerMember(RegistrationRequestDto registrationRequestDto) {
         Registration registration = this.registrationMapper.toEntity(registrationRequestDto);
         Optional<Member> member = this.registrationRepository.findMemberRegisteredMemberForSession(registrationRequestDto.getSession(), registrationRequestDto.getMember());
@@ -46,7 +48,7 @@ public class RegistrationServiceImpl implements RegistrationService {
         }
 
         this.registrationRepository.save(registration);
-        this.contributionService.createMemberCalendar(registrationRequestDto.getSession(), registrationRequestDto.getMember());
+        this.contributionService.createMemberCalendar(registrationRequestDto.getMember(),registrationRequestDto.getSession());
         ResponseVO<Void> responseVO = new ResponseVOBuilder<Void>().success().build();
         return new ResponseEntity<>(responseVO, HttpStatus.CREATED);
     }
