@@ -3,6 +3,7 @@ package org.aemudapi.member.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import org.aemudapi.contribution.service.ContributionService;
 import org.aemudapi.exceptions.customeExceptions.MemberAllReadyRegisterException;
 import org.aemudapi.member.dtos.MemberDataResponseDTO;
 import org.aemudapi.member.dtos.RegistrationRequestDto;
@@ -21,6 +22,7 @@ import org.aemudapi.utils.ResponseVOBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,15 +36,19 @@ public class RegistrationServiceImpl implements RegistrationService {
     private final RegistrationRepository registrationRepository;
     private final MemberMapper memberMapper;
     private MemberRepository memberRepository;
+    private ContributionService contributionService;
 
     @Override
+    @Transactional
     public ResponseEntity<ResponseVO<Void>> registerMember(RegistrationRequestDto registrationRequestDto) {
         Registration registration = this.registrationMapper.toEntity(registrationRequestDto);
         Optional<Member> member = this.registrationRepository.findMemberRegisteredMemberForSession(registrationRequestDto.getSession(), registrationRequestDto.getMember());
         if (member.isPresent()) {
             throw new MemberAllReadyRegisterException("Member Already Registered");
         }
+
         this.registrationRepository.save(registration);
+        this.contributionService.createMemberCalendar(registrationRequestDto.getMember(),registrationRequestDto.getSession());
         ResponseVO<Void> responseVO = new ResponseVOBuilder<Void>().success().build();
         return new ResponseEntity<>(responseVO, HttpStatus.CREATED);
     }

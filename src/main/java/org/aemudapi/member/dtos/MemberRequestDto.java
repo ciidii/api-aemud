@@ -15,7 +15,8 @@ public class MemberRequestDto {
     private AcademicInfoRequestDTO academicInfo;
     private AddressInfoRequestDto addressInfo;
     private ContactInfoRequestDto contactInfo;
-    private BourseIdDTO bourse;
-    private List<ClubIdDto> clubs;
-    private List<CommissionIdDto> commissions;
+    private String bourse;
+    private List<String> clubs;
+    private List<String> commissions;
+    private ReligiousKnowledgeDto religiousKnowledge;
 }

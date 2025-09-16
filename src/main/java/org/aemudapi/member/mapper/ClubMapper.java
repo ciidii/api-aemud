@@ -15,6 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ClubMapper {
     private final MemberRepository memberRepository;
+
     public ClubDto toDto(Club club) {
         ClubDto dto = new ClubDto();
         dto.setId(club.getId());
@@ -26,13 +27,13 @@ public class ClubMapper {
         Club club = new Club();
         club.setId(clubDto.getId());
         club.setName(clubDto.getName());
-        List<Member> member =  this.memberRepository.findAllById(clubDto.getMembers());
+        List<Member> member = this.memberRepository.findAllById(clubDto.getMembers());
         return club;
     }
 
-    public Club toEntity(ClubIdDto clubId) {
+    public Club toEntity(String clubId) {
         Club club = new Club();
-        club.setId(clubId.getId());
+        club.setId(clubId);
         return club;
     }
 
@@ -45,9 +46,9 @@ public class ClubMapper {
     }
 
 
-    public List<Club> toEntity(List<ClubIdDto> clubIDs) {
+    public List<Club> toEntity(List<String> clubIDs) {
         List<Club> clubs = new ArrayList<>();
-        for (ClubIdDto dto : clubIDs) {
+        for (String dto : clubIDs) {
             clubs.add(this.toEntity(dto));
         }
         return clubs;

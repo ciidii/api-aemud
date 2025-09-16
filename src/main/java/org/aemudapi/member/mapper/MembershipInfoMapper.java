@@ -1,5 +1,6 @@
 package org.aemudapi.member.mapper;
 
+import lombok.AllArgsConstructor;
 import org.aemudapi.club.repository.ClubRepository;
 import org.aemudapi.member.dtos.MembershipInfoDTO;
 import org.aemudapi.member.entity.MembershipInfo;
@@ -8,25 +9,18 @@ import org.aemudapi.member.repository.BourseRepository;
 import org.aemudapi.member.repository.CommissionRepository;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
+@AllArgsConstructor
 public class MembershipInfoMapper {
-    private final ClubRepository clubRepository;
-    private final CommissionRepository commissionRepository;
-    private final BourseRepository bourseRepository;
 
-    public MembershipInfoMapper(ClubRepository clubRepository, CommissionRepository commissionRepository, BourseRepository bourseRepository) {
-        this.clubRepository = clubRepository;
-        this.commissionRepository = commissionRepository;
-        this.bourseRepository = bourseRepository;
-    }
-
-    // Méthode pour mapper MembershipInfoDTO vers MembershipInfo
     public MembershipInfo toEntity(MembershipInfoDTO dto) {
         if (dto == null) {
             return null;
         }
         MembershipInfo entity = new MembershipInfo();
-        Session session = new Session();
         entity.setLegacyInstitution(dto.getLegacyInstitution());
         entity.setYearOfBac(dto.getYearOfBac());
         entity.setBacMention(dto.getBacMention());
@@ -59,21 +53,14 @@ public class MembershipInfoMapper {
         return dto;
     }
 
-//    private List<Long> getMemberClubIds(MembershipInfo member) {
-//        List<Long> ids = new ArrayList<>();
-//        member.getClubs().forEach((mem) -> {
-//            ids.add(mem.getId());
-//        });
-//        return ids;
-//    }
-
-//    private Commission getCommission(Long commissionID) {
-//        return this.commissionRepository.findById(commissionID).orElseThrow(() -> new EntityNotFoundException("Aucun commission trouver avec l'ID" + commissionID));
-//    }
-//
-//    private List<Club> getClubs(Long clubID) {
-//        List<Club> clubs = new ArrayList<>();
-//        clubs.add(this.clubRepository.findById(clubID).orElseThrow(() -> new EntityNotFoundException("Pas de club avec l'ID" + clubID)));
-//        return clubs;
-//    }
+    public List<MembershipInfo> toEntity(List<MembershipInfoDTO> dtos) {
+        if (dtos == null) {
+            return null;
+        }
+        List<MembershipInfo> entities = new ArrayList<>();
+        dtos.forEach((entitie) -> {
+            entities.add(toEntity(entitie));
+        });
+        return entities;
+    }
 }

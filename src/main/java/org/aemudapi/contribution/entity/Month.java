@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.aemudapi.member.entity.BaseEntity;
 
-@Entity
+
 @Getter
 @Setter
 @NoArgsConstructor

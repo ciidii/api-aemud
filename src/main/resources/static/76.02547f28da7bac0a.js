@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkamued_frontend=self.webpackChunkamued_frontend||[]).push([[76],{3076:(e,n,u)=>{u.r(n),u.d(n,{NOTIFICATIONS_ROUTES:()=>d});const d=[]}}]);

@@ -21,7 +21,7 @@ public class MemberMapper {
     private final ClubMapper clubMapper;
     private final CommissionMapper commissionMapper;
     private final RegistrationMapper registrationMapper;
-
+    private final ReligiousKnowledgeMapper religiousKnowledgeMapper;
 
     public MemberDataResponseDTO toDto(Member member) {
         if (member == null) {
@@ -39,6 +39,7 @@ public class MemberMapper {
         dto.setClubs(this.clubMapper.toDto(member.getClubs()));
         dto.setCommissions(this.commissionMapper.toDto(member.getCommissions()));
         dto.setRegistration(this.registrationMapper.toDto(member.getRegistration()));
+        dto.setReligiousKnowledge(this.religiousKnowledgeMapper.toDto(member.getReligiousKnowledge()));
         return dto;
     }
 
@@ -65,6 +66,7 @@ public class MemberMapper {
         entity.setBourse(this.bourseMapper.toEntity(dto.getBourse()));
         entity.setClubs(this.clubMapper.toEntity(dto.getClubs()));
         entity.setCommissions(this.commissionMapper.toEntity(dto.getCommissions()));
+        entity.setReligiousKnowledge(this.religiousKnowledgeMapper.toEntity(dto.getReligiousKnowledge()));
         return entity;
     }
 

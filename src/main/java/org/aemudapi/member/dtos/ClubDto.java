@@ -11,5 +11,5 @@ import java.util.List;
 public class ClubDto {
     private String id;
     private String name;
-        private List<String> members;
+    private List<String> members;
 }

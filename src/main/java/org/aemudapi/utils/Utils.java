@@ -5,6 +5,8 @@ import org.aemudapi.member.entity.Member;
 import org.aemudapi.member.specifications.MemberSpecification;
 import org.springframework.data.jpa.domain.Specification;
 
+import java.util.Random;
+
 public class Utils {
     public static Specification<Member> makeFilterCriteriaSpec(String criteria, String value, FilterDTO filterDTO) {
         Specification<Member> memberSpecification = Specification.where(null);
@@ -49,4 +51,9 @@ public class Utils {
         }
         return memberSpecification;
     }
+
+    public static String generateResetCode() {
+        return String.format("%06d", new Random().nextInt(999999));
+    }
+
 }

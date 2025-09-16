@@ -3,11 +3,9 @@ package org.aemudapi.member.mapper;
 import lombok.RequiredArgsConstructor;
 import org.aemudapi.member.dtos.BourseDTO;
 import org.aemudapi.member.dtos.BourseIdDTO;
-import org.aemudapi.member.dtos.MemberResponseDto;
 import org.aemudapi.member.entity.Bourse;
 import org.aemudapi.member.entity.Member;
 import org.aemudapi.member.repository.MemberRepository;
-import org.aemudapi.member.service.MemberService;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -57,13 +55,13 @@ public class BourseMapper {
         return bourse;
     }
 
-    public Bourse toEntity(BourseIdDTO bourseId) {
+    public Bourse toEntity(String bourseId) {
         if (bourseId == null) {
             return null;
         }
 
         Bourse bourse = new Bourse();
-        bourse.setId(bourseId.getBourseId());
+        bourse.setId(bourseId);
 
         return bourse;
     }

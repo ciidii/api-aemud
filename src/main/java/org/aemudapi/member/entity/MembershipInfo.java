@@ -8,6 +8,7 @@ import lombok.Setter;
 import org.aemudapi.club.entity.Club;
 import org.aemudapi.commission.entity.Commission;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Embeddable
@@ -22,4 +23,5 @@ public class MembershipInfo {
     private String otherCourses;
     private String participatedActivity;
     private String politicOrganisation;
+    private LocalDateTime adhesionDate = LocalDateTime.now();
 }

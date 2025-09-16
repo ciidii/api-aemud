@@ -6,7 +6,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.Month;
+import java.time.YearMonth;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ContributionRepository extends JpaRepository<Contribution, String> {
@@ -37,17 +40,30 @@ public interface ContributionRepository extends JpaRepository<Contribution, Stri
     List<Contribution> findMemberContributionsBySessionId(String memberId, String sessionId);
 
     @Query("""
-            select sum(c.amount) from Contribution c where c.session.id = :sessionId
+             select count(c) > 0 from Contribution c 
+             where c.member.id = :memberId 
+               and c.session.id = :sessionId 
+               and c.month = :month
             """)
-    Double sumContributionsBySessionId(String sessionId);
+    boolean existsByMemberAndSessionAndMonth(String memberId, String sessionId, YearMonth month);
 
     @Query("""
-            select sum(c.amount) from Contribution c where c.session.id = :sessionId and c.month.id = :monthId
-            """)
-    Double sumContributionsByMonth(String sessionId, String monthId);
+            select c from Contribution c where c.member.id = :memberId and c.session.id = :sessionId""")
+    List<Contribution> findMemberContributionsCalendarByMemberIdAndSessionId(String memberId, String sessionId);
 
-    @Query("""
-            select c from Contribution c where c.session.id = :sessionId and c.month.id = :monthId and c.member.contactInfo.numberPhone=:memberId
-            """)
-    List<Contribution> findMonthMemberByPhoneNumberContribution(@Param("sessionId") String sessionId, @Param("monthId") String monthId, @Param("memberId") String memberId);
+
+//    @Query("""
+//            select sum(c.amount) from Contribution c where c.session.id = :sessionId
+//            """)
+//    Double sumContributionsBySessionId(String sessionId);
+
+//    @Query("""
+//            select sum(c.amount) from Contribution c where c.session.id = :sessionId and c.month.id = :monthId
+//            """)
+//    Double sumContributionsByMonth(String sessionId, String monthId);
+
+//    @Query("""
+//            select c from Contribution c where c.session.id = :sessionId and c.month.id = :monthId and c.member.contactInfo.numberPhone=:memberId
+//            """)
+//    List<Contribution> findMonthMemberByPhoneNumberContribution(@Param("sessionId") String sessionId, @Param("monthId") String monthId, @Param("memberId") String memberId);
 }

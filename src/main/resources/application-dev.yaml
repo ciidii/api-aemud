@@ -8,3 +8,18 @@ DB_PASSWORD: '#Wollaj@1'
 DB_USERNAME: postgres
 JDBC_DRIVER: org.postgresql.Driver
 DIALECT: org.hibernate.dialect.PostgreSQLDialect
+JWT_SECRET: "KmDWmBsu4p8ZVN2194WtSSx17oqr7q0sL0+SSLIkoPI="
+JWT_EXPIRATION: 1800000
+
+spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: boubacarcidi77@gmail.com
+    password: rxpe kxxz msts ucfo
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true

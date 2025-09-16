@@ -1,10 +1,10 @@
 package org.aemudapi.contribution.controller;
 
 import lombok.AllArgsConstructor;
-import org.aemudapi.contribution.dto.ContributionDTO;
-import org.aemudapi.contribution.dto.ContributionWithPhoneNumberDTO;
+import org.aemudapi.contribution.dto.*;
 import org.aemudapi.contribution.service.ContributionService;
 import org.aemudapi.utils.ResponseVO;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,17 +17,21 @@ public class ContributionController {
     private final ContributionService contributionService;
 
     @PostMapping("contribute")
-    public ResponseEntity<ResponseVO<ContributionDTO>> contribute(@RequestBody ContributionDTO contributionDTO) {
-        return this.contributionService.contribute(contributionDTO);
+    public ResponseEntity<ResponseVO<ContributionResponseDTO>> contribute(@RequestBody ContributionRequestDTO contributionDTO) {
+        return this.contributionService.addContribute(contributionDTO);
     }
 
-    @PostMapping("contribute-phone")
-    public ResponseEntity<ResponseVO<ContributionDTO>> contributeUsingNumberPhone(@RequestBody ContributionWithPhoneNumberDTO contributionDTO) {
-        return this.contributionService.contributeUsingNumPhone(contributionDTO.getPhoneNumber(), contributionDTO.getSessionId(), contributionDTO.getMonthId());
+    @PostMapping("pay-contributions")
+    ResponseEntity<ResponseVO<ContributionsPayementResponse>> payContributions(@RequestBody ContributionsPayementRequest payementRequest) {
+        return this.contributionService.payContributions(payementRequest);
     }
+//    @PostMapping("contribute-phone")
+//    public ResponseEntity<ResponseVO<ContributionDTO>> contributeUsingNumberPhone(@RequestBody ContributionWithPhoneNumberDTO contributionDTO) {
+//        return this.contributionService.contributeUsingNumPhone(contributionDTO.getPhoneNumber(), contributionDTO.getSessionId(), contributionDTO.getMonthId());
+//    }
 
     @PutMapping
-    public ResponseEntity<ResponseVO<ContributionDTO>> modifyContribution(ContributionDTO contributionDTO) {
+    public ResponseEntity<ResponseVO<ContributionResponseDTO>> modifyContribution(ContributionRequestDTO contributionDTO) {
         return this.contributionService.modifyContribution(contributionDTO);
     }
 
@@ -47,22 +51,34 @@ public class ContributionController {
     }
 
     @GetMapping("list-member-contribution-peer-month")
-    public ResponseEntity<ResponseVO<List<ContributionDTO>>> getContributionPeerMonth(@RequestParam("sessionId") String sessionId, @RequestParam("monthId") String monthId) {
+    public ResponseEntity<ResponseVO<List<ContributionResponseDTO>>> getContributionPeerMonth(@RequestParam("sessionId") String sessionId, @RequestParam("monthId") String monthId) {
         return this.contributionService.getContributionPeerMonth(sessionId, monthId);
     }
 
     @GetMapping("member-contributions")
-    public ResponseEntity<ResponseVO<List<ContributionDTO>>> getMemberContributions(@RequestParam("memberId") String memberId, @RequestParam("sessionId") String sessionId) {
+    public ResponseEntity<ResponseVO<List<ContributionResponseDTO>>> getMemberContributions(@RequestParam("memberId") String memberId, @RequestParam("sessionId") String sessionId) {
         return this.contributionService.getMemberContributions(memberId, sessionId);
     }
 
-    @GetMapping("amount-peer-month")
-    ResponseEntity<ResponseVO<Double>> getContributionsAmountPeerMonth(@RequestParam("monthId") String monthId, @RequestParam("sessionId") String sessionId) {
-        return this.contributionService.getContributionsAmountPeerMonth(monthId, sessionId);
+    @PostMapping("create-membre-calendar")
+    public ResponseEntity<ResponseVO<Void>> createContributionCalendar(@RequestBody MembreCalendarDTO membreCalendarDTO) {
+        this.contributionService.createMemberCalendar(membreCalendarDTO.memberID(), membreCalendarDTO.sessionID());
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @GetMapping("amount-peer-session")
-    ResponseEntity<ResponseVO<Double>> getContributionsAmountPeerMonth(@RequestParam("sessionId") String sessionId) {
-        return this.contributionService.getContributionsAmountPeerSessions(sessionId);
+
+    @GetMapping("member-contribution-calendar")
+    public ResponseEntity<ResponseVO<List<ContributionResponseDTO>>> getMemberContributionCalendar(@RequestParam("memberId") String memberId, @RequestParam("sessionId") String sessionId) {
+        return  this.contributionService.getMemberContributionsCalendar(memberId,sessionId);
     }
+//
+//    @GetMapping("amount-peer-month")
+//    ResponseEntity<ResponseVO<Double>> getContributionsAmountPeerMonth(@RequestParam("monthId") String monthId, @RequestParam("sessionId") String sessionId) {
+//        return this.contributionService.getContributionsAmountPeerMonth(monthId, sessionId);
+//    }
+//
+//    @GetMapping("amount-peer-session")
+//    ResponseEntity<ResponseVO<Double>> getContributionsAmountPeerMonth(@RequestParam("sessionId") String sessionId) {
+//        return this.contributionService.getContributionsAmountPeerSessions(sessionId);
+//    }
 }

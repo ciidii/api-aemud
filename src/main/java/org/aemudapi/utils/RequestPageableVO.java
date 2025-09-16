@@ -4,7 +4,7 @@ import lombok.Data;
 import org.apache.commons.lang.math.NumberUtils;
 
 @Data
-public class RequestPageableVO {
+public class    RequestPageableVO {
     public static final Integer DEFAULT_PAGE = NumberUtils.INTEGER_ONE;
     public static final Integer DEFAULT_RPP = Integer.valueOf(10);
 
