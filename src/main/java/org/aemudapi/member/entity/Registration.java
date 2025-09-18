@@ -31,6 +31,7 @@ public class Registration extends BaseEntity {
 
     private boolean statusPayment = false;
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private RegistrationStatus registrationStatus;
 
 }
