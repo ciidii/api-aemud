@@ -41,9 +41,9 @@ public interface RegistrationRepository extends JpaRepository<Registration, Stri
     List<Member> getMembersRegistrationsStatusForSessions(@Param("session") String session, @Param("registrationStatus") RegistrationStatus registrationStatus);
 
     @Query("""
-            select r.member from Registration r where r.session.id =:session and r.member.id =:memberId
+            select r.member from Registration r where r.session.id =:sessionID and r.member.id =:memberId
             """)
-    Optional<Member> findMemberRegisteredMemberForSession(@Param("session") String session, @Param("memberId") String memberId);
+    Optional<Member> findMemberRegisteredMemberForSession(@Param("sessionID") String sessionID, @Param("memberId") String memberId);
 
 
     @Query("""

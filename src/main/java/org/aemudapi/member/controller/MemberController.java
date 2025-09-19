@@ -63,8 +63,8 @@ public class MemberController {
             @RequestParam(name = "registrationStatus", required = false) RegistrationStatus registrationStatus,
             @RequestParam(name = "sessionIdForRegistration", required = false) String sessionIdForRegistration,
             @RequestParam(name = "registrationType", required = false) TypeInscription registrationType,
-            @RequestParam(name = "sortColumn",required = false) String sortColumn,
-            @RequestParam(name = "sortDirection",required = false) boolean sortDirection
+            @RequestParam(name = "sortColumn", required = false) String sortColumn,
+            @RequestParam(name = "sortDirection", required = false) boolean sortDirection
 
     ) {
         RequestPageableVO requestPageableVO = new RequestPageableVO(page, rpp);
@@ -79,7 +79,7 @@ public class MemberController {
                 .registration(sessionIdForRegistration)
                 .registrationType(registrationType)
                 .build();
-        return this.memberService.searchMember(requestPageableVO, criteria, value, filters,sortColumn,sortDirection);
+        return this.memberService.searchMember(requestPageableVO, criteria, value, filters, sortColumn, sortDirection);
     }
 
     //TODO refactoring check if we can find this last page
@@ -93,7 +93,7 @@ public class MemberController {
             @RequestParam(name = "bourse", required = false) String bourse,
             @RequestParam(name = "paymentStatus", required = false) String paymentStatus,
             @RequestParam(name = "registrationStatus", required = false) RegistrationStatus registrationStatus,
-            @RequestParam(name = "sortColumn",required = false) String sortColumn
+            @RequestParam(name = "sortColumn", required = false) String sortColumn
     ) {
         FilterDTO filters = FilterDTO
                 .builder()

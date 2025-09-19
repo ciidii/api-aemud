@@ -1,5 +1,7 @@
 package org.aemudapi.contribution.entity;
 
+import io.micrometer.common.lang.Nullable;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -28,6 +30,7 @@ public class Contribution extends BaseEntity {
     @JoinColumn(name = "session_id")
     private Session session;
     private YearMonth month;
+    @Column(nullable = false)
     private Double amountDue;
     private Double amountPaid;
     private ContributionStatus status;

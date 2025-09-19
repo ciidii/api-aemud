@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class RegistrationResponseDto {
-
+    private String id;
     private String member;
     private int session;
     private LocalDate dateInscription;

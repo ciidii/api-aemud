@@ -8,9 +8,8 @@ import org.aemudapi.member.entity.TypeInscription;
 @Getter
 @Setter
 public class RegistrationRequestDto {
-    private String id;
     private String member;
-    private String session;
+    private String sessionId;
     private TypeInscription registrationType;
     private boolean statusPayment;
     private RegistrationStatus registrationStatus;
