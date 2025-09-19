@@ -52,7 +52,7 @@ public class MemberServiceImpl implements MemberService {
         registrationRequestDto.setMember(memberFromDB.getId());
         registrationRequestDto.setRegistrationStatus(RegistrationStatus.UNCOMPLETED);
         registrationRequestDto.setRegistrationType(TypeInscription.INITIAL);
-        registrationRequestDto.setSession(session.getId());
+        registrationRequestDto.setSessionId(session.getId());
         registrationRequestDto.setStatusPayment(false);
         this.registrationService.registerMember(registrationRequestDto);
         ResponseVO<MemberDataResponseDTO> responseVO = new ResponseVOBuilder<MemberDataResponseDTO>().addData(dto).build();

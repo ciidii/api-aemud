@@ -29,8 +29,8 @@ public class RegistrationMapper {
 
         Registration registration = new Registration();
         Member member = this.getMember(dto.getMember());
-        Session session = this.getSession(dto.getSession());
-        registration.setId(dto.getId());
+        Session session = this.getSession(dto.getSessionId());
+        registration.setId(session.getId());
         registration.setMember(member);
         registration.setSession(session);
         registration.setRegistrationType(dto.getRegistrationType());
@@ -41,7 +41,7 @@ public class RegistrationMapper {
         return registration;
     }
 
-    public Registration toEntity(RegistrationRequestWithPhoneNumberDto dto,Member member) {
+    public Registration toEntity(RegistrationRequestWithPhoneNumberDto dto, Member member) {
         if (dto == null) {
             return null;
         }
@@ -65,7 +65,7 @@ public class RegistrationMapper {
         }
 
         RegistrationResponseDto dto = new RegistrationResponseDto();
-
+        dto.setId(registration.getId());
         dto.setMember(registration.getMember().getId());
         dto.setSession(registration.getSession().getYear_());
         dto.setRegistrationType(registration.getRegistrationType());
