@@ -32,4 +32,4 @@ build/
 ### VS Code ###
 .vscode/
 /tokens/*
-
+src/main/resources/application-dev.yaml

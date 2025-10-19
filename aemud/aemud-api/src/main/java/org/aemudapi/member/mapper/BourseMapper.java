@@ -46,7 +46,6 @@ public class BourseMapper {
         }
 
         Bourse bourse = new Bourse();
-        List<Member> members = this.memberService.findAllById(dto.getMembers());
         bourse.setId(dto.getBourseId());
         bourse.setLebelle(dto.getLebelle());
         bourse.setMontant(dto.getMontant());
