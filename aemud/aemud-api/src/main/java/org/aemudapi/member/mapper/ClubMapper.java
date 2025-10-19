@@ -27,7 +27,6 @@ public class ClubMapper {
         Club club = new Club();
         club.setId(clubDto.getId());
         club.setName(clubDto.getName());
-        List<Member> member = this.memberRepository.findAllById(clubDto.getMembers());
         return club;
     }
 
