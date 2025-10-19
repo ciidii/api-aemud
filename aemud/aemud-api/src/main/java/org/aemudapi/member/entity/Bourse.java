@@ -9,8 +9,6 @@ import java.util.List;
 @Getter
 @Setter
 public class Bourse extends BaseEntity {
-    @OneToMany(mappedBy = "bourse", cascade = CascadeType.ALL)
-    private List<Member> members;
     private String lebelle;
     private Double montant;
 }
