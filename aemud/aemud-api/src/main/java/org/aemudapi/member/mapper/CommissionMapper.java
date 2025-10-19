@@ -25,8 +25,6 @@ public class CommissionMapper {
 
     public Commission toEntity(CommissionDto commissionDto) {
         Commission commission = new Commission();
-        List<Member> members = this.memberRepository.findAllById(commissionDto.getMembers());
-        commission.setMember(members);
         commission.setName(commissionDto.getName());
         commission.setId(commissionDto.getId());
         return commission;

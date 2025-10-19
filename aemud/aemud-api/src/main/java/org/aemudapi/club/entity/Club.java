@@ -17,8 +17,5 @@ import java.util.List;
 @NoArgsConstructor
 public class Club extends BaseEntity {
     private String name;
-
-    @ManyToMany(mappedBy = "clubs", cascade = {CascadeType.PERSIST})
-    private List<Member> members;
 }
 

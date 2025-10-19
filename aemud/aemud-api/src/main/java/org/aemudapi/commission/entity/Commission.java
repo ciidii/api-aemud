@@ -15,7 +15,5 @@ import java.util.List;
 public class Commission extends BaseEntity {
     private String name;
 
-    @ManyToMany(mappedBy = "commissions")
-    private List<Member> member;
 }
 
