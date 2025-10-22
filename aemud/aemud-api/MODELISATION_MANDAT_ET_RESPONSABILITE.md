@@ -22,9 +22,11 @@ Nous allons décomposer le problème en trois concepts distincts, chacun représ
 2.  La **Structure** : Le "QUOI". Il s'agit de l'association elle-même, d'un club, ou d'une commission. (Note: Les structures `Club` et `Commission` existent déjà).
 3.  Le **Poste** (ou `Responsabilite`) : Le "QUI FAIT QUOI, OÙ et QUAND". Il lie une personne à une structure pour un mandat donné.
 
-### 1. Entité `Mandat` (Le "Quand")
+### 1. Entité `Mandat` et `Phase` (Le "Quand")
 
-Son unique rôle est de définir une période de temps administrative.
+Le `Mandat` définit la période administrative globale (ex: 2 ans), tandis que la `Phase` la divise en cycles de travail (ex: 1 an), comme vous l'avez souligné.
+
+#### Entité `Mandat`
 
 ```java
 @Entity
@@ -40,13 +42,40 @@ public class Mandat extends BaseEntity {
     private LocalDate dateFin;
 
     private boolean estActif; // Un seul mandat doit être actif à la fois
+
+    @OneToMany(mappedBy = "mandat", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Phase> phases;
+}
+```
+
+#### Entité `Phase`
+
+Cette nouvelle entité permet de matérialiser les cycles annuels.
+
+```java
+@Entity
+public class Phase extends BaseEntity {
+
+    @Column(nullable = false)
+    private String nom; // Ex: "Année 1: 2025-2026"
+
+    @Column(nullable = false)
+    private LocalDate dateDebut;
+
+    @Column(nullable = false)
+    private LocalDate dateFin;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "mandat_id")
+    private Mandat mandat;
 }
 ```
 
 #### Justification professionnelle :
-*   **Ciblé et Simple** : Cette entité ne se préoccupe pas de savoir *qui* est le président. Elle dit juste "ce mandat existe et couvre cette période".
-*   **Précision Temporelle** : L'utilisation de `dateDebut` et `dateFin` est plus précise qu'une simple année et permet des requêtes temporelles complexes.
-*   **Performance** : Le flag `estActif` est un moyen simple et performant de récupérer le mandat en cours sans avoir à comparer les dates à chaque fois. Le service (`MandatService`) devra garantir qu'un seul mandat est actif.
+*   **Granularité et Clarté** : Le modèle distingue clairement le cadre général (`Mandat`) des périodes d'action (`Phase`).
+*   **Flexibilité** : Un mandat peut désormais avoir N phases, ce qui rend le modèle adaptable à des mandats de 1, 2 ou 3 ans sans changer la structure.
+*   **Suivi Précis** : Les activités et les bilans peuvent être rattachés à une phase, permettant un suivi annuel précis.
+*   **Performance** : Le flag `estActif` sur le `Mandat` reste un moyen performant de trouver le cadre de travail en cours.
 
 ---
 
@@ -141,7 +170,7 @@ Un mandat n'a de valeur que par ce qui est accompli durant celui-ci. Pour modél
 
 ### 1. Entité `Activite`
 
-Cette entité va nous permettre de cataloguer toutes les actions menées.
+Cette entité va nous permettre de cataloguer toutes les actions menées. Comme les activités se déroulent dans le cadre d'une phase annuelle, nous la lions à l'entité `Phase`.
 
 ```java
 @Entity
@@ -161,8 +190,8 @@ public class Activite extends BaseEntity {
     private String lieu;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "mandat_id")
-    private Mandat mandat; // L'activité est rattachée à un mandat
+    @JoinColumn(name = "phase_id")
+    private Phase phase; // L'activité est rattachée à une phase spécifique du mandat
 
     // Qui organise ? L'association, un club, une commission ?
     // On réutilise le modèle polymorphique
@@ -185,7 +214,7 @@ public class Activite extends BaseEntity {
 ```
 
 #### Justification professionnelle :
-*   **Traçabilité** : Chaque activité est clairement liée à un `Mandat`.
+*   **Traçabilité** : Chaque activité est clairement liée à une `Phase` et donc à un `Mandat`. Cela permet un suivi annuel précis.
 *   **Responsabilité** : On sait exactement quelle structure (`Club`, `Commission` ou l'association) a organisé l'activité.
 *   **Mesure de l'Engagement** : La liste des `participants` est une mine d'or. Elle permet de mesurer l'engagement des membres au-delà des simples cotisations et de voir quelles activités sont les plus populaires.
 
@@ -193,7 +222,7 @@ public class Activite extends BaseEntity {
 
 ### 2. Entité `Realisation`
 
-Cette entité met en valeur les succès et les accomplissements.
+Cette entité met en valeur les succès et les accomplissements, qui sont souvent le fruit d'une phase de travail.
 
 ```java
 @Entity
@@ -209,8 +238,8 @@ public class Realisation extends BaseEntity {
     private LocalDate dateAccomplissement;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "mandat_id")
-    private Mandat mandat; // La réalisation appartient à un bilan de mandat
+    @JoinColumn(name = "phase_id")
+    private Phase phase; // La réalisation est rattachée au bilan d'une phase
 
     // Lien optionnel vers les activités qui ont contribué à cette réalisation
     @ManyToMany
@@ -224,9 +253,9 @@ public class Realisation extends BaseEntity {
 ```
 
 #### Justification professionnelle :
-*   **Focalisée sur la Valeur** : Cette entité ne se préoccupe pas de la logistique (qui a participé, où, etc.) mais du résultat. C'est ce qui figurera dans le bilan de fin de mandat.
+*   **Focalisée sur la Valeur** : Cette entité se concentre sur le résultat. C'est ce qui figurera dans le bilan annuel (par phase) et le bilan final (consolidé par mandat).
 *   **Création de Narratif** : Le lien `activitesLiees` est très puissant. Il permet de raconter une histoire : "Grâce à nos activités de collecte de fonds (liens vers les activités), nous avons atteint la réalisation 'Rénovation de la salle de prière'".
-*   **Bilan de Mandat Automatisé** : À la fin d'un mandat, il suffira de requêter toutes les `Realisation` liées à ce mandat pour générer 80% du rapport d'accomplissement.
+*   **Bilan de Mandat Automatisé** : Pour générer le rapport d'accomplissement d'un mandat, il suffira de requêter toutes les `Realisation` des `Phase` de ce mandat.
 
 ---
 
@@ -234,9 +263,10 @@ public class Realisation extends BaseEntity {
 
 Voici comment les entités interagissent :
 
+*   Un `Mandat` a plusieurs `Phase` (les cycles de travail).
 *   Un `Mandat` a plusieurs `Poste` (les responsables).
-*   Un `Mandat` a plusieurs `Activite` (les actions menées).
-*   Un `Mandat` a plusieurs `Realisation` (les succès).
+*   Une `Phase` a plusieurs `Activite` (les actions menées).
+*   Une `Phase` a plusieurs `Realisation` (les succès).
 *   Une `Activite` peut avoir plusieurs `Member` comme participants.
 *   Une `Realisation` peut être liée à plusieurs `Activite`.
 
