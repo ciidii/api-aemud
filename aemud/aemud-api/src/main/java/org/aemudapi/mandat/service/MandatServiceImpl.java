@@ -4,6 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.aemudapi.mandat.dtos.CreateMandatDto;
 import org.aemudapi.mandat.dtos.MandatDto;
+import org.aemudapi.mandat.dtos.UpdateMandatDto;
 import org.aemudapi.mandat.entity.Mandat;
 import org.aemudapi.mandat.entity.Phase;
 import org.aemudapi.mandat.mapper.MandatMapper;
