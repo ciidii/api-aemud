@@ -1,10 +1,12 @@
 package org.aemudapi.mandat.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
 import org.aemudapi.member.entity.BaseEntity;
-import org.hibernate.annotations.CascadeType;
 
 import java.time.LocalDate;
 

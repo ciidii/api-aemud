@@ -4,10 +4,9 @@ import org.aemudapi.mandat.dtos.CreateMandatDto;
 import org.aemudapi.mandat.dtos.MandatDto;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface MandatService {
     List<MandatDto> getAllMandats();
     MandatDto createMandat(CreateMandatDto createMandatDto);
-    MandatDto getMandatById(UUID id);
+    MandatDto getMandatById(String id);
 }

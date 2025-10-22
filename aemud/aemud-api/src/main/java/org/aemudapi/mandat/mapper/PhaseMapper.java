@@ -12,10 +12,10 @@ public class PhaseMapper {
             return null;
         }
         return new PhaseDto(
-            phase.getId(),
-            phase.getNom(),
-            phase.getDateDebut(),
-            phase.getDateFin()
+                phase.getId(),
+                phase.getNom(),
+                phase.getDateDebut(),
+                phase.getDateFin()
         );
     }
 

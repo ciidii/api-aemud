@@ -1,5 +1,6 @@
 package org.aemudapi.mandat.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.aemudapi.mandat.dtos.CreateMandatDto;
 import org.aemudapi.mandat.dtos.MandatDto;
@@ -10,10 +11,8 @@ import org.aemudapi.mandat.repository.MandatRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,9 +33,9 @@ public class MandatServiceImpl implements MandatService {
 
     @Override
     @Transactional(readOnly = true)
-    public MandatDto getMandatById(UUID id) {
+    public MandatDto getMandatById(String id) {
         Mandat mandat = mandatRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Mandat non trouvé avec l'id " + id)); // TODO: Remplacer par une exception personnalisée
+                .orElseThrow(() -> new EntityNotFoundException("Mandat non trouvé avec l'id " + id));
         return mandatMapper.toDto(mandat);
     }
 

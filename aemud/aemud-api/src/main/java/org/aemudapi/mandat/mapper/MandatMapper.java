@@ -20,14 +20,14 @@ public class MandatMapper {
             return null;
         }
         return new MandatDto(
-            mandat.getId(),
-            mandat.getNom(),
-            mandat.getDateDebut(),
-            mandat.getDateFin(),
-            mandat.isEstActif(),
-            mandat.getPhases() != null ?
-                mandat.getPhases().stream().map(phaseMapper::toDto).collect(Collectors.toList()) :
-                Collections.emptyList()
+                mandat.getId(),
+                mandat.getNom(),
+                mandat.getDateDebut(),
+                mandat.getDateFin(),
+                mandat.isEstActif(),
+                mandat.getPhases() != null ?
+                        mandat.getPhases().stream().map(phaseMapper::toDto).collect(Collectors.toList()) :
+                        Collections.emptyList()
         );
     }
 
