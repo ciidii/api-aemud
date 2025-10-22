@@ -15,7 +15,7 @@ import jakarta.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/phases")
+@RequestMapping("phases")
 @RequiredArgsConstructor
 public class PhaseController {
 

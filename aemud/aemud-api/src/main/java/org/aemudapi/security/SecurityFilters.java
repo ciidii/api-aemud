@@ -51,7 +51,7 @@ public class SecurityFilters {
                         .requestMatchers("/users/forgotten-password-email").permitAll()
                         .requestMatchers("/users/change-password-forgotten").permitAll()
                         .requestMatchers("/users/create-user").hasAnyAuthority("ADMIN", "SUPER_ADMIN")
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider());
