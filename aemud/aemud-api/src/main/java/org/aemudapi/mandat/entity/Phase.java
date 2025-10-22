@@ -1,12 +1,16 @@
 package org.aemudapi.mandat.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.aemudapi.member.entity.BaseEntity;
 import org.hibernate.annotations.CascadeType;
 
 import java.time.LocalDate;
 
 @Entity
+@Getter
+@Setter
 public class Phase extends BaseEntity {
 
     @Column(nullable = false)
