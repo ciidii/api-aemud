@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 public record MandatDto(
-    UUID id,
+    String id,
     String nom,
     LocalDate dateDebut,
     LocalDate dateFin,

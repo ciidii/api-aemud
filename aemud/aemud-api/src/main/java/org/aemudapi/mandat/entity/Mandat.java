@@ -4,12 +4,16 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
+import lombok.Getter;
+import lombok.Setter;
 import org.aemudapi.member.entity.BaseEntity;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
+@Getter
+@Setter
 public class Mandat extends BaseEntity {
 
     @Column(unique = true, nullable = false)
