@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface MandatRepository extends JpaRepository<Mandat, UUID> {
+public interface MandatRepository extends JpaRepository<Mandat, String> {
 }
