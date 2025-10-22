@@ -41,4 +41,14 @@ public class MandatMapper {
         mandat.setDateFin(createMandatDto.dateFin());
         return mandat;
     }
+
+    public void updateEntity(Mandat mandat, UpdateMandatDto updateMandatDto) {
+        if (mandat == null || updateMandatDto == null) {
+            return;
+        }
+        mandat.setNom(updateMandatDto.nom());
+        mandat.setDateDebut(updateMandatDto.dateDebut());
+        mandat.setDateFin(updateMandatDto.dateFin());
+        mandat.setEstActif(updateMandatDto.estActif());
+    }
 }

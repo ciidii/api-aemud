@@ -66,4 +66,22 @@ public class MandatServiceImpl implements MandatService {
         Mandat savedMandat = mandatRepository.save(mandat);
         return mandatMapper.toDto(savedMandat);
     }
+
+    @Override
+    public MandatDto updateMandat(String id, UpdateMandatDto updateMandatDto) {
+        Mandat existingMandat = mandatRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Mandat non trouvé avec l'id " + id));
+
+        mandatMapper.updateEntity(existingMandat, updateMandatDto);
+        Mandat updatedMandat = mandatRepository.save(existingMandat);
+        return mandatMapper.toDto(updatedMandat);
+    }
+
+    @Override
+    public void deleteMandat(String id) {
+        if (!mandatRepository.existsById(id)) {
+            throw new EntityNotFoundException("Mandat non trouvé avec l'id " + id);
+        }
+        mandatRepository.deleteById(id);
+    }
 }

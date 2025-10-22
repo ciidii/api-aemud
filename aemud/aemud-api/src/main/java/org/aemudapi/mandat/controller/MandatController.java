@@ -3,6 +3,7 @@ package org.aemudapi.mandat.controller;
 import lombok.RequiredArgsConstructor;
 import org.aemudapi.mandat.dtos.CreateMandatDto;
 import org.aemudapi.mandat.dtos.MandatDto;
+import org.aemudapi.mandat.dtos.UpdateMandatDto;
 import org.aemudapi.mandat.service.MandatService;
 import org.aemudapi.utils.ResponseVO;
 import org.aemudapi.utils.ResponseVOBuilder;
@@ -14,7 +15,7 @@ import jakarta.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("mandats")
+@RequestMapping("/api/v1/mandats")
 @RequiredArgsConstructor
 public class MandatController {
 
@@ -45,5 +46,23 @@ public class MandatController {
                 .addData(createdMandat)
                 .build()
                 .toResponseEntity(HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ResponseVO<MandatDto>> updateMandat(@PathVariable String id, @Valid @RequestBody UpdateMandatDto updateMandatDto) {
+        MandatDto updatedMandat = mandatService.updateMandat(id, updateMandatDto);
+        return new ResponseVOBuilder<MandatDto>()
+                .addData(updatedMandat)
+                .build()
+                .toResponseEntity();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ResponseVO<Void>> deleteMandat(@PathVariable String id) {
+        mandatService.deleteMandat(id);
+        return new ResponseVOBuilder<Void>()
+                .success()
+                .build()
+                .toResponseEntity(HttpStatus.NO_CONTENT); // 204 No Content for successful deletion
     }
 }
