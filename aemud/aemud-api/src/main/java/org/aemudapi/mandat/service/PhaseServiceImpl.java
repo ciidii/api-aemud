@@ -2,6 +2,7 @@ package org.aemudapi.mandat.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.aemudapi.exceptions.customeExceptions.InvalidPhaseDatesException;
 import org.aemudapi.mandat.dtos.CreatePhaseDto;
 import org.aemudapi.mandat.dtos.PhaseDto;
 import org.aemudapi.mandat.dtos.UpdatePhaseDto;
@@ -30,6 +31,11 @@ public class PhaseServiceImpl implements PhaseService {
         Mandat mandat = mandatRepository.findById(createPhaseDto.mandatId())
                 .orElseThrow(() -> new EntityNotFoundException("Mandat non trouvé avec l'id " + createPhaseDto.mandatId()));
 
+        // Validate phase dates against mandate dates
+        if (createPhaseDto.dateDebut().isBefore(mandat.getDateDebut()) || createPhaseDto.dateFin().isAfter(mandat.getDateFin())) {
+            throw new InvalidPhaseDatesException("Les dates de début et de fin de la phase doivent être comprises entre les dates de début et de fin du mandat.");
+        }
+
         Phase phase = phaseMapper.toEntity(createPhaseDto);
         phase.setMandat(mandat);
 
@@ -57,6 +63,13 @@ public class PhaseServiceImpl implements PhaseService {
     public PhaseDto updatePhase(String id, UpdatePhaseDto updatePhaseDto) {
         Phase existingPhase = phaseRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Phase non trouvée avec l'id " + id));
+
+        Mandat mandat = existingPhase.getMandat(); // Get the associated Mandat
+
+        // Validate updated phase dates against mandate dates
+        if (updatePhaseDto.dateDebut().isBefore(mandat.getDateDebut()) || updatePhaseDto.dateFin().isAfter(mandat.getDateFin())) {
+            throw new InvalidPhaseDatesException("Les dates de début et de fin de la phase doivent être comprises entre les dates de début et de fin du mandat.");
+        }
 
         phaseMapper.updateEntity(existingPhase, updatePhaseDto);
         Phase updatedPhase = phaseRepository.save(existingPhase);
