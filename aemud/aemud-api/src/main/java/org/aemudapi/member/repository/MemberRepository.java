@@ -20,6 +20,8 @@ public interface MemberRepository extends JpaRepository<Member, String>, JpaSpec
     @Query("SELECT m from Member m where m.contactInfo.numberPhone =:numberphone")
     Optional<Member> findByNumberPhone(@Param("numberphone") String numberphone);
 
+    Optional<Member> findByContactInfoNumberPhone(String numberPhone);
+
     @Query("""
             SELECT m from Member m join Registration r where m.id=r.id and r.mandat.id =:registrationNumber
             """)
