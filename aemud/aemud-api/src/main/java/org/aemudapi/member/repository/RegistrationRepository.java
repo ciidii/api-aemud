@@ -16,38 +16,38 @@ import java.util.Optional;
 public interface RegistrationRepository extends JpaRepository<Registration, String> {
 
     @Query("""
-            SELECT count(*) FROM Registration r where r.session.id =:session
+            SELECT count(*) FROM Registration r where r.mandat.id =:mandatId
             """)
-    int getRegistrationCountBySession(@Param("session") String session);
+    int getRegistrationCountByMandat(@Param("mandatId") String mandatId);
 
     @Query("""
-            SELECT count(*) FROM Registration r where r.session.id =:session and r.statusPayment=:statusPayment
+            SELECT count(*) FROM Registration r where r.mandat.id =:mandatId and r.statusPayment=:statusPayment
             """)
-    int getPayedOrNoPayedSessionCountPeerSession(@Param("session") String session, @Param("statusPayment") Boolean statusPayment);
+    int getPayedOrNoPayedSessionCountPeerMandat(@Param("mandatId") String mandatId, @Param("statusPayment") Boolean statusPayment);
 
     @Query("""
-            SELECT r.member FROM Registration r where r.session.id =:session
+            SELECT r.member FROM Registration r where r.mandat.id =:mandatId
             """)
-    List<Member> getMembersBySession(@Param("session") String session);
+    List<Member> getMembersByMandat(@Param("mandatId") String mandatId);
 
     @Query("""
-            SELECT r.member FROM Registration r where r.session.id =:session and r.statusPayment=:statusPayment
+            SELECT r.member FROM Registration r where r.mandat.id =:mandatId and r.statusPayment=:statusPayment
             """)
-    List<Member> getPayedOrNoPayedMembersPeerSession(@Param("session") String session, @Param("statusPayment") Boolean statusPayment);
+    List<Member> getPayedOrNoPayedMembersPeerMandat(@Param("mandatId") String mandatId, @Param("statusPayment") Boolean statusPayment);
 
     @Query("""
-            SELECT r.member FROM Registration r where r.session.id =:session and r.registrationStatus =:registrationStatus
+            SELECT r.member FROM Registration r where r.mandat.id =:mandatId and r.registrationStatus =:registrationStatus
             """)
-    List<Member> getMembersRegistrationsStatusForSessions(@Param("session") String session, @Param("registrationStatus") RegistrationStatus registrationStatus);
+    List<Member> getMembersRegistrationsStatusForMandats(@Param("mandatId") String mandatId, @Param("registrationStatus") RegistrationStatus registrationStatus);
 
     @Query("""
-            select r.member from Registration r where r.session.id =:sessionID and r.member.id =:memberId
+            select r.member from Registration r where r.mandat.id =:mandatID and r.member.id =:memberId
             """)
-    Optional<Member> findMemberRegisteredMemberForSession(@Param("sessionID") String sessionID, @Param("memberId") String memberId);
+    Optional<Member> findMemberRegisteredMemberForMandat(@Param("mandatID") String mandatID, @Param("memberId") String memberId);
 
 
     @Query("""
-            SELECT count(*) FROM Registration r where r.session.id =:session AND r.registrationType =:typeInscription
+            SELECT count(*) FROM Registration r where r.mandat.id =:mandatId AND r.registrationType =:typeInscription
             """)
-    int getNewOrRenewalAdherentForASession(@Param("session") String session,@Param("typeInscription") TypeInscription typeInscription);
+    int getNewOrRenewalAdherentForAMandat(@Param("mandatId") String mandatId,@Param("typeInscription") TypeInscription typeInscription);
 }

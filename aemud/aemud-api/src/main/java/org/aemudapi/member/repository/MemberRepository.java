@@ -21,7 +21,7 @@ public interface MemberRepository extends JpaRepository<Member, String>, JpaSpec
     Optional<Member> findByNumberPhone(@Param("numberphone") String numberphone);
 
     @Query("""
-            SELECT m from Member m join Registration r where m.id=r.id and r.session.id =:registrationNumber
+            SELECT m from Member m join Registration r where m.id=r.id and r.mandat.id =:registrationNumber
             """)
     List<Member> findMemberByRegistration(@Param("registrationNumber") String registrationNumber);
 }

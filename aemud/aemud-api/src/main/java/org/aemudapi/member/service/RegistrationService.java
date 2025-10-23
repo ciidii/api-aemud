@@ -19,17 +19,15 @@ public interface RegistrationService {
 
     ResponseEntity<ResponseVO<Void>> deleteRegistration(String id);
 
-    ResponseEntity<ResponseVO<Integer>> getRegistrationCountBySession(String session);
+    ResponseEntity<ResponseVO<Integer>> getRegistrationCountByMandat(String mandatId);
 
-    ResponseEntity<ResponseVO<Integer>> getPayedOrNoPayedSessionCountPeerSession(String sessionID, Boolean statusPayment);
+    ResponseEntity<ResponseVO<Integer>> getPayedOrNoPayedSessionCountPeerMandat(String mandatId, Boolean statusPayment);
 
-    ResponseEntity<ResponseVO<List<MemberDataResponseDTO>>> getMemberBySession(String sessionId);
+    ResponseEntity<ResponseVO<List<MemberDataResponseDTO>>> getMemberByMandat(String mandatId);
 
-    ResponseEntity<ResponseVO<List<MemberDataResponseDTO>>> getPayedOrNoPayedMembersPeerSession(String session, Boolean statusPayment);
+    ResponseEntity<ResponseVO<List<MemberDataResponseDTO>>> getPayedOrNoPayedMembersPeerMandat(String mandatId, Boolean statusPayment);
 
-    ResponseEntity<ResponseVO<List<MemberDataResponseDTO>>> getMembersRegistrationsStatusForSessions(String session, RegistrationStatus registrationStatus);
+    ResponseEntity<ResponseVO<List<MemberDataResponseDTO>>> getMembersRegistrationsStatusForMandats(String mandatId, RegistrationStatus registrationStatus);
 
-    ResponseEntity<ResponseVO<Integer>> getNewOrRenewalAdherentForASession(String session, TypeInscription typeInscription);
-
-    ResponseEntity<ResponseVO<List<MemberDataResponseDTO>>> getMemberByYearOfRegistration(String session);
+    ResponseEntity<ResponseVO<Integer>> getNewOrRenewalAdherentForAMandat(String mandatId, TypeInscription typeInscription);
 }

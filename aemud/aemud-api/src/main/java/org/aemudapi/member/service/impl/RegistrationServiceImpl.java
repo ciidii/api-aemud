@@ -41,7 +41,7 @@ public class RegistrationServiceImpl implements RegistrationService {
     @Override
     @Transactional
     public ResponseEntity<ResponseVO<Void>> registerMember(RegistrationRequestDto registrationRequestDto) {
-        Optional<Member> member = this.registrationRepository.findMemberRegisteredMemberForSession(registrationRequestDto.getSessionId(), registrationRequestDto.getMember());
+        Optional<Member> member = this.registrationRepository.findMemberRegisteredMemberForMandat(registrationRequestDto.getMandatId(), registrationRequestDto.getMember());
         if (member.isPresent()) {
             throw new MemberAllReadyRegisterException("Member Already Registered");
         }
@@ -54,7 +54,7 @@ public class RegistrationServiceImpl implements RegistrationService {
         Registration registration = this.registrationMapper.toEntity(registrationRequestDto);
 
         this.registrationRepository.save(registration);
-        this.contributionService.createMemberCalendar(registrationRequestDto.getMember(), registrationRequestDto.getSessionId());
+        this.contributionService.createMemberCalendar(registrationRequestDto.getMember(), registrationRequestDto.getMandatId());
         ResponseVO<Void> responseVO = new ResponseVOBuilder<Void>().success().build();
         return new ResponseEntity<>(responseVO, HttpStatus.CREATED);
     }
@@ -62,7 +62,7 @@ public class RegistrationServiceImpl implements RegistrationService {
     @Override
     public ResponseEntity<ResponseVO<Void>> registerMemberWithNumberPhone(RegistrationRequestWithPhoneNumberDto registrationRequestDto) {
         Member member = this.memberRepository.findByNumberPhone(registrationRequestDto.getMemberPhoneNumber()).orElseThrow(() -> new EntityNotFoundException("Member Not Found"));
-        Optional<Member> memberFromDB = this.registrationRepository.findMemberRegisteredMemberForSession(registrationRequestDto.getSession(), member.getId());
+        Optional<Member> memberFromDB = this.registrationRepository.findMemberRegisteredMemberForMandat(registrationRequestDto.getMandatId(), member.getId());
         if (memberFromDB.isPresent()) {
             throw new MemberAllReadyRegisterException("Member Already Registered");
         }
@@ -83,49 +83,41 @@ public class RegistrationServiceImpl implements RegistrationService {
     }
 
     @Override
-    public ResponseEntity<ResponseVO<Integer>> getRegistrationCountBySession(String session) {
-        int registrationCount = this.registrationRepository.getRegistrationCountBySession(session);
+    public ResponseEntity<ResponseVO<Integer>> getRegistrationCountByMandat(String mandatId) {
+        int registrationCount = this.registrationRepository.getRegistrationCountByMandat(mandatId);
         ResponseVO<Integer> responseVO = new ResponseVOBuilder<Integer>().addData(registrationCount).build();
         return new ResponseEntity<>(responseVO, HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<ResponseVO<Integer>> getPayedOrNoPayedSessionCountPeerSession(String session, Boolean statusPayment) {
-        int num = this.registrationRepository.getPayedOrNoPayedSessionCountPeerSession(session, statusPayment);
+    public ResponseEntity<ResponseVO<Integer>> getPayedOrNoPayedSessionCountPeerMandat(String mandatId, Boolean statusPayment) {
+        int num = this.registrationRepository.getPayedOrNoPayedSessionCountPeerMandat(mandatId, statusPayment);
         return new ResponseEntity<>(new ResponseVOBuilder<Integer>().addData(num).build(), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<ResponseVO<Integer>> getNewOrRenewalAdherentForASession(String session, TypeInscription typeInscription) {
-        int num = this.registrationRepository.getNewOrRenewalAdherentForASession(session, typeInscription);
+    public ResponseEntity<ResponseVO<Integer>> getNewOrRenewalAdherentForAMandat(String mandatId, TypeInscription typeInscription) {
+        int num = this.registrationRepository.getNewOrRenewalAdherentForAMandat(mandatId, typeInscription);
         return new ResponseEntity<>(new ResponseVOBuilder<Integer>().addData(num).build(), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<ResponseVO<List<MemberDataResponseDTO>>> getMemberByYearOfRegistration(String session) {
-        List<Member> members = this.memberRepository.findMemberByRegistration(session);
-        List<MemberDataResponseDTO> memberDataResponseDTOS = this.memberMapper.toDto(members);
-        ResponseVO<List<MemberDataResponseDTO>> responseVO = new ResponseVOBuilder<List<MemberDataResponseDTO>>().addData(memberDataResponseDTOS).build();
-        return new ResponseEntity<>(responseVO, HttpStatus.OK);
-    }
-
-    @Override
-    public ResponseEntity<ResponseVO<List<MemberDataResponseDTO>>> getMemberBySession(String sessionId) {
-        List<Member> members = this.registrationRepository.getMembersBySession(sessionId);
+    public ResponseEntity<ResponseVO<List<MemberDataResponseDTO>>> getMemberByMandat(String mandatId) {
+        List<Member> members = this.registrationRepository.getMembersByMandat(mandatId);
         ResponseVO<List<MemberDataResponseDTO>> responseVO = new ResponseVOBuilder<List<MemberDataResponseDTO>>().addData(this.memberMapper.toDto(members)).build();
         return new ResponseEntity<>(responseVO, HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<ResponseVO<List<MemberDataResponseDTO>>> getPayedOrNoPayedMembersPeerSession(String sessionId, Boolean statusPayment) {
-        List<Member> members = this.registrationRepository.getPayedOrNoPayedMembersPeerSession(sessionId, statusPayment);
+    public ResponseEntity<ResponseVO<List<MemberDataResponseDTO>>> getPayedOrNoPayedMembersPeerMandat(String mandatId, Boolean statusPayment) {
+        List<Member> members = this.registrationRepository.getPayedOrNoPayedMembersPeerMandat(mandatId, statusPayment);
         ResponseVO<List<MemberDataResponseDTO>> responseVO = new ResponseVOBuilder<List<MemberDataResponseDTO>>().addData(this.memberMapper.toDto(members)).build();
         return new ResponseEntity<>(responseVO, HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<ResponseVO<List<MemberDataResponseDTO>>> getMembersRegistrationsStatusForSessions(String sessionId, RegistrationStatus registrationStatus) {
-        List<Member> members = this.registrationRepository.getMembersRegistrationsStatusForSessions(sessionId, registrationStatus);
+    public ResponseEntity<ResponseVO<List<MemberDataResponseDTO>>> getMembersRegistrationsStatusForMandats(String mandatId, RegistrationStatus registrationStatus) {
+        List<Member> members = this.registrationRepository.getMembersRegistrationsStatusForMandats(mandatId, registrationStatus);
         ResponseVO<List<MemberDataResponseDTO>> responseVO = new ResponseVOBuilder<List<MemberDataResponseDTO>>().addData(this.memberMapper.toDto(members)).build();
         return new ResponseEntity<>(responseVO, HttpStatus.OK);
     }

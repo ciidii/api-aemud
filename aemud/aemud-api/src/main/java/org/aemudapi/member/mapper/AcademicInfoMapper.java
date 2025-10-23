@@ -2,19 +2,18 @@ package org.aemudapi.member.mapper;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import org.aemudapi.mandat.repository.MandatRepository;
 import org.aemudapi.member.dtos.AcademicInfoRequestDTO;
-import org.aemudapi.member.entity.Session;
 import org.aemudapi.member.entity.AcademicInfo;
 import org.aemudapi.member.entity.Member;
 import org.aemudapi.member.repository.MemberRepository;
-import org.aemudapi.member.repository.SessionRepository;
 import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
 public class AcademicInfoMapper {
     private final MemberRepository memberRepository;
-    private final SessionRepository sessionRepository;
+    private final MandatRepository mandatRepository;
 
     public AcademicInfo toEntity(AcademicInfoRequestDTO dto) {
         if (dto == null) {
@@ -35,11 +34,6 @@ public class AcademicInfoMapper {
         return member.getId();
     }
 
-    private String getIdYear(String idYear) {
-        Session session = this.sessionRepository.findById(idYear)
-                .orElseThrow(() -> new EntityNotFoundException("Pas d'année avec cette identifiant" + idYear));
-        return session.getId();
-    }
 
     public AcademicInfoRequestDTO toDto(AcademicInfo academicInfo) {
         if (academicInfo == null) {

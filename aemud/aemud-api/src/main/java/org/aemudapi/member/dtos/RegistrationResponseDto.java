@@ -12,7 +12,7 @@ import java.time.LocalDate;
 public class RegistrationResponseDto {
     private String id;
     private String member;
-    private int session;
+    private String mandat;
     private LocalDate dateInscription;
     private TypeInscription registrationType;
     private boolean statusPayment;

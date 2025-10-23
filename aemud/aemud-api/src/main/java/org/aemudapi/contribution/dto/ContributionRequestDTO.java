@@ -5,7 +5,7 @@ import org.aemudapi.contribution.entity.ContributionStatus;
 import java.time.Month;
 import java.time.YearMonth;
 
-public record ContributionRequestDTO(String sessionID,
+public record ContributionRequestDTO(String mandatID,
                                      String memberID,
                                      YearMonth month,
                                      double amountDue,

@@ -10,7 +10,7 @@ import org.aemudapi.member.entity.TypeInscription;
 public class RegistrationRequestWithPhoneNumberDto {
     private String id;
     private String memberPhoneNumber;
-    private String session;
+    private String mandatId;
     private TypeInscription registrationType;
     private boolean statusPayment;
     private RegistrationStatus registrationStatus;

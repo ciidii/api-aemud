@@ -17,20 +17,15 @@ public interface ContributionService {
 
     ResponseEntity<ResponseVO<Integer>> countAllContributions();
 
-    ResponseEntity<ResponseVO<Integer>> countContributionPeerSession(String sessionId);
+    ResponseEntity<ResponseVO<Integer>> countContributionPeerMandat(String mandatId);
 
-    ResponseEntity<ResponseVO<List<ContributionResponseDTO>>> getContributionPeerMonth(String sessionId, String monthId);
+    ResponseEntity<ResponseVO<List<ContributionResponseDTO>>> getContributionPeerMonth(String mandatId, String monthId);
 
-    ResponseEntity<ResponseVO<List<ContributionResponseDTO>>> getMemberContributions(String memberId, String sessionId);
+    ResponseEntity<ResponseVO<List<ContributionResponseDTO>>> getMemberContributions(String memberId, String mandatId);
 
     ResponseEntity<ResponseVO<ContributionsPayementResponse>> payContributions(ContributionsPayementRequest payementRequest);
 
-//    ResponseEntity<ResponseVO<Double>> getContributionsAmountPeerMonth(String monthId, String sessionId);
+    public void createMemberCalendar(String memberId, String mandatId);
 
-//    ResponseEntity<ResponseVO<Double>> getContributionsAmountPeerSessions(String sessionId);
-
-//    ResponseEntity<ResponseVO<ContributionDTO>> contributeUsingNumPhone(String phoneNumber, String yearId, String monthId);
-    public void createMemberCalendar(String memberId, String sessionId);
-
-    ResponseEntity<ResponseVO<List<ContributionResponseDTO>>> getMemberContributionsCalendar(String memberId, String sessionId);
+    ResponseEntity<ResponseVO<List<ContributionResponseDTO>>> getMemberContributionsCalendar(String memberId, String mandatId);
 }

@@ -20,9 +20,9 @@ public interface ContributionRepository extends JpaRepository<Contribution, Stri
     Integer countContributions();
 
     @Query("""
-            select count(c) from Contribution c where c.session.id = :sessionId
+            select count(c) from Contribution c where c.mandat.id = :mandatId
             """)
-    Integer countContributionBySessionId(String sessionId);
+    Integer countContributionByMandatId(String mandatId);
 
     @Query("""
             select count(c) from Contribution c where c.month = :monthId
@@ -30,40 +30,25 @@ public interface ContributionRepository extends JpaRepository<Contribution, Stri
     int countContributionPeerMonth(String monthId);
 
     @Query("""
-            select c from Contribution c where c.month = :monthId and c.session.id = :sessionId
+            select c from Contribution c where c.month = :monthId and c.mandat.id = :mandatId
             """)
-    List<Contribution> findContributionByMonth(String monthId, String sessionId);
+    List<Contribution> findContributionByMonth(String monthId, String mandatId);
 
     @Query("""
-            select c from Contribution c where c.member.id = :memberId and c.session.id = :sessionId
+            select c from Contribution c where c.member.id = :memberId and c.mandat.id = :mandatId
             """)
-    List<Contribution> findMemberContributionsBySessionId(String memberId, String sessionId);
+    List<Contribution> findMemberContributionsByMandatId(String memberId, String mandatId);
 
     @Query("""
              select count(c) > 0 from Contribution c 
              where c.member.id = :memberId 
-               and c.session.id = :sessionId 
+               and c.mandat.id = :mandatId 
                and c.month = :month
             """)
-    boolean existsByMemberAndSessionAndMonth(String memberId, String sessionId, YearMonth month);
+    boolean existsByMemberAndMandatAndMonth(String memberId, String mandatId, YearMonth month);
 
     @Query("""
-            select c from Contribution c where c.member.id = :memberId and c.session.id = :sessionId""")
-    List<Contribution> findMemberContributionsCalendarByMemberIdAndSessionId(String memberId, String sessionId);
+            select c from Contribution c where c.member.id = :memberId and c.mandat.id = :mandatId""")
+    List<Contribution> findMemberContributionsCalendarByMemberIdAndMandatId(String memberId, String mandatId);
 
-
-//    @Query("""
-//            select sum(c.amount) from Contribution c where c.session.id = :sessionId
-//            """)
-//    Double sumContributionsBySessionId(String sessionId);
-
-//    @Query("""
-//            select sum(c.amount) from Contribution c where c.session.id = :sessionId and c.month.id = :monthId
-//            """)
-//    Double sumContributionsByMonth(String sessionId, String monthId);
-
-//    @Query("""
-//            select c from Contribution c where c.session.id = :sessionId and c.month.id = :monthId and c.member.contactInfo.numberPhone=:memberId
-//            """)
-//    List<Contribution> findMonthMemberByPhoneNumberContribution(@Param("sessionId") String sessionId, @Param("monthId") String monthId, @Param("memberId") String memberId);
 }

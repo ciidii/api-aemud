@@ -9,7 +9,7 @@ import org.aemudapi.member.entity.TypeInscription;
 @Setter
 public class RegistrationRequestDto {
     private String member;
-    private String sessionId;
+    private String mandatId;
     private TypeInscription registrationType;
     private boolean statusPayment;
     private RegistrationStatus registrationStatus;

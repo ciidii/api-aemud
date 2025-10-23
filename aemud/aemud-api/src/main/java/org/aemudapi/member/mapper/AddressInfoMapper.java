@@ -2,19 +2,18 @@ package org.aemudapi.member.mapper;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import org.aemudapi.mandat.repository.MandatRepository;
 import org.aemudapi.member.dtos.AddressInfoRequestDto;
-import org.aemudapi.member.entity.Session;
 import org.aemudapi.member.entity.AddressInfo;
 import org.aemudapi.member.entity.Member;
 import org.aemudapi.member.repository.MemberRepository;
-import org.aemudapi.member.repository.SessionRepository;
 import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
 public class AddressInfoMapper {
     private final MemberRepository memberRepository;
-    private final SessionRepository sessionRepository;
+    private final MandatRepository mandatRepository;
 
     public AddressInfo toEntity(AddressInfoRequestDto dto) {
         if (dto == null) {
@@ -35,8 +34,7 @@ public class AddressInfoMapper {
         }
 
         AddressInfoRequestDto dto = new AddressInfoRequestDto();
-       // dto.setMemberID(addressInfo.getMember().getId());
-       // dto.setIdYear(addressInfo.getMemberSessionPK().getSessionID());
+
         dto.setAddressInDakar(addressInfo.getAddressInDakar());
         dto.setHolidayAddress(addressInfo.getHolidayAddress());
         dto.setAddressToCampus(addressInfo.getAddressToCampus());
@@ -50,9 +48,5 @@ public class AddressInfoMapper {
         return member.getId();
     }
 
-    private String getIdYear(String idYear) {
-        Session session = this.sessionRepository.findById(idYear)
-                .orElseThrow(() -> new EntityNotFoundException("Pas d'année avec cette identifiant" + idYear));
-        return session.getId();
-    }
+
 }

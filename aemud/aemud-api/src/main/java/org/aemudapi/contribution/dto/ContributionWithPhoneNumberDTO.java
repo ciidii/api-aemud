@@ -8,5 +8,5 @@ import lombok.Setter;
 public class ContributionWithPhoneNumberDTO {
     private String phoneNumber;
     private String monthId;
-    private String sessionId;
+    private String mandatId;
 }

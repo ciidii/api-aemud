@@ -12,7 +12,7 @@ public class ContributionDTO {
     private String contributionId;
     private String memberId;
 
-    private String sessionId;
+    private String mandatId;
     private String monthId;
 
     private Double amount;

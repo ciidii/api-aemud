@@ -14,12 +14,12 @@ import org.aemudapi.contribution.mapper.PayementMapper;
 import org.aemudapi.contribution.repository.ContributionRepository;
 import org.aemudapi.contribution.repository.PayementRepository;
 import org.aemudapi.contribution.service.ContributionService;
+import org.aemudapi.mandat.entity.Mandat;
+import org.aemudapi.mandat.repository.MandatRepository;
 import org.aemudapi.member.entity.Bourse;
 import org.aemudapi.member.entity.Member;
-import org.aemudapi.member.entity.Session;
 import org.aemudapi.member.repository.BourseRepository;
 import org.aemudapi.member.repository.MemberRepository;
-import org.aemudapi.member.repository.SessionRepository;
 import org.aemudapi.utils.ResponseVO;
 import org.aemudapi.utils.ResponseVOBuilder;
 import org.springframework.http.HttpStatus;
@@ -39,14 +39,14 @@ public class ContributionServiceImpl implements ContributionService {
     private final MemberRepository memberRepository;
     private final PayementRepository payementRepository;
     private final PayementMapper payementMapper;
-    private final SessionRepository sessionRepository;
+    private final MandatRepository mandatRepository;
     private final BourseRepository bourseRepository;
 
     @Override
     public ResponseEntity<ResponseVO<ContributionResponseDTO>> addContribute(ContributionRequestDTO contributionRequestDTO) {
         Contribution contribution = this.contributionMapper.toEntity(contributionRequestDTO);
         contribution = this.contributionRepository.save(contribution);
-        ContributionResponseDTO contributionResponseDTO = new ContributionResponseDTO(contribution.getId(), contribution.getSession().getId(), contribution.getMember().getId(), contribution.getMonth(), contribution.getAmountDue(), contribution.getAmountPaid(), contribution.getStatus());
+        ContributionResponseDTO contributionResponseDTO = new ContributionResponseDTO(contribution.getId(), contribution.getMandat().getId(), contribution.getMember().getId(), contribution.getMonth(), contribution.getAmountDue(), contribution.getAmountPaid(), contribution.getStatus());
         return new ResponseEntity<>(new ResponseVOBuilder<ContributionResponseDTO>().addData(contributionResponseDTO).build(), HttpStatus.OK);
     }
 
@@ -71,22 +71,22 @@ public class ContributionServiceImpl implements ContributionService {
     }
 
     @Override
-    public ResponseEntity<ResponseVO<Integer>> countContributionPeerSession(String sessionId) {
-        int contributions = this.contributionRepository.countContributionBySessionId(sessionId);
+    public ResponseEntity<ResponseVO<Integer>> countContributionPeerMandat(String mandatId) {
+        int contributions = this.contributionRepository.countContributionByMandatId(mandatId);
         return new ResponseEntity<>(new ResponseVOBuilder<Integer>().addData(contributions).build(), HttpStatus.OK);
     }
 
 
     @Override
-    public ResponseEntity<ResponseVO<List<ContributionResponseDTO>>> getContributionPeerMonth(String monthId, String sessionId) {
-        List<Contribution> contributions = this.contributionRepository.findContributionByMonth(sessionId, monthId);
+    public ResponseEntity<ResponseVO<List<ContributionResponseDTO>>> getContributionPeerMonth(String monthId, String mandatId) {
+        List<Contribution> contributions = this.contributionRepository.findContributionByMonth(mandatId, monthId);
         List<ContributionResponseDTO> contributionDTOS = this.contributionMapper.toDTOList(contributions);
         return new ResponseEntity<>(new ResponseVOBuilder<List<ContributionResponseDTO>>().addData(contributionDTOS).build(), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<ResponseVO<List<ContributionResponseDTO>>> getMemberContributions(String memberId, String sessionId) {
-        List<Contribution> contributions = this.contributionRepository.findMemberContributionsBySessionId(memberId, sessionId);
+    public ResponseEntity<ResponseVO<List<ContributionResponseDTO>>> getMemberContributions(String memberId, String mandatId) {
+        List<Contribution> contributions = this.contributionRepository.findMemberContributionsByMandatId(memberId, mandatId);
         List<ContributionResponseDTO> contributionDTOS = this.contributionMapper.toDTOList(contributions);
         return new ResponseEntity<>(new ResponseVOBuilder<List<ContributionResponseDTO>>().addData(contributionDTOS).build(), HttpStatus.OK);
     }
@@ -110,16 +110,16 @@ public class ContributionServiceImpl implements ContributionService {
 
     @Override
     @Transactional
-    public void createMemberCalendar(String memberId, String sessionId) {
+    public void createMemberCalendar(String memberId, String mandatId) {
         Member member = memberRepository.findById(memberId).orElseThrow(() -> new EntityNotFoundException("Member not found"));
-        Session session = sessionRepository.findById(sessionId).orElseThrow(() -> new EntityNotFoundException("Session not found"));
+        Mandat mandat = mandatRepository.findById(mandatId).orElseThrow(() -> new EntityNotFoundException("Mandat not found"));
 
         YearMonth adhesionMonth = YearMonth.from(member.getMembershipInfo().getAdhesionDate());
         Bourse bourse = this.bourseRepository.getBourseById(member.getBourse().getId());
         for (int month = 1; month <= 12; month++) {
-            YearMonth current = YearMonth.of(session.getYear_(), month);
+            YearMonth current = YearMonth.of(mandat.getDateDebut().getYear(), month);
 
-            boolean exists = contributionRepository.existsByMemberAndSessionAndMonth(memberId, sessionId, current);
+            boolean exists = contributionRepository.existsByMemberAndMandatAndMonth(memberId, mandatId, current);
 
             if (!exists) {
                 ContributionStatus status;
@@ -130,7 +130,7 @@ public class ContributionServiceImpl implements ContributionService {
                     status = ContributionStatus.PENDING;
                 }
 
-                Contribution contribution = new Contribution(member, session, current, bourse.getMontant(), 0.0, status);
+                Contribution contribution = new Contribution(member, mandat, current, bourse.getMontant(), 0.0, status);
 
                 contributionRepository.save(contribution);
             }
@@ -138,8 +138,8 @@ public class ContributionServiceImpl implements ContributionService {
     }
 
     @Override
-    public ResponseEntity<ResponseVO<List<ContributionResponseDTO>>> getMemberContributionsCalendar(String memberId, String sessionId) {
-        List<Contribution> contributions = this.contributionRepository.findMemberContributionsCalendarByMemberIdAndSessionId(memberId, sessionId);
+    public ResponseEntity<ResponseVO<List<ContributionResponseDTO>>> getMemberContributionsCalendar(String memberId, String mandatId) {
+        List<Contribution> contributions = this.contributionRepository.findMemberContributionsCalendarByMemberIdAndMandatId(memberId, mandatId);
         List<ContributionResponseDTO> contributionResponseDTOS = this.contributionMapper.toDTOList(contributions);
         return new ResponseEntity<>(new ResponseVOBuilder<List<ContributionResponseDTO>>().addData(contributionResponseDTOS).build(), HttpStatus.OK);
     }
@@ -150,28 +150,5 @@ public class ContributionServiceImpl implements ContributionService {
         Member member = this.memberRepository.findById(memberId).orElseThrow(() -> new EntityNotFoundException("Member not found"));
         return months * member.getBourse().getMontant();
     }
-
-//    @Override
-//    public ResponseEntity<ResponseVO<Double>> getContributionsAmountPeerMonth(String monthId, String sessionId) {
-////        double contributionsAmount = this.contributionRepository.sumContributionsByMonth(sessionId, monthId);
-////        return new ResponseEntity<>(new ResponseVOBuilder<Double>().addData(contributionsAmount).build(), HttpStatus.OK);
-//    }
-
-//    @Override
-//    public ResponseEntity<ResponseVO<Double>> getContributionsAmountPeerSessions(String sessionId) {
-//        double contributionsAmount = this.contributionRepository.sumContributionsBySessionId(sessionId);
-//        return new ResponseEntity<>(new ResponseVOBuilder<Double>().addData(contributionsAmount).build(), HttpStatus.OK);
-//    }
-
-//    @Override
-//    public ResponseEntity<ResponseVO<ContributionDTO>> contributeUsingNumPhone(String phoneNumber, String yearId, String monthId) {
-//        Contribution contribution = this.contributionMapper.toEntity(phoneNumber, yearId, monthId);
-//        List<Contribution> monthMemberContribution = this.contributionRepository.findMonthMemberByPhoneNumberContribution(yearId, monthId, phoneNumber);
-//        if (!monthMemberContribution.isEmpty()) {
-//            throw new EntityExistsException("Ce member à déjà cotiser pour ce mois");
-//        }
-//        ContributionDTO contributionDTO = this.contributionMapper.toDTO(this.contributionRepository.save(contribution));
-//        return new ResponseEntity<>(new ResponseVOBuilder<ContributionDTO>().addData(contributionDTO).build(), HttpStatus.OK);
-//    }
 
 }

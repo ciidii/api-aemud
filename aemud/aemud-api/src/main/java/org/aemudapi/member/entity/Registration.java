@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.aemudapi.mandat.entity.Mandat;
 
 import java.time.LocalDate;
 
@@ -22,8 +23,8 @@ public class Registration extends BaseEntity {
     private Member member;
 
     @ManyToOne
-    @JoinColumn(name = "session_id", nullable = false)
-    private Session session;
+    @JoinColumn(name = "mandat_id", nullable = false)
+    private Mandat mandat;
 
     private LocalDate dateInscription = LocalDate.now();
     @Enumerated(EnumType.STRING)

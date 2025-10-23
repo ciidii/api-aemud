@@ -1,4 +1,4 @@
 package org.aemudapi.contribution.dto;
 
-public record MembreCalendarDTO(String sessionID, String memberID) {
+public record MembreCalendarDTO(String mandatID, String memberID) {
 }
