@@ -22,6 +22,8 @@ public interface MemberRepository extends JpaRepository<Member, String>, JpaSpec
 
     Optional<Member> findByContactInfoNumberPhone(String numberPhone);
 
+    Optional<Member> findByContactInfoEmail(String email);
+
     @Query("""
             SELECT m from Member m join Registration r where m.id=r.id and r.mandat.id =:registrationNumber
             """)
