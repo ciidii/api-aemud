@@ -3,6 +3,7 @@ package org.aemudapi.member.dtos;
 import lombok.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -10,6 +11,8 @@ import java.util.List;
 @NoArgsConstructor
 public class MemberRequestDto {
     private String id;
+    private String mandatId;
+    private String phaseId;
     private PersonalInfoDTO personalInfo;
     private MembershipInfoDTO membershipInfo;
     private AcademicInfoRequestDTO academicInfo;

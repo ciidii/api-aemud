@@ -9,6 +9,8 @@ import org.aemudapi.mandat.entity.Mandat;
 import org.aemudapi.mandat.entity.Phase;
 import org.aemudapi.mandat.repository.MandatRepository;
 import org.aemudapi.mandat.repository.PhaseRepository;
+
+import java.util.UUID;
 import org.aemudapi.member.dtos.FilterDTO;
 import org.aemudapi.member.dtos.MemberDataResponseDTO;
 import org.aemudapi.member.dtos.MemberRequestDto;
@@ -58,13 +60,29 @@ public class MemberServiceImpl implements MemberService {
         if (email != null && !email.isBlank() && this.memberRepository.findByContactInfoEmail(email).isPresent()) {
             throw new UserAlreadyExistsException("Un membre avec l'email '" + email + "' existe déjà.");
         }
-            // 2. Récupérer le mandat actif
-            Mandat mandat = this.mandatRepository.findMandatByEstActif(true)
+        // 2. Récupérer le mandat
+        Mandat mandat;
+        if (memberRequestDto.getMandatId() != null) {
+            mandat = this.mandatRepository.findById(memberRequestDto.getMandatId())
+                    .orElseThrow(() -> new EntityNotFoundException("Aucun mandat trouvé avec l'ID : " + memberRequestDto.getMandatId()));
+        } else {
+            mandat = this.mandatRepository.findMandatByEstActif(true)
                     .orElseThrow(() -> new ActiveMandateNotFoundException("Aucun mandat actif n'a été trouvé. Impossible de créer un nouveau membre."));
+        }
         
-            // 3. Trouver la phase actuelle pour ce mandat
-            Phase currentPhase = this.phaseRepository.findCurrentPhaseForMandat(mandat.getId(), LocalDate.now())
+        // 3. Trouver la phase pour ce mandat
+        Phase phase;
+        if (memberRequestDto.getPhaseId() != null) {
+            phase = this.phaseRepository.findById(memberRequestDto.getPhaseId())
+                    .orElseThrow(() -> new EntityNotFoundException("Aucune phase trouvée avec l'ID : " + memberRequestDto.getPhaseId()));
+            // Vérifier que la phase appartient bien au mandat sélectionné
+            if (!phase.getMandat().getId().equals(mandat.getId())) {
+                throw new IllegalArgumentException("La phase sélectionnée n'appartient pas au mandat sélectionné.");
+            }
+        } else {
+            phase = this.phaseRepository.findCurrentPhaseForMandat(mandat.getId(), LocalDate.now())
                     .orElseThrow(() -> new EntityNotFoundException("Aucune phase active trouvée pour le mandat actuel."));
+        }
         
             // 4. Mapper le DTO en entité
             Member member = this.memberMapper.toEntity(memberRequestDto);
@@ -82,10 +100,11 @@ public class MemberServiceImpl implements MemberService {
             registrationRequestDto.setRegistrationType(TypeInscription.INITIAL);
             registrationRequestDto.setMandatId(mandat.getId());
             registrationRequestDto.setStatusPayment(false);
-            this.registrationService.registerMember(registrationRequestDto, currentPhase.getId());
+            this.registrationService.registerMember(registrationRequestDto, phase.getId());
         
             // 8. Préparer et retourner la réponse
-            MemberDataResponseDTO dto = this.memberMapper.toDto(memberFromDB);        ResponseVO<MemberDataResponseDTO> responseVO = new ResponseVOBuilder<MemberDataResponseDTO>().addData(dto).build();
+            MemberDataResponseDTO dto = this.memberMapper.toDto(memberFromDB);
+            ResponseVO<MemberDataResponseDTO> responseVO = new ResponseVOBuilder<MemberDataResponseDTO>().addData(dto).build();
         return new ResponseEntity<>(responseVO, HttpStatus.CREATED);
     }
 

@@ -47,17 +47,21 @@ public class MandatServiceImpl implements MandatService {
         mandat.setEstActif(false);
 
         List<Phase> phases = new ArrayList<>();
+
+        // Calculer le point médian du mandat
+        long totalDays = java.time.temporal.ChronoUnit.DAYS.between(mandat.getDateDebut(), mandat.getDateFin());
+        java.time.LocalDate midPoint = mandat.getDateDebut().plusDays(totalDays / 2);
+
         Phase phase1 = new Phase();
         phase1.setNom("Année 1");
         phase1.setDateDebut(mandat.getDateDebut());
-        phase1.setDateFin(mandat.getDateDebut().plusYears(1));
+        phase1.setDateFin(midPoint);
         phase1.setMandat(mandat);
         phases.add(phase1);
 
         Phase phase2 = new Phase();
         phase2.setNom("Année 2");
-        phase2.setDateDebut(mandat.getDateDebut().plusYears(1));
-        // Assurons-nous que la date de fin de la phase 2 correspond à la date de fin du mandat
+        phase2.setDateDebut(midPoint);
         phase2.setDateFin(mandat.getDateFin());
         phase2.setMandat(mandat);
         phases.add(phase2);
