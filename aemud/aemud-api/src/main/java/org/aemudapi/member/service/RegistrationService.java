@@ -13,7 +13,7 @@ import java.util.List;
 
 @Service
 public interface RegistrationService {
-    ResponseEntity<ResponseVO<Void>> registerMember(RegistrationRequestDto registrationRequestDto);
+    ResponseEntity<ResponseVO<Void>> registerMember(RegistrationRequestDto registrationRequestDto, String phaseId);
 
     ResponseEntity<ResponseVO<Void>> registerMemberWithNumberPhone(RegistrationRequestWithPhoneNumberDto registrationRequestDto);
 

@@ -6,7 +6,9 @@ import lombok.AllArgsConstructor;
 import org.aemudapi.exceptions.customeExceptions.ActiveMandateNotFoundException;
 import org.aemudapi.exceptions.customeExceptions.UserAlreadyExistsException;
 import org.aemudapi.mandat.entity.Mandat;
+import org.aemudapi.mandat.entity.Phase;
 import org.aemudapi.mandat.repository.MandatRepository;
+import org.aemudapi.mandat.repository.PhaseRepository;
 import org.aemudapi.member.dtos.FilterDTO;
 import org.aemudapi.member.dtos.MemberDataResponseDTO;
 import org.aemudapi.member.dtos.MemberRequestDto;
@@ -30,6 +32,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,11 +45,11 @@ public class MemberServiceImpl implements MemberService {
     private final MemberMapper memberMapper;
     private final RegistrationService registrationService;
     private final MandatRepository mandatRepository;
-
+    private final PhaseRepository phaseRepository;
     @Override
     @Transactional
     public ResponseEntity<ResponseVO<MemberDataResponseDTO>> addMember(MemberRequestDto memberRequestDto) {
-        // 1. Valider l'unicité du membre
+
         String phoneNumber = memberRequestDto.getContactInfo().getNumberPhone();
         if (this.memberRepository.findByContactInfoNumberPhone(phoneNumber).isPresent()) {
             throw new UserAlreadyExistsException("Un membre avec le numéro de téléphone '" + phoneNumber + "' existe déjà.");
@@ -55,32 +58,34 @@ public class MemberServiceImpl implements MemberService {
         if (email != null && !email.isBlank() && this.memberRepository.findByContactInfoEmail(email).isPresent()) {
             throw new UserAlreadyExistsException("Un membre avec l'email '" + email + "' existe déjà.");
         }
-
-        // 2. Récupérer le mandat actif
-        Mandat mandat = this.mandatRepository.findMandatByEstActif(true)
-                .orElseThrow(() -> new ActiveMandateNotFoundException("Aucun mandat actif n'a été trouvé. Impossible de créer un nouveau membre."));
-
-        // 3. Mapper le DTO en entité
-        Member member = this.memberMapper.toEntity(memberRequestDto);
-
-        // 4. S'assurer que l'ID est null pour la création
-        member.setId(null);
-
-        // 5. Sauvegarder le nouveau membre
-        Member memberFromDB = this.memberRepository.save(member);
-
-        // 6. Gérer l'inscription initiale
-        RegistrationRequestDto registrationRequestDto = new RegistrationRequestDto();
-        registrationRequestDto.setMember(memberFromDB.getId());
-        registrationRequestDto.setRegistrationStatus(RegistrationStatus.UNCOMPLETED);
-        registrationRequestDto.setRegistrationType(TypeInscription.INITIAL);
-        registrationRequestDto.setMandatId(mandat.getId());
-        registrationRequestDto.setStatusPayment(false);
-        this.registrationService.registerMember(registrationRequestDto);
-
-        // 7. Préparer et retourner la réponse
-        MemberDataResponseDTO dto = this.memberMapper.toDto(memberFromDB);
-        ResponseVO<MemberDataResponseDTO> responseVO = new ResponseVOBuilder<MemberDataResponseDTO>().addData(dto).build();
+            // 2. Récupérer le mandat actif
+            Mandat mandat = this.mandatRepository.findMandatByEstActif(true)
+                    .orElseThrow(() -> new ActiveMandateNotFoundException("Aucun mandat actif n'a été trouvé. Impossible de créer un nouveau membre."));
+        
+            // 3. Trouver la phase actuelle pour ce mandat
+            Phase currentPhase = this.phaseRepository.findCurrentPhaseForMandat(mandat.getId(), LocalDate.now())
+                    .orElseThrow(() -> new EntityNotFoundException("Aucune phase active trouvée pour le mandat actuel."));
+        
+            // 4. Mapper le DTO en entité
+            Member member = this.memberMapper.toEntity(memberRequestDto);
+            
+            // 5. S'assurer que l'ID est null pour la création
+            member.setId(null);
+        
+            // 6. Sauvegarder le nouveau membre
+            Member memberFromDB = this.memberRepository.save(member);
+        
+            // 7. Gérer l'inscription initiale
+            RegistrationRequestDto registrationRequestDto = new RegistrationRequestDto();
+            registrationRequestDto.setMember(memberFromDB.getId());
+            registrationRequestDto.setRegistrationStatus(RegistrationStatus.UNCOMPLETED);
+            registrationRequestDto.setRegistrationType(TypeInscription.INITIAL);
+            registrationRequestDto.setMandatId(mandat.getId());
+            registrationRequestDto.setStatusPayment(false);
+            this.registrationService.registerMember(registrationRequestDto, currentPhase.getId());
+        
+            // 8. Préparer et retourner la réponse
+            MemberDataResponseDTO dto = this.memberMapper.toDto(memberFromDB);        ResponseVO<MemberDataResponseDTO> responseVO = new ResponseVOBuilder<MemberDataResponseDTO>().addData(dto).build();
         return new ResponseEntity<>(responseVO, HttpStatus.CREATED);
     }
 

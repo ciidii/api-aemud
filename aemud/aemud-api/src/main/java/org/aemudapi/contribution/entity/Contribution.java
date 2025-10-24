@@ -9,7 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.aemudapi.mandat.entity.Mandat;
+import org.aemudapi.mandat.entity.Phase;
 import org.aemudapi.member.entity.BaseEntity;
 import org.aemudapi.member.entity.Member;
 import java.time.YearMonth;
@@ -24,8 +24,8 @@ public class Contribution extends BaseEntity {
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
     @ManyToOne
-    @JoinColumn(name = "mandat_id")
-    private Mandat mandat;
+    @JoinColumn(name = "phase_id")
+    private Phase phase;
     private YearMonth month;
     @Column(nullable = false)
     private Double amountDue;

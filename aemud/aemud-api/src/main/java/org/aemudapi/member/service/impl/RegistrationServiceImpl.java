@@ -40,7 +40,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 
     @Override
     @Transactional
-    public ResponseEntity<ResponseVO<Void>> registerMember(RegistrationRequestDto registrationRequestDto) {
+    public ResponseEntity<ResponseVO<Void>> registerMember(RegistrationRequestDto registrationRequestDto, String phaseId) {
         Optional<Member> member = this.registrationRepository.findMemberRegisteredMemberForMandat(registrationRequestDto.getMandatId(), registrationRequestDto.getMember());
         if (member.isPresent()) {
             throw new MemberAllReadyRegisterException("Member Already Registered");
@@ -54,7 +54,7 @@ public class RegistrationServiceImpl implements RegistrationService {
         Registration registration = this.registrationMapper.toEntity(registrationRequestDto);
 
         this.registrationRepository.save(registration);
-        this.contributionService.createMemberCalendar(registrationRequestDto.getMember(), registrationRequestDto.getMandatId());
+        this.contributionService.createMemberCalendar(registrationRequestDto.getMember(), phaseId);
         ResponseVO<Void> responseVO = new ResponseVOBuilder<Void>().success().build();
         return new ResponseEntity<>(responseVO, HttpStatus.CREATED);
     }

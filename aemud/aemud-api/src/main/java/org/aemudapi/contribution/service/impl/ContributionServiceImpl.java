@@ -14,8 +14,9 @@ import org.aemudapi.contribution.mapper.PayementMapper;
 import org.aemudapi.contribution.repository.ContributionRepository;
 import org.aemudapi.contribution.repository.PayementRepository;
 import org.aemudapi.contribution.service.ContributionService;
-import org.aemudapi.mandat.entity.Mandat;
+import org.aemudapi.mandat.entity.Phase;
 import org.aemudapi.mandat.repository.MandatRepository;
+import org.aemudapi.mandat.repository.PhaseRepository;
 import org.aemudapi.member.entity.Bourse;
 import org.aemudapi.member.entity.Member;
 import org.aemudapi.member.repository.BourseRepository;
@@ -31,6 +32,7 @@ import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.List;
 
+
 @Service
 @AllArgsConstructor
 public class ContributionServiceImpl implements ContributionService {
@@ -41,12 +43,13 @@ public class ContributionServiceImpl implements ContributionService {
     private final PayementMapper payementMapper;
     private final MandatRepository mandatRepository;
     private final BourseRepository bourseRepository;
+    private final PhaseRepository phaseRepository;
 
     @Override
     public ResponseEntity<ResponseVO<ContributionResponseDTO>> addContribute(ContributionRequestDTO contributionRequestDTO) {
         Contribution contribution = this.contributionMapper.toEntity(contributionRequestDTO);
         contribution = this.contributionRepository.save(contribution);
-        ContributionResponseDTO contributionResponseDTO = new ContributionResponseDTO(contribution.getId(), contribution.getMandat().getId(), contribution.getMember().getId(), contribution.getMonth(), contribution.getAmountDue(), contribution.getAmountPaid(), contribution.getStatus());
+        ContributionResponseDTO contributionResponseDTO = new ContributionResponseDTO(contribution.getId(), contribution.getPhase().getId(), contribution.getMember().getId(), contribution.getMonth(), contribution.getAmountDue(), contribution.getAmountPaid(), contribution.getStatus());
         return new ResponseEntity<>(new ResponseVOBuilder<ContributionResponseDTO>().addData(contributionResponseDTO).build(), HttpStatus.OK);
     }
 
@@ -108,35 +111,38 @@ public class ContributionServiceImpl implements ContributionService {
         return new ResponseEntity<>(new ResponseVOBuilder<ContributionsPayementResponse>().addData(contributionsPayementResponse).build(), HttpStatus.OK);
     }
 
+
     @Override
     @Transactional
-    public void createMemberCalendar(String memberId, String mandatId) {
+    public void createMemberCalendar(String memberId, String phaseId) {
         Member member = memberRepository.findById(memberId).orElseThrow(() -> new EntityNotFoundException("Member not found"));
-        Mandat mandat = mandatRepository.findById(mandatId).orElseThrow(() -> new EntityNotFoundException("Mandat not found"));
+        Phase phase = phaseRepository.findById(phaseId).orElseThrow(() -> new EntityNotFoundException("Phase not found"));
 
         YearMonth adhesionMonth = YearMonth.from(member.getMembershipInfo().getAdhesionDate());
         Bourse bourse = this.bourseRepository.getBourseById(member.getBourse().getId());
-        for (int month = 1; month <= 12; month++) {
-            YearMonth current = YearMonth.of(mandat.getDateDebut().getYear(), month);
 
-            boolean exists = contributionRepository.existsByMemberAndMandatAndMonth(memberId, mandatId, current);
+        LocalDate startDate = phase.getDateDebut();
+        LocalDate endDate = phase.getDateFin();
+
+        for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusMonths(1)) {
+            YearMonth currentMonth = YearMonth.from(date);
+
+            boolean exists = contributionRepository.existsByMemberAndPhaseAndMonth(memberId, phaseId, currentMonth);
 
             if (!exists) {
                 ContributionStatus status;
 
-                if (current.isBefore(adhesionMonth)) {
-                    status = ContributionStatus.NOT_APPLICABLE; // nouveau statut
+                if (currentMonth.isBefore(adhesionMonth)) {
+                    status = ContributionStatus.NOT_APPLICABLE;
                 } else {
                     status = ContributionStatus.PENDING;
                 }
 
-                Contribution contribution = new Contribution(member, mandat, current, bourse.getMontant(), 0.0, status);
-
+                Contribution contribution = new Contribution(member, phase, currentMonth, bourse.getMontant(), 0.0, status);
                 contributionRepository.save(contribution);
             }
         }
     }
-
     @Override
     public ResponseEntity<ResponseVO<List<ContributionResponseDTO>>> getMemberContributionsCalendar(String memberId, String mandatId) {
         List<Contribution> contributions = this.contributionRepository.findMemberContributionsCalendarByMemberIdAndMandatId(memberId, mandatId);
@@ -150,5 +156,4 @@ public class ContributionServiceImpl implements ContributionService {
         Member member = this.memberRepository.findById(memberId).orElseThrow(() -> new EntityNotFoundException("Member not found"));
         return months * member.getBourse().getMontant();
     }
-
 }

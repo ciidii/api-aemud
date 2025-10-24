@@ -7,7 +7,9 @@ import org.aemudapi.contribution.dto.ContributionResponseDTO;
 import org.aemudapi.contribution.entity.Contribution;
 import org.aemudapi.contribution.entity.Month;
 import org.aemudapi.mandat.entity.Mandat;
+import org.aemudapi.mandat.entity.Phase;
 import org.aemudapi.mandat.repository.MandatRepository;
+import org.aemudapi.mandat.repository.PhaseRepository;
 import org.aemudapi.member.entity.Member;
 import org.aemudapi.member.repository.MemberRepository;
 import org.springframework.stereotype.Component;
@@ -18,7 +20,7 @@ import java.util.stream.Collectors;
 @Component
 @AllArgsConstructor
 public class ContributionMapper {
-    private final MandatRepository mandatRepository;
+    private final PhaseRepository phaseRepository;
     private final MemberRepository memberRepository;
 
     public ContributionResponseDTO toDTO(Contribution contribution) {
@@ -26,7 +28,7 @@ public class ContributionMapper {
             return null;
         }
 
-        return new ContributionResponseDTO(contribution.getId(), contribution.getMandat().getId(), contribution.getMember().getId(), contribution.getMonth(), contribution.getAmountDue(), contribution.getAmountPaid(), contribution.getStatus());
+        return new ContributionResponseDTO(contribution.getId(), contribution.getPhase().getId(), contribution.getMember().getId(), contribution.getMonth(), contribution.getAmountDue(), contribution.getAmountPaid(), contribution.getStatus());
     }
 
 
@@ -36,11 +38,11 @@ public class ContributionMapper {
         }
 
         Contribution contribution = new Contribution();
-        Mandat mandat = this.mandatRepository.findById(dto.mandatID()).orElseThrow(() -> new EntityNotFoundException("Mandat with id " + dto.mandatID() + " not found"));
+        Phase mandat = this.phaseRepository.findById(dto.mandatID()).orElseThrow(() -> new EntityNotFoundException("Mandat with id " + dto.mandatID() + " not found"));
         Member member = this.memberRepository.findById(dto.memberID()).orElseThrow(() -> new EntityNotFoundException("Member with id " + dto.memberID() + " not found"));
         contribution.setMember(member);
         contribution.setMonth(dto.month());
-        contribution.setMandat(mandat);
+        contribution.setPhase(mandat);
         contribution.setAmountDue(member.getBourse().getMontant());
         contribution.setAmountPaid(dto.amountPaid());
         contribution.setStatus(dto.status());
@@ -49,11 +51,11 @@ public class ContributionMapper {
 
     public Contribution toEntity(String memberPhoneNumber, String mandatId, String monthId) {
         Contribution contribution = new Contribution();
-        Mandat mandat = this.mandatRepository.findById(mandatId).orElseThrow(() -> new EntityNotFoundException("Mandat with id " + mandatId + " not found"));
+        Phase mandat = this.phaseRepository.findById(mandatId).orElseThrow(() -> new EntityNotFoundException("Mandat with id " + mandatId + " not found"));
         Member member = this.memberRepository.findByNumberPhone(memberPhoneNumber).orElseThrow(() -> new EntityNotFoundException("Member with id " + memberPhoneNumber + " not found"));
         contribution.setMember(member);
 //        contribution.setMonth(month);
-        contribution.setMandat(mandat);
+        contribution.setPhase(mandat);
 //        contribution.setAmount(member.getBourse().getMontant());
 
         return contribution;

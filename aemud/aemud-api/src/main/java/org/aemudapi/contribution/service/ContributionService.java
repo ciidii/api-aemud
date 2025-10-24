@@ -25,7 +25,7 @@ public interface ContributionService {
 
     ResponseEntity<ResponseVO<ContributionsPayementResponse>> payContributions(ContributionsPayementRequest payementRequest);
 
-    public void createMemberCalendar(String memberId, String mandatId);
+    public void createMemberCalendar(String memberId, String phaseId);
 
     ResponseEntity<ResponseVO<List<ContributionResponseDTO>>> getMemberContributionsCalendar(String memberId, String mandatId);
 }
