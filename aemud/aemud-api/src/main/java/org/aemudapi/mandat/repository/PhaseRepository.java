@@ -40,4 +40,6 @@ public interface PhaseRepository extends JpaRepository<Phase, String> {
         return findFuturePhases(date).stream().findFirst();
     }
 
+    List<Phase> findByMandatId(String mandatId);
+
 }

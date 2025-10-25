@@ -9,6 +9,7 @@ import org.aemudapi.mandat.entity.Mandat;
 import org.aemudapi.mandat.entity.Phase;
 import org.aemudapi.mandat.mapper.MandatMapper;
 import org.aemudapi.mandat.repository.MandatRepository;
+import org.aemudapi.mandat.repository.PhaseRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +24,7 @@ public class MandatServiceImpl implements MandatService {
 
     private final MandatRepository mandatRepository;
     private final MandatMapper mandatMapper;
-
+    private final PhaseRepository phaseRepository;
     @Override
     @Transactional(readOnly = true)
     public List<MandatDto> getAllMandats() {
@@ -68,8 +69,33 @@ public class MandatServiceImpl implements MandatService {
 
         mandat.setPhases(phases);
 
+        // Validate for overlaps before saving
+        validatePhasesDoNotOverlap(mandat, phases);
+
         Mandat savedMandat = mandatRepository.save(mandat);
         return mandatMapper.toDto(savedMandat);
+    }
+
+    private void validatePhasesDoNotOverlap(Mandat mandat, List<Phase> newPhases) {
+        // Fetch existing phases for the mandate
+        List<Phase> existingPhases = mandat.getId() != null ? phaseRepository.findByMandatId(mandat.getId()) : new ArrayList<>();
+
+        // Combine existing and new phases for validation
+        List<Phase> allPhases = new ArrayList<>(existingPhases);
+        allPhases.addAll(newPhases);
+
+        // Check for overlaps within all phases
+        for (int i = 0; i < allPhases.size(); i++) {
+            for (int j = i + 1; j < allPhases.size(); j++) {
+                Phase p1 = allPhases.get(i);
+                Phase p2 = allPhases.get(j);
+
+                // Overlap condition: (start1 <= end2) AND (start2 <= end1)
+                if (p1.getDateDebut().isBefore(p2.getDateFin()) && p2.getDateDebut().isBefore(p1.getDateFin())) {
+                    throw new IllegalArgumentException("Les phases se chevauchent : " + p1.getNom() + " (" + p1.getDateDebut() + " - " + p1.getDateFin() + ") et " + p2.getNom() + " (" + p2.getDateDebut() + " - " + p2.getDateFin() + ")");
+                }
+            }
+        }
     }
 
     @Override
