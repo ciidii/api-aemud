@@ -1,8 +1,6 @@
 package org.aemudapi.member.entity;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import jakarta.persistence.Embeddable;
 import lombok.Getter;
 import lombok.Setter;
 

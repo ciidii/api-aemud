@@ -1,4 +1,3 @@
-
 ```json
 {
   "id": "a-uuid-string",
@@ -44,8 +43,14 @@
     ]
   },
   "bourse": "Bourse-ID",
-  "clubs": ["Club-A-ID", "Club-B-ID"],
-  "commissions": ["Commission-A-ID", "Commission-B-ID"],
+  "clubs": [
+    "Club-A-ID",
+    "Club-B-ID"
+  ],
+  "commissions": [
+    "Commission-A-ID",
+    "Commission-B-ID"
+  ],
   "religiousKnowledge": {
     "arabicProficiency": "READ_AND_UNDERSTAND",
     "coranLevel": "AMMAH",

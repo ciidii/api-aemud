@@ -31,16 +31,20 @@ ALTER TABLE member_fiqh_books
 DROP TABLE sender_template_sms CASCADE;
 
 ALTER TABLE member
-    DROP COLUMN aemud_courses;
+DROP
+COLUMN aemud_courses;
 
 ALTER TABLE member
-    DROP COLUMN other_courses;
+DROP
+COLUMN other_courses;
 
 ALTER TABLE recipient_template
-    DROP COLUMN senders;
+DROP
+COLUMN senders;
 
 ALTER TABLE contribution
-    DROP COLUMN month;
+DROP
+COLUMN month;
 
 ALTER TABLE contribution
     ADD month date;

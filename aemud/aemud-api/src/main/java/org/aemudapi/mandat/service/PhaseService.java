@@ -8,8 +8,12 @@ import java.util.List;
 
 public interface PhaseService {
     PhaseDto createPhase(CreatePhaseDto createPhaseDto);
+
     PhaseDto getPhaseById(String id);
+
     List<PhaseDto> getAllPhases();
+
     PhaseDto updatePhase(String id, UpdatePhaseDto updatePhaseDto);
+
     void deletePhase(String id);
 }

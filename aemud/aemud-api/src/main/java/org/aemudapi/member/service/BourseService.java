@@ -14,7 +14,8 @@ public interface BourseService {
     ResponseEntity<ResponseVO<List<BourseDTO>>> getAllBourse();
 
     ResponseEntity<ResponseVO<Void>> deleteBourse(String bourseId);
-    public ResponseEntity<ResponseVO<Boolean>>  checkIfCanDeleteBourse(String bourseId);
+
+    public ResponseEntity<ResponseVO<Boolean>> checkIfCanDeleteBourse(String bourseId);
 
     ResponseEntity<ResponseVO<BourseDTO>> findBourseById(String bourseId);
 

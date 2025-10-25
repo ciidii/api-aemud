@@ -49,5 +49,5 @@ public interface RegistrationRepository extends JpaRepository<Registration, Stri
     @Query("""
             SELECT count(*) FROM Registration r where r.mandat.id =:mandatId AND r.registrationType =:typeInscription
             """)
-    int getNewOrRenewalAdherentForAMandat(@Param("mandatId") String mandatId,@Param("typeInscription") TypeInscription typeInscription);
+    int getNewOrRenewalAdherentForAMandat(@Param("mandatId") String mandatId, @Param("typeInscription") TypeInscription typeInscription);
 }

@@ -2,9 +2,7 @@ package org.aemudapi.member.mapper;
 
 import lombok.RequiredArgsConstructor;
 import org.aemudapi.member.dtos.BourseDTO;
-import org.aemudapi.member.dtos.BourseIdDTO;
 import org.aemudapi.member.entity.Bourse;
-import org.aemudapi.member.entity.Member;
 import org.aemudapi.member.repository.MemberRepository;
 import org.springframework.stereotype.Component;
 

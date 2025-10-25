@@ -5,4 +5,5 @@ public record ResetPasswordRequest(
         String confirmPassword,
         String username,
         String token
-) {}
+) {
+}

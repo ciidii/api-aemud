@@ -1,9 +1,8 @@
 package org.aemudapi.member.entity;
 
-import jakarta.persistence.*;
-import lombok.*;
-
-import java.util.List;
+import jakarta.persistence.Entity;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Getter

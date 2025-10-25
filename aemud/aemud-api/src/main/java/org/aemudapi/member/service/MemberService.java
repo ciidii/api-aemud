@@ -9,8 +9,6 @@ import org.aemudapi.utils.ResponseVO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-import java.security.GeneralSecurityException;
 import java.util.List;
 
 @Service
@@ -23,7 +21,7 @@ public interface MemberService {
 
     ResponseEntity<ResponseVO<MemberDataResponseDTO>> getMemberById(String id);
 
-    ResponseEntity<ResponsePageableVO<MemberDataResponseDTO>> searchMember(RequestPageableVO requestPageableVO, String criteria, String value, FilterDTO filterDTO, String sortColumn,boolean sortDirection);
+    ResponseEntity<ResponsePageableVO<MemberDataResponseDTO>> searchMember(RequestPageableVO requestPageableVO, String criteria, String value, FilterDTO filterDTO, String sortColumn, boolean sortDirection);
 
     ResponseEntity<ResponseVO<List<MemberDataResponseDTO>>> searchMemberToPrint(String criteria, String value, FilterDTO filters);
 

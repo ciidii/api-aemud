@@ -52,7 +52,7 @@ public class UserMapper {
         user.setUsername(userResponseDto.getUsername());
         user.setLocked(userResponseDto.isLocked());
         user.setForcePasswordChange(userResponseDto.isForcePasswordChange());
-      //  user.setMember(userResponseDto.getMember());
+        //  user.setMember(userResponseDto.getMember());
         user.setRoles(userResponseDto.getRoles());
         // Note: Le mot de passe n'est pas dans UserDtoResponse, donc il ne peut pas être mappé ici.
         // C'est une raison pour laquelle un UserDtoRequest serait plus approprié pour la création/mise à jour.

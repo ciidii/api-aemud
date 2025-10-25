@@ -14,6 +14,7 @@ public interface PhaseRepository extends JpaRepository<Phase, String> {
 
     /**
      * Trouve la phase en cours à une date donnée.
+     *
      * @param date La date actuelle.
      * @return Un Optional contenant la phase en cours si elle existe.
      */
@@ -22,6 +23,7 @@ public interface PhaseRepository extends JpaRepository<Phase, String> {
 
     /**
      * Trouve toutes les phases qui sont terminées avant une date donnée.
+     *
      * @param date La date actuelle.
      * @return Une liste des phases passées.
      */
@@ -30,11 +32,12 @@ public interface PhaseRepository extends JpaRepository<Phase, String> {
 
     /**
      * Trouve la prochaine phase qui n'a pas encore commencé.
+     *
      * @param date La date actuelle.
      * @return Un Optional contenant la prochaine phase si elle existe.
      */
     @Query("SELECT p FROM Phase p WHERE p.dateDebut > :date ORDER BY p.dateDebut ASC")
-        List<Phase> findFuturePhases(LocalDate date);
+    List<Phase> findFuturePhases(LocalDate date);
 
     default Optional<Phase> findNextPhase(LocalDate date) {
         return findFuturePhases(date).stream().findFirst();

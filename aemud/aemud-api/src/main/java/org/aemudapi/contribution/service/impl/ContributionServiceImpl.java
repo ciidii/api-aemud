@@ -36,14 +36,14 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class ContributionServiceImpl implements ContributionService {
-    private ContributionMapper contributionMapper;
-    private ContributionRepository contributionRepository;
     private final MemberRepository memberRepository;
     private final PayementRepository payementRepository;
     private final PayementMapper payementMapper;
     private final MandatRepository mandatRepository;
     private final BourseRepository bourseRepository;
     private final PhaseRepository phaseRepository;
+    private ContributionMapper contributionMapper;
+    private ContributionRepository contributionRepository;
 
     @Override
     public ResponseEntity<ResponseVO<ContributionResponseDTO>> addContribute(ContributionRequestDTO contributionRequestDTO) {
@@ -143,6 +143,7 @@ public class ContributionServiceImpl implements ContributionService {
             }
         }
     }
+
     @Override
     public ResponseEntity<ResponseVO<List<ContributionResponseDTO>>> getMemberContributionsCalendar(String memberId, String mandatId) {
         List<Contribution> contributions = this.contributionRepository.findMemberContributionsCalendarByMemberIdAndMandatId(memberId, mandatId);

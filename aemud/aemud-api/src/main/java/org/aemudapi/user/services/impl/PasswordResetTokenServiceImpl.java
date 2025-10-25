@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class PasswordResetTokenServiceImpl implements PasswordResetTokenService {
     private PasswordResetTokenRepository passwordResetTokenRepository;
+
     @Override
     public PasswordResetToken createPasswordResetToken(PasswordResetToken passwordResetToken) {
         this.passwordResetTokenRepository.save(passwordResetToken);

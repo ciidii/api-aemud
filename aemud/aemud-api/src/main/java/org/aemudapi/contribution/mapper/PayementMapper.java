@@ -1,7 +1,6 @@
 package org.aemudapi.contribution.mapper;
 
 import lombok.AllArgsConstructor;
-import org.aemudapi.contribution.dto.ContributionRequestDTO;
 import org.aemudapi.contribution.dto.PayementRequestDTO;
 import org.aemudapi.contribution.dto.PayementResponseDTO;
 import org.aemudapi.contribution.entity.Contribution;

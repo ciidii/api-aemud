@@ -2,7 +2,6 @@ package org.aemudapi.member.mapper;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
-import org.aemudapi.mandat.entity.Mandat;
 import org.aemudapi.mandat.repository.MandatRepository;
 import org.aemudapi.member.dtos.ContactInfoRequestDto;
 import org.aemudapi.member.entity.ContactInfo;

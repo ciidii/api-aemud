@@ -1,6 +1,5 @@
 package org.aemudapi.contribution.entity;
 
-import io.micrometer.common.lang.Nullable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -12,6 +11,7 @@ import lombok.Setter;
 import org.aemudapi.mandat.entity.Phase;
 import org.aemudapi.member.entity.BaseEntity;
 import org.aemudapi.member.entity.Member;
+
 import java.time.YearMonth;
 
 @Entity

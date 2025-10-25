@@ -1,6 +1,5 @@
 package org.aemudapi.notification.dtos;
 
-import org.aemudapi.notification.dtos.SmsModelDTO;
 import org.aemudapi.notification.entity.SmsModel;
 import org.springframework.stereotype.Component;
 

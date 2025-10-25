@@ -1,22 +1,21 @@
 package org.aemudapi.mandat.dtos;
 
-import jakarta.validation.constraints.Future;
-import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+
 import java.time.LocalDate;
 
 public record UpdateMandatDto(
-    @NotBlank(message = "Le nom du mandat ne peut pas être vide.")
-    String nom,
+        @NotBlank(message = "Le nom du mandat ne peut pas être vide.")
+        String nom,
 
-    @NotNull(message = "La date de début est requise.")
-    @FutureOrPresent(message = "La date de début ne peut pas être dans le passé.")
-    LocalDate dateDebut,
+        @NotNull(message = "La date de début est requise.")
+        LocalDate dateDebut,
 
-    @NotNull(message = "La date de fin est requise.")
-    @Future(message = "La date de fin doit être dans le futur.")
-    LocalDate dateFin,
+        @NotNull(message = "La date de fin est requise.")
+        LocalDate dateFin,
 
-    boolean estActif
-) {}
+        boolean estActif,
+        Boolean recalculatePhasesAutomatically
+) {
+}

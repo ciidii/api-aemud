@@ -2,7 +2,6 @@ package org.aemudapi.user.dtos;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.aemudapi.member.entity.Member;
 import org.aemudapi.user.entity.Role;
 
 import java.util.List;

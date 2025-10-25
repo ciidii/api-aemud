@@ -1,10 +1,8 @@
 package org.aemudapi.member.mapper;
 
 import lombok.RequiredArgsConstructor;
-import org.aemudapi.member.dtos.CommissionDto;
 import org.aemudapi.commission.entity.Commission;
-import org.aemudapi.member.dtos.CommissionIdDto;
-import org.aemudapi.member.entity.Member;
+import org.aemudapi.member.dtos.CommissionDto;
 import org.aemudapi.member.repository.MemberRepository;
 import org.springframework.stereotype.Component;
 

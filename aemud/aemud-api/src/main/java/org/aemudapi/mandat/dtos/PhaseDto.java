@@ -5,9 +5,10 @@ import org.aemudapi.mandat.entity.PhaseStatus;
 import java.time.LocalDate;
 
 public record PhaseDto(
-    String id,
-    String nom,
-    LocalDate dateDebut,
-    LocalDate dateFin,
-    PhaseStatus status
-) {}
+        String id,
+        String nom,
+        LocalDate dateDebut,
+        LocalDate dateFin,
+        PhaseStatus status
+) {
+}

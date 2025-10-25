@@ -16,7 +16,7 @@ public interface UserService {
 
     ResponseEntity<ResponseVO<Boolean>> checkIfEmailValid(String email);
 
-    Boolean checkTokenValid(String email,String token);
+    Boolean checkTokenValid(String email, String token);
 
     ResponseEntity<ResponseVO<Void>> changeChangeWordPForgotten(ChangeForgottenPassword changePasswordRequestDTO);
 }

@@ -1,11 +1,11 @@
 package org.aemudapi.commission.entity;
 
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Entity;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.aemudapi.member.entity.BaseEntity;
-import org.aemudapi.member.entity.Member;
-
-import java.util.List;
 
 @Entity
 @Getter

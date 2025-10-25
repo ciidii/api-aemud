@@ -1,15 +1,10 @@
 package org.aemudapi.member.entity;
 
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
-import org.aemudapi.club.entity.Club;
-import org.aemudapi.commission.entity.Commission;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Embeddable
 @Getter

@@ -14,27 +14,27 @@
 
 // --- Palette Primaire ---
 $primary-base: #278F8F;
-$primary-100: lighten($primary-base, 35%);   // #A4D9D9
-$primary-200: lighten($primary-base, 28%);   // #8AD1D1
-$primary-300: lighten($primary-base, 21%);   // #71C8C8
-$primary-400: lighten($primary-base, 10%);   // #4FB9B9
-$primary-500: $primary-base;                 // #278F8F (Couleur principale)
-$primary-600: darken($primary-base, 6%);    // #217A7A
-$primary-700: darken($primary-base, 12%);   // #1B6666
-$primary-800: darken($primary-base, 18%);   // #155252
-$primary-900: darken($primary-base, 24%);   // #0F3D3D
+$primary-100: lighten($primary-base, 35%); // #A4D9D9
+$primary-200: lighten($primary-base, 28%); // #8AD1D1
+$primary-300: lighten($primary-base, 21%); // #71C8C8
+$primary-400: lighten($primary-base, 10%); // #4FB9B9
+$primary-500: $primary-base; // #278F8F (Couleur principale)
+$primary-600: darken($primary-base, 6%); // #217A7A
+$primary-700: darken($primary-base, 12%); // #1B6666
+$primary-800: darken($primary-base, 18%); // #155252
+$primary-900: darken($primary-base, 24%); // #0F3D3D
 
 // --- Palette Secondaire ---
 $secondary-base: #D09C0A;
 $secondary-100: lighten($secondary-base, 30%); // #F5DDA8
 $secondary-200: lighten($secondary-base, 24%); // #EDD08A
 $secondary-300: lighten($secondary-base, 18%); // #E5C46D
-$secondary-400: lighten($secondary-base, 9%);  // #D9B547
-$secondary-500: $secondary-base;              // #D09C0A (Couleur principale)
-$secondary-600: darken($secondary-base, 6%);   // #B58809
-$secondary-700: darken($secondary-base, 12%);  // #9A7508
-$secondary-800: darken($secondary-base, 18%);  // #7F6106
-$secondary-900: darken($secondary-base, 24%);  // #644E05
+$secondary-400: lighten($secondary-base, 9%); // #D9B547
+$secondary-500: $secondary-base; // #D09C0A (Couleur principale)
+$secondary-600: darken($secondary-base, 6%); // #B58809
+$secondary-700: darken($secondary-base, 12%); // #9A7508
+$secondary-800: darken($secondary-base, 18%); // #7F6106
+$secondary-900: darken($secondary-base, 24%); // #644E05
 
 // --- Palette de Gris ---
 $gray-base: #1B1B1B;
@@ -128,8 +128,8 @@ $font-weight-bold: 700;
 $line-height-base: 1.5;
 $line-height-heading: 1.2;
 
-$font-size-body: 1.6rem;   // 16px
-$font-size-small: 1.4rem;  // 14px
+$font-size-body: 1.6rem; // 16px
+$font-size-small: 1.4rem; // 14px
 $font-size-h6: 1.6rem;
 $font-size-h5: 2rem;
 $font-size-h4: 2.4rem;
@@ -143,15 +143,15 @@ $font-size-h1: 4.8rem;
 // ==========================================================================
 // Échelle basée sur un multiple de 4px (0.4rem).
 
-$space-1: 0.4rem;   // 4px
-$space-2: 0.8rem;   // 8px
-$space-3: 1.2rem;   // 12px
-$space-4: 1.6rem;   // 16px
-$space-5: 2.0rem;   // 20px
-$space-6: 2.4rem;   // 24px
-$space-8: 3.2rem;   // 32px
-$space-12: 4.8rem;  // 48px
-$space-16: 6.4rem;  // 64px
+$space-1: 0.4rem; // 4px
+$space-2: 0.8rem; // 8px
+$space-3: 1.2rem; // 12px
+$space-4: 1.6rem; // 16px
+$space-5: 2.0rem; // 20px
+$space-6: 2.4rem; // 24px
+$space-8: 3.2rem; // 32px
+$space-12: 4.8rem; // 48px
+$space-16: 6.4rem; // 64px
 
 
 // ==========================================================================
@@ -175,7 +175,7 @@ $shadow-lg: 0 10px 15px rgba($gray-900, 0.15);
 // ==========================================================================
 
 // --- Layout & Sidebar ---
-$sidebar-expanded-width: 24rem;   // 240px
+$sidebar-expanded-width: 24rem; // 240px
 $sidebar-collapsed-width: 7.2rem; // 72px
 $header-height: 6.4rem;
 
@@ -197,8 +197,8 @@ $form-input-border-radius: $radius-md;
 // 8. TAILLES D'ICÔNES
 // ==========================================================================
 
-$icon-xs: 1.6rem;  // 16px
-$icon-sm: 2rem;    // 20px
-$icon-md: 2.4rem;  // 24px
-$icon-lg: 3.2rem;  // 32px
-$icon-xl: 4.8rem;  // 48px
+$icon-xs: 1.6rem; // 16px
+$icon-sm: 2rem; // 20px
+$icon-md: 2.4rem; // 24px
+$icon-lg: 3.2rem; // 32px
+$icon-xl: 4.8rem; // 48px

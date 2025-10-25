@@ -1,5 +1,6 @@
 package org.aemudapi.mandat.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.aemudapi.mandat.dtos.CreatePhaseDto;
 import org.aemudapi.mandat.dtos.PhaseDto;
@@ -11,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.validation.Valid;
 import java.util.List;
 
 @RestController
